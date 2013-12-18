@@ -3,6 +3,7 @@ package ajedrez;
  *
  * @author Francisco Salido RUiz
  */
+//PACO ATRINCAMELA UN RATO
 public class Ajedrez {
 
     /**
