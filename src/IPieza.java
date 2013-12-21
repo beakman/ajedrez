@@ -6,9 +6,9 @@ package ajedrez;
 
 /**
  *
- * @author Edu
  */
-public interface IPieza {
+public interface IPieza 
+{
     Movimiento[] getMovimientosPosibles();
     boolean esMovimientoPosible(Posicion nuevoDestino);
     void actualizarPosicion(Posicion nuevaPosicion);
