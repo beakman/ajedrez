@@ -4,9 +4,7 @@
  */
 package ajedrez;
  Object obj = new Object();
- *
- * @author Edu
- */
+
 public interface IJugador {
     void preguntarNombre();
     void preguntarColorPiezas();

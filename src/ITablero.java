@@ -4,10 +4,6 @@
  */
 package ajedrez;
 
-/**
- *
- * @author Edu
- */
 public interface ITablero {
     boolean esMovimientoPosible(Movimiento mov);
     Pieza ejecutarMovimiento(Movimiento mov);
