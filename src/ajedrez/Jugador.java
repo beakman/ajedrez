@@ -21,7 +21,7 @@ public abstract class Jugador implements IJugador {
     }
     
     @Override
-    public Movimiento pedirMovimiento(){
+    public Movimientos pedirMovimiento(){
         
     }
     
