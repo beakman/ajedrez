@@ -1,9 +1,9 @@
 package ajedrez;
 /**
  *
- * @author Francisco Salido RUiz
+ * @author Francisco Salido Ruiz
  */
-// hago un pull previo
+
 public class Ajedrez {
 
     /**
