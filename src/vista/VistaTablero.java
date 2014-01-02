@@ -5,6 +5,7 @@
 package vista;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,9 +31,10 @@ public class VistaTablero extends javax.swing.JFrame {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 casilla[i][j] = new JButton();
+                casilla[i][j].setSize(new Dimension(50,50));
 
                 if ((i + j) % 2 == 0) {
-                    casilla[i][j].setBackground(Color.black);
+                    casilla[i][j].setBackground(new Color(0x00a6ac));
                 } else {
                     casilla[i][j].setBackground(Color.white);
                 }   
