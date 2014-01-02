@@ -41,15 +41,21 @@ public class VistaTablero extends javax.swing.JFrame {
         }
         // Colocamos las piezas        
         casilla[0][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
+        casilla[0][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
+        casilla[0][3].setIcon(new ImageIcon(VistaTablero.class.getResource("reinan.png")));
         casilla[0][4].setIcon(new ImageIcon(VistaTablero.class.getResource("reyn.png")));
         casilla[0][5].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
+        casilla[0][6].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][7].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
 
         casilla[7][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torreb.png")));
+        casilla[7][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballob.png")));
         casilla[7][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));
+        casilla[7][3].setIcon(new ImageIcon(VistaTablero.class.getResource("reinab.png")));
         casilla[7][4].setIcon(new ImageIcon(VistaTablero.class.getResource("reyb.png")));
         casilla[7][5].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));
+        casilla[7][6].setIcon(new ImageIcon(VistaTablero.class.getResource("caballob.png")));
         casilla[7][7].setIcon(new ImageIcon(VistaTablero.class.getResource("torreb.png")));
         
         for (int i = 0; i < 8; i++) {
