@@ -5,8 +5,8 @@
 package ajedrez;
 
 public interface ITablero {
-    boolean esMovimientoPosible(Movimiento mov);
-    Pieza ejecutarMovimiento(Movimiento mov);
+    boolean esMovimientoPosible(Movimientos mov);
+    Pieza ejecutarMovimiento(Movimientos mov);
     void colocarPiezas();
     boolean jugadorHaceJaqueMate(Jugador jug);
     

@@ -9,7 +9,7 @@ public interface IJugador {
     void preguntarNombre();
     void preguntarColorPiezas();
     
-    Movimiento pedirMovimiento();
+    Movimientos pedirMovimiento();
     boolean puedeMover();
     void anotarPiezaPerdida(Pieza pieza);
 }
