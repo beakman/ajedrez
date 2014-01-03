@@ -33,18 +33,18 @@ public class CtrlAjedrez implements java.awt.event.ActionListener
         String botonPulsado = e.getActionCommand();
         // Paco tiene que pasar la posicion de la pieza mirando el boton
         // El boton que se pulsa tiene una pieza y ademas el boton no estaba pulsado antes
-        if (fichaSeleccionada.existe && !fichaSeleccionada.posicion.equals(botonPulsado))
-        {
-            if (pieza.esMovimientoPosible(fichaSeleccionada.posicion))
-            {
-                pieza.actualizarPosicion(fichaSeleccionada.posicion);
-            }
-        }
+//        if (fichaSeleccionada.existe && !fichaSeleccionada.posicion.equals(botonPulsado))
+//        {
+//            if (pieza.esMovimientoPosible(fichaSeleccionada.posicion))
+//            {
+//                pieza.actualizarPosicion(fichaSeleccionada.posicion);
+//            }
+//        }
         // El boton que se pulsa es el mismo que se habia pulsado antes
-        else if (fichaSeleccionada)
-        {
-        
-        }
+//        else if (fichaSeleccionada)
+//        {
+//        
+//        }
     }
     
     

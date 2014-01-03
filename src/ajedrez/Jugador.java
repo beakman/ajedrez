@@ -9,6 +9,7 @@ import ajedrez.IPartidaAjedrez.Color;
 public abstract class Jugador implements IJugador {
     private String nombre;
     private Color color;
+    private Movimientos movimiento;
     
     @Override
     public void preguntarNombre() {
@@ -21,13 +22,17 @@ public abstract class Jugador implements IJugador {
     }
     
     @Override
-    public Movimientos pedirMovimiento(){
-        
+    public Movimientos pedirMovimiento()
+    {
+        // Devuelvo un movimiento dummy para poder compilar
+        return movimiento;
     }
     
     @Override
-    public boolean puedeMover(){
-        
+    public boolean puedeMover()
+    {
+        // Devuelve verdadero para poder compilar
+        return true;
     }
     
     @Override

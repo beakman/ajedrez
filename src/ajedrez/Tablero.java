@@ -5,6 +5,8 @@ package ajedrez;
  * @author paco
  * Tablero de ajedrez
  */
-public class Tablero implements ITablero {
+
+// Convertido a abstract para poder compilar
+public abstract class Tablero implements ITablero {
     
 }

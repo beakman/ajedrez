@@ -3,7 +3,8 @@
  * and open the template in the editor.
  */
 package ajedrez;
- Object obj = new Object();
+// No sabemos por que esta aqui asi que lo comento para poder compilar
+ // Object obj = new Object();
 
 public interface IJugador {
     void preguntarNombre();
