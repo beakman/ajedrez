@@ -5,11 +5,16 @@
 package vista;
 
 import controlador.CtrlAjedrez;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -18,6 +23,8 @@ import javax.swing.JButton;
 public class VistaTablero extends javax.swing.JFrame {
     
     private CtrlAjedrez controlador;
+    public String jugador1;
+    public String jugador2;
     
     public void setControlador(CtrlAjedrez valor)
     {
@@ -50,6 +57,7 @@ public class VistaTablero extends javax.swing.JFrame {
                     casilla[i][j].setBackground(new Color(0x00a6ac));
                 }   
                 tableroPanel.add(casilla[i][j]);
+                casilla[i][j].setEnabled(false);
             }
         }
         // Colocamos las piezas        
@@ -75,7 +83,7 @@ public class VistaTablero extends javax.swing.JFrame {
             casilla[1][i].setIcon(new ImageIcon(VistaTablero.class.getResource("peonn.png")));
             casilla[6][i].setIcon(new ImageIcon(VistaTablero.class.getResource("peonb.png")));
         }
-        setVisible(true);
+        setVisible(true);        
     }
     
     /**
@@ -88,29 +96,36 @@ public class VistaTablero extends javax.swing.JFrame {
     private void initComponents() {
 
         statusPanel = new javax.swing.JPanel();
-        jugador1 = new javax.swing.JTextField();
+        j1TextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jugador2 = new javax.swing.JTextField();
+        j2TextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
+        jugarBoton = new javax.swing.JButton();
         tableroPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jugador1.setText("Jugador 1");
+        j1TextField.setText("Jugador 1");
+        j1TextField.setToolTipText("Nombre jugador 1");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Master Chess");
 
-        jugador2.setText("Jugador 2");
+        j2TextField.setText("Jugador 2");
+        j2TextField.setToolTipText("Nombre jugador 2");
 
         jLabel2.setText("Blancas");
 
         jLabel3.setText("Negras");
 
-        jButton1.setText("Jugar");
+        jugarBoton.setText("Jugar");
+        jugarBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jugarBotonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
@@ -122,12 +137,12 @@ public class VistaTablero extends javax.swing.JFrame {
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(statusPanelLayout.createSequentialGroup()
                         .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jugador1)
+                            .addComponent(j1TextField)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jugador2, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                            .addComponent(j2TextField, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jugarBoton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -141,14 +156,14 @@ public class VistaTablero extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addGap(5, 5, 5)
-                .addComponent(jugador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(j1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jugador2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(j2TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addComponent(jugarBoton)
+                .addContainerGap(234, Short.MAX_VALUE))
         );
 
         getContentPane().add(statusPanel, java.awt.BorderLayout.LINE_START);
@@ -157,7 +172,7 @@ public class VistaTablero extends javax.swing.JFrame {
         tableroPanel.setLayout(tableroPanelLayout);
         tableroPanelLayout.setHorizontalGroup(
             tableroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 508, Short.MAX_VALUE)
+            .addGap(0, 512, Short.MAX_VALUE)
         );
         tableroPanelLayout.setVerticalGroup(
             tableroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,6 +183,35 @@ public class VistaTablero extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jugarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugarBotonActionPerformed
+        // Activamos los botones
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                casilla[i][j].setEnabled(true);
+            }
+        }
+        // Guardamos el nombre de los jugadores
+        jugador1 = j1TextField.getText();
+        jugador2 = j2TextField.getText();
+        
+        // Cambiamos al panel de estadisticas
+        statusPanel.remove(jLabel1);
+        statusPanel.remove(jSeparator1);
+        statusPanel.remove(jLabel2);
+        statusPanel.remove(j1TextField);
+        statusPanel.remove(jLabel3);
+        statusPanel.remove(j2TextField);
+        statusPanel.remove(jugarBoton);
+        statusPanel.setLayout(new BorderLayout());
+        JPanel estado = new JPanel();
+        estado.setBorder(new TitledBorder("Jugadas"));
+        JTextArea informacion = new JTextArea("Último movimiento: d6 a3 \nJuegan Blancas: c8 a6");
+        estado.add(informacion, BorderLayout.CENTER);
+        statusPanel.add(estado, BorderLayout.CENTER);
+        statusPanel.paintImmediately(statusPanel.getBounds());
+        statusPanel.setVisible(true);        
+    }//GEN-LAST:event_jugarBotonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,13 +248,13 @@ public class VistaTablero extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField j1TextField;
+    private javax.swing.JTextField j2TextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jugador1;
-    private javax.swing.JTextField jugador2;
+    private javax.swing.JButton jugarBoton;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JPanel tableroPanel;
     // End of variables declaration//GEN-END:variables
