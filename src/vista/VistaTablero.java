@@ -9,9 +9,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  *
@@ -24,7 +21,7 @@ public class VistaTablero extends javax.swing.JFrame {
      */
     public VistaTablero() {
         initComponents();  
-        setSize(500, 500);
+        setSize(600,500);
         tableroPanel.setLayout(new GridLayout(8, 8));
         
         // Dibujamos el tablero: cada casilla sera un JButton.
@@ -34,9 +31,9 @@ public class VistaTablero extends javax.swing.JFrame {
                 casilla[i][j].setSize(new Dimension(50,50));
 
                 if ((i + j) % 2 == 0) {
-                    casilla[i][j].setBackground(new Color(0x00a6ac));
-                } else {
                     casilla[i][j].setBackground(Color.white);
+                } else {                    
+                    casilla[i][j].setBackground(new Color(0x00a6ac));
                 }   
                 tableroPanel.add(casilla[i][j]);
             }
@@ -45,17 +42,17 @@ public class VistaTablero extends javax.swing.JFrame {
         casilla[0][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
         casilla[0][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
-        casilla[0][3].setIcon(new ImageIcon(VistaTablero.class.getResource("reinan.png")));
-        casilla[0][4].setIcon(new ImageIcon(VistaTablero.class.getResource("reyn.png")));
+        casilla[0][3].setIcon(new ImageIcon(VistaTablero.class.getResource("reyn.png")));
+        casilla[0][4].setIcon(new ImageIcon(VistaTablero.class.getResource("reinan.png")));
         casilla[0][5].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
         casilla[0][6].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][7].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
 
         casilla[7][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torreb.png")));
         casilla[7][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballob.png")));
-        casilla[7][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));
-        casilla[7][3].setIcon(new ImageIcon(VistaTablero.class.getResource("reinab.png")));
-        casilla[7][4].setIcon(new ImageIcon(VistaTablero.class.getResource("reyb.png")));
+        casilla[7][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));        
+        casilla[7][3].setIcon(new ImageIcon(VistaTablero.class.getResource("reyb.png")));
+        casilla[7][4].setIcon(new ImageIcon(VistaTablero.class.getResource("reinab.png")));
         casilla[7][5].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));
         casilla[7][6].setIcon(new ImageIcon(VistaTablero.class.getResource("caballob.png")));
         casilla[7][7].setIcon(new ImageIcon(VistaTablero.class.getResource("torreb.png")));
@@ -66,7 +63,7 @@ public class VistaTablero extends javax.swing.JFrame {
         }
         setVisible(true);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,34 +73,83 @@ public class VistaTablero extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        statsPanel = new javax.swing.JPanel();
-        statsLabel = new javax.swing.JLabel();
+        statusPanel = new javax.swing.JPanel();
+        jugador1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jugador2 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
         tableroPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        statsLabel.setText("DeepBlue 2.0");
+        jugador1.setText("Jugador 1");
 
-        javax.swing.GroupLayout statsPanelLayout = new javax.swing.GroupLayout(statsPanel);
-        statsPanel.setLayout(statsPanelLayout);
-        statsPanelLayout.setHorizontalGroup(
-            statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statsPanelLayout.createSequentialGroup()
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setText("Master Chess");
+
+        jugador2.setText("Jugador 2");
+
+        jLabel2.setText("Blancas");
+
+        jLabel3.setText("Negras");
+
+        jButton1.setText("Jugar");
+
+        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
+        statusPanel.setLayout(statusPanelLayout);
+        statusPanelLayout.setHorizontalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(statsLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(statusPanelLayout.createSequentialGroup()
+                        .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jugador1)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jugador2, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
-        statsPanelLayout.setVerticalGroup(
-            statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statsPanelLayout.createSequentialGroup()
+        statusPanelLayout.setVerticalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(statsLabel)
-                .addContainerGap(860, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(5, 5, 5)
+                .addComponent(jugador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jugador2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
-        getContentPane().add(statsPanel, java.awt.BorderLayout.LINE_START);
+        getContentPane().add(statusPanel, java.awt.BorderLayout.LINE_START);
 
-        tableroPanel.setLayout(new java.awt.GridLayout());
+        javax.swing.GroupLayout tableroPanelLayout = new javax.swing.GroupLayout(tableroPanel);
+        tableroPanel.setLayout(tableroPanelLayout);
+        tableroPanelLayout.setHorizontalGroup(
+            tableroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 508, Short.MAX_VALUE)
+        );
+        tableroPanelLayout.setVerticalGroup(
+            tableroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 433, Short.MAX_VALUE)
+        );
+
         getContentPane().add(tableroPanel, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -144,8 +190,14 @@ public class VistaTablero extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel statsLabel;
-    private javax.swing.JPanel statsPanel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField jugador1;
+    private javax.swing.JTextField jugador2;
+    private javax.swing.JPanel statusPanel;
     private javax.swing.JPanel tableroPanel;
     // End of variables declaration//GEN-END:variables
 }
