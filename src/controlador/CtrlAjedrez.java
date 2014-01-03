@@ -19,10 +19,13 @@ public class CtrlAjedrez implements java.awt.event.ActionListener
 {
     private VistaTablero tablero;
     private IPieza pieza;
+    private IJugador jugador;
     
-    public CtrlAjedrez()
+    public CtrlAjedrez(VistaTablero tablero, IPieza pieza, IJugador jugador)
     {
-        
+        this.tablero = tablero;
+        this.pieza = pieza;
+        this.jugador = jugador;
     }
     
     @Override

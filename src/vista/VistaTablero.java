@@ -4,6 +4,7 @@
  */
 package vista;
 
+import controlador.CtrlAjedrez;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -15,6 +16,19 @@ import javax.swing.JButton;
  * @author OneFranc
  */
 public class VistaTablero extends javax.swing.JFrame {
+    
+    private CtrlAjedrez controlador;
+    
+    public void setControlador(CtrlAjedrez valor)
+    {
+        this.controlador = valor;
+    }
+    
+    public CtrlAjedrez getControlador()
+    {
+        return this.controlador;
+    }
+    
     JButton casilla[][] = new JButton[8][8];
     /**
      * Creates new form VistaTablero
