@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,6 +27,7 @@ public class VistaTablero extends javax.swing.JFrame {
     private CtrlAjedrez controlador;
     public String jugador1;
     public String jugador2;
+    public JTextArea informacion = new JTextArea();
     
     public void setControlador(CtrlAjedrez valor)
     {
@@ -47,9 +50,20 @@ public class VistaTablero extends javax.swing.JFrame {
         
         // Dibujamos el tablero: cada casilla sera un JButton.
         for (int i = 0; i < 8; i++) {
+            final int fila = i;
             for (int j = 0; j < 8; j++) {
+                final int columna = j;
                 casilla[i][j] = new JButton();
                 casilla[i][j].setSize(new Dimension(50,50));
+                casilla[i][j].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        char[] c = {'a','b','c','d','e','f','g','h'};
+                        char[] f = {'8','7','6','5','4','3','2','1'};
+                        String s = new StringBuilder().append(c[columna]).append(f[fila]).toString();
+                        setEstado("a6 c3", "Blancas: b2 h1", s);
+                    }
+                });
 
                 if ((i + j) % 2 == 0) {
                     casilla[i][j].setBackground(Color.white);
@@ -86,6 +100,12 @@ public class VistaTablero extends javax.swing.JFrame {
         setVisible(true);        
     }
     
+    public void setEstado(String ultima, String turno, String pulsada){
+        String estado = "Último movimiento: "+ultima+"\nJuegan "+turno+"\nSeleccionada: "+pulsada;
+        informacion.setText(estado);
+        validate();
+        repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -195,22 +215,30 @@ public class VistaTablero extends javax.swing.JFrame {
         jugador1 = j1TextField.getText();
         jugador2 = j2TextField.getText();
         
-        // Cambiamos al panel de estadisticas
-        statusPanel.remove(jLabel1);
-        statusPanel.remove(jSeparator1);
-        statusPanel.remove(jLabel2);
-        statusPanel.remove(j1TextField);
-        statusPanel.remove(jLabel3);
-        statusPanel.remove(j2TextField);
-        statusPanel.remove(jugarBoton);
-        statusPanel.setLayout(new BorderLayout());
+        /* 
+            Cambiamos al panel de estadisticas: 
+            - Ultimo movimiento: orig, dest
+            - Turno de blancas/negras
+        */
+        remove(statusPanel);
+        
+        // nuevo panel con borde y titulo
         JPanel estado = new JPanel();
         estado.setBorder(new TitledBorder("Jugadas"));
-        JTextArea informacion = new JTextArea("Último movimiento: d6 a3 \nJuegan Blancas: c8 a6");
+        
+        // cuadro de texto que mostrara la informacion, con el color de fondo
+        // del panel y que no sea editable por el usuario.
+        informacion.setText("Último movimiento: d6 a3 \nJuegan Blancas: c8 a6");
+        informacion.setBackground(this.getContentPane().getBackground());
+        informacion.setEditable(false);
+        
+        // añadimos el cuadro de texto al panel
         estado.add(informacion, BorderLayout.CENTER);
-        statusPanel.add(estado, BorderLayout.CENTER);
-        statusPanel.paintImmediately(statusPanel.getBounds());
-        statusPanel.setVisible(true);        
+        add(estado, BorderLayout.WEST);
+        
+        // refrescamos la vista
+        validate();
+        setVisible(true);
     }//GEN-LAST:event_jugarBotonActionPerformed
 
     /**
