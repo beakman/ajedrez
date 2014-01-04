@@ -13,10 +13,19 @@ import ajedrez.Posicion;
  * @author betico
  */
 public class Alfil extends Pieza{
-
+    Posicion pos;
+    int fila_actual;
+    char columna_actual;
+    public Alfil(){
+        this.fila_actual = pos.getFila();
+        this.columna_actual = pos.getColumna();
+    }
+    
     @Override
     public Movimientos[] getMovimientosPosibles() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return null;
+        
     }
 
     @Override
@@ -26,7 +35,9 @@ public class Alfil extends Pieza{
 
     @Override
     public void actualizarPosicion(Posicion nuevaPosicion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        pos.setColumna(nuevaPosicion.columna);
+        pos.setFila(nuevaPosicion.fila);
     }
+    
     
 }
