@@ -24,22 +24,22 @@ import javax.swing.border.TitledBorder;
  */
 public class VistaTablero extends javax.swing.JFrame {
     
-    private CtrlAjedrez controlador;
+    private static CtrlAjedrez controlador;
     public String jugador1;
     public String jugador2;
     public JTextArea informacion = new JTextArea();
     
     public void setControlador(CtrlAjedrez valor)
     {
-        this.controlador = valor;
+        VistaTablero.controlador = valor;
     }
     
     public CtrlAjedrez getControlador()
     {
-        return this.controlador;
+        return VistaTablero.controlador;
     }
     
-    JButton casilla[][] = new JButton[8][8];
+    public static JButton casilla[][] = new JButton[8][8];
     /**
      * Creates new form VistaTablero
      */
@@ -55,13 +55,14 @@ public class VistaTablero extends javax.swing.JFrame {
                 final int columna = j;
                 casilla[i][j] = new JButton();
                 casilla[i][j].setSize(new Dimension(50,50));
+                char[] c = {'a','b','c','d','e','f','g','h'};
+                char[] f = {'8','7','6','5','4','3','2','1'};
+                String s = new StringBuilder().append(c[columna]).append(f[fila]).toString();
+                casilla[fila][columna].setActionCommand(s);
                 casilla[i][j].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        char[] c = {'a','b','c','d','e','f','g','h'};
-                        char[] f = {'8','7','6','5','4','3','2','1'};
-                        String s = new StringBuilder().append(c[columna]).append(f[fila]).toString();
-                        setEstado("a6 c3", "Blancas: b2 h1", s);
+                        setEstado("a6 c3", "Blancas: b2 h1", event.getActionCommand());
                     }
                 });
 
@@ -270,8 +271,17 @@ public class VistaTablero extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new VistaTablero().setVisible(true);
+                VistaTablero tablero = new VistaTablero();
+                CtrlAjedrez controlador = new CtrlAjedrez(tablero);
+                VistaTablero.controlador = controlador;
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        VistaTablero.casilla[i][j].addActionListener(controlador);
+                    }
+                }      
+                tablero.setVisible(true);
             }
         });
     }

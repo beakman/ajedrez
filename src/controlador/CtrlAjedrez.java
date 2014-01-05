@@ -21,11 +21,11 @@ public class CtrlAjedrez implements java.awt.event.ActionListener
     private IPieza pieza;
     private IJugador jugador;
     
-    public CtrlAjedrez(VistaTablero tablero, IPieza pieza, IJugador jugador)
+    public CtrlAjedrez(VistaTablero tablero)
     {
         this.tablero = tablero;
-        this.pieza = pieza;
-        this.jugador = jugador;
+//        this.pieza = pieza;
+//        this.jugador = jugador;
     }
     
     @Override
@@ -33,14 +33,13 @@ public class CtrlAjedrez implements java.awt.event.ActionListener
     {
         // ficha seleccionada sera la posicion y ficha del boton pulsado
         boolean fichaSeleccionada = false;
-        String botonPulsado = e.getActionCommand();
-        // Paco tiene que pasar la posicion de la pieza mirando el boton
+        String posicion = e.getActionCommand();
         // El boton que se pulsa tiene una pieza y ademas el boton no estaba pulsado antes
-//        if (fichaSeleccionada.existe && !fichaSeleccionada.posicion.equals(botonPulsado))
+//        if (fichaSeleccionada && posicion.equals())
 //        {
-//            if (pieza.esMovimientoPosible(fichaSeleccionada.posicion))
+//            if (pieza.esMovimientoPosible(posicion))
 //            {
-//                pieza.actualizarPosicion(fichaSeleccionada.posicion);
+//                movimientoFicha(posicion);
 //            }
 //        }
         // El boton que se pulsa es el mismo que se habia pulsado antes
@@ -50,5 +49,8 @@ public class CtrlAjedrez implements java.awt.event.ActionListener
 //        }
     }
     
-    
+    public void movimientoFicha(Posicion posicion)
+    {
+        pieza.actualizarPosicion(posicion);
+    }
 }

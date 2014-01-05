@@ -12,9 +12,10 @@ public class Ajedrez {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        VistaTablero juego = new VistaTablero();
-        juego.setVisible(true);        
-    }
+//    public static void main(String[] args) {
+//        VistaTablero juego = new VistaTablero();
+//        juego.run();
+//        juego.setVisible(true);        
+//    }
     
 }
