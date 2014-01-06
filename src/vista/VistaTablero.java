@@ -4,6 +4,8 @@
  */
 package vista;
 
+import ajedrez.IPieza;
+import ajedrez.IJugador;
 import controlador.CtrlAjedrez;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,9 +27,13 @@ import javax.swing.border.TitledBorder;
 public class VistaTablero extends javax.swing.JFrame {
     
     private static CtrlAjedrez controlador;
+    private static IPieza pieza;
+    private static IJugador jugador;
+    
     public String jugador1;
     public String jugador2;
     public JTextArea informacion = new JTextArea();
+    public static String seleccionAnterior;
     
     public void setControlador(CtrlAjedrez valor)
     {
@@ -47,6 +53,7 @@ public class VistaTablero extends javax.swing.JFrame {
         initComponents();  
         setSize(600,500);
         tableroPanel.setLayout(new GridLayout(8, 8));
+        seleccionAnterior = " ";
         
         // Dibujamos el tablero: cada casilla sera un JButton.
         for (int i = 0; i < 8; i++) {
@@ -63,9 +70,10 @@ public class VistaTablero extends javax.swing.JFrame {
                     @Override
                     public void actionPerformed(ActionEvent event) {
                         setEstado("a6 c3", "Blancas: b2 h1", event.getActionCommand());
+                        casilla[fila][columna].setSelected(true);
+                        seleccionAnterior = event.getActionCommand();
                     }
                 });
-
                 if ((i + j) % 2 == 0) {
                     casilla[i][j].setBackground(Color.white);
                 } else {                    
@@ -274,7 +282,8 @@ public class VistaTablero extends javax.swing.JFrame {
             @Override
             public void run() {
                 VistaTablero tablero = new VistaTablero();
-                CtrlAjedrez controlador = new CtrlAjedrez(tablero);
+//                Pieza pieza = new Pieza();
+                CtrlAjedrez controlador = new CtrlAjedrez(tablero, pieza, jugador);
                 VistaTablero.controlador = controlador;
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
