@@ -8,6 +8,7 @@ package controlador;
 
 import vista.VistaTablero;
 import ajedrez.*;
+import ajedrez.piezas.Alfil;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
@@ -21,11 +22,12 @@ public class CtrlAjedrez implements java.awt.event.ActionListener
     private IPieza pieza;
     private IJugador jugador;
     private Posicion posicion;
+    private Alfil[] alfil;
     
-    public CtrlAjedrez(VistaTablero tablero, IPieza pieza, IJugador jugador)
+    public CtrlAjedrez(VistaTablero tablero, Alfil[] alfil, IJugador jugador)
     {
         this.tablero = tablero;
-        this.pieza = pieza;
+        this.alfil = alfil;
         this.jugador = jugador;
     }
     
@@ -38,11 +40,15 @@ public class CtrlAjedrez implements java.awt.event.ActionListener
         {
             System.out.println(pos);
             System.out.println(VistaTablero.seleccionAnterior);
-            this.posicion.setFila(3);
-            this.posicion.setColumna('a');
+            
+            this.posicion.setFila(Character.getNumericValue(pos.charAt(1)));
+            this.posicion.setColumna(pos.charAt(0));
             if (pieza.esMovimientoPosible(this.posicion))
             {
-                movimientoFicha(this.posicion);
+                alfil[0].actualizarPosicion(posicion);
+                alfil[1].actualizarPosicion(posicion);
+                alfil[2].actualizarPosicion(posicion);
+                alfil[3].actualizarPosicion(posicion);
             }
         }
         // El boton que se pulsa tiene una pieza y ademas el boton no estaba pulsado antes

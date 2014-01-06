@@ -6,6 +6,8 @@ package vista;
 
 import ajedrez.IPieza;
 import ajedrez.IJugador;
+import ajedrez.Posicion;
+import ajedrez.piezas.Alfil;
 import controlador.CtrlAjedrez;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,6 +31,8 @@ public class VistaTablero extends javax.swing.JFrame {
     private static CtrlAjedrez controlador;
     private static IPieza pieza;
     private static IJugador jugador;
+    private Posicion posicion;
+    private static Alfil[] alfil;
     
     public String jugador1;
     public String jugador2;
@@ -50,6 +54,10 @@ public class VistaTablero extends javax.swing.JFrame {
      * Creates new form VistaTablero
      */
     public VistaTablero() {
+        
+        
+        posicion.setColumna('a');
+        posicion.setFila(0);
         initComponents();  
         setSize(600,500);
         tableroPanel.setLayout(new GridLayout(8, 8));
@@ -83,22 +91,34 @@ public class VistaTablero extends javax.swing.JFrame {
                 casilla[i][j].setEnabled(false);
             }
         }
+
         // Colocamos las piezas        
         casilla[0][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
         casilla[0][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
+        posicion.setColumna('c');
+        posicion.setFila(8);
+        alfil[0].actualizarPosicion(posicion);
         casilla[0][3].setIcon(new ImageIcon(VistaTablero.class.getResource("reyn.png")));
         casilla[0][4].setIcon(new ImageIcon(VistaTablero.class.getResource("reinan.png")));
         casilla[0][5].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
+        posicion.setColumna('f');
+        posicion.setFila(8);
+        alfil[1].actualizarPosicion(posicion);
         casilla[0][6].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][7].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
-
         casilla[7][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torreb.png")));
         casilla[7][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballob.png")));
-        casilla[7][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));        
+        casilla[7][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));
+        posicion.setColumna('c');
+        posicion.setFila(0);
+        alfil[2].actualizarPosicion(posicion);
         casilla[7][3].setIcon(new ImageIcon(VistaTablero.class.getResource("reyb.png")));
         casilla[7][4].setIcon(new ImageIcon(VistaTablero.class.getResource("reinab.png")));
         casilla[7][5].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));
+        posicion.setColumna('f');
+        posicion.setFila(0);
+        alfil[3].actualizarPosicion(posicion);
         casilla[7][6].setIcon(new ImageIcon(VistaTablero.class.getResource("caballob.png")));
         casilla[7][7].setIcon(new ImageIcon(VistaTablero.class.getResource("torreb.png")));
         
@@ -283,7 +303,7 @@ public class VistaTablero extends javax.swing.JFrame {
             public void run() {
                 VistaTablero tablero = new VistaTablero();
 //                Pieza pieza = new Pieza();
-                CtrlAjedrez controlador = new CtrlAjedrez(tablero, pieza, jugador);
+                CtrlAjedrez controlador = new CtrlAjedrez(tablero, VistaTablero.alfil, jugador);
                 VistaTablero.controlador = controlador;
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
