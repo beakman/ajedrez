@@ -6,7 +6,32 @@ package ajedrez;
  * Tablero de ajedrez
  */
 
-// Convertido a abstract para poder compilar
-public abstract class Tablero implements ITablero {
+
+public class Tablero implements ITablero {
+
+    @Override
+    public boolean esMovimientoPosible(Movimientos mov) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Pieza ejecutarMovimiento(Movimientos mov) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void colocarPiezas() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean jugadorHaceJaqueMate(Jugador jug) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mostrarTablero() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

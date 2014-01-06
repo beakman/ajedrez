@@ -15,7 +15,7 @@ import ajedrez.Posicion;
 public class Torre extends Pieza{
 
     @Override
-    public Movimientos[] getMovimientosPosibles() {
+    public Posicion[] getMovimientosPosibles() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -25,7 +25,7 @@ public class Alfil extends Pieza{
     }
     
     @Override
-    public Movimientos[] getMovimientosPosibles() {
+    public Posicion[] getMovimientosPosibles() {
         //Al ser un alfil tenemos 4 posibles caminos que comprobar (las 4 esquinas)
         int indice = 0;
         //Esquina superior derecha
@@ -72,7 +72,7 @@ public class Alfil extends Pieza{
         }
         
         //Aquí tenemos que devolver el array result pero ¿De qué tipo?
-        return null;
+        return result;
         
     }
 
