@@ -15,7 +15,7 @@ import ajedrez.Posicion;
 public class Rey extends Pieza{
 
     @Override
-    public Movimientos[] getMovimientosPosibles() {
+    public Movimientos getMovimientosPosibles() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

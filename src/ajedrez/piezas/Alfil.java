@@ -13,6 +13,7 @@ import ajedrez.Posicion;
  * @author betico
  */
 public class Alfil extends Pieza{
+    Movimientos mov;
     Posicion pos;
     int fila_actual;
     char columna_actual;
@@ -25,7 +26,7 @@ public class Alfil extends Pieza{
     }
     
     @Override
-    public Movimientos[] getMovimientosPosibles() {
+    public Movimientos getMovimientosPosibles() {
         //Al ser un alfil tenemos 4 posibles caminos que comprobar (las 4 esquinas)
         int indice = 0;
         //Esquina superior derecha
@@ -37,6 +38,7 @@ public class Alfil extends Pieza{
             c_aux++;
             result[indice].columna = columnas[c_aux];
             result[indice].fila = f_aux;
+            mov.anadirMovimiento("alfil", Integer.toString(c_aux), Integer.toString(c_aux));
             indice++;
         }
         //Esquina inferior derecha
@@ -48,6 +50,7 @@ public class Alfil extends Pieza{
             c_aux++;
             result[indice].columna = columnas[c_aux];
             result[indice].fila = f_aux;
+            mov.anadirMovimiento("alfil", Integer.toString(c_aux), Integer.toString(c_aux));
             indice++;
         }
         f_aux = fila_actual;
@@ -58,6 +61,7 @@ public class Alfil extends Pieza{
             c_aux--;
             result[indice].columna = columnas[c_aux];
             result[indice].fila = f_aux;
+            mov.anadirMovimiento("alfil", Integer.toString(c_aux), Integer.toString(c_aux));
             indice++;
         }
         f_aux = fila_actual;
@@ -68,11 +72,12 @@ public class Alfil extends Pieza{
             c_aux--;
             result[indice].columna = columnas[c_aux];
             result[indice].fila = f_aux;
+            mov.anadirMovimiento("alfil", Integer.toString(c_aux), Integer.toString(c_aux));
             indice++;
         }
         
         //Aquí tenemos que devolver el array result pero ¿De qué tipo?
-        return null;
+        return mov;
         
     }
 
