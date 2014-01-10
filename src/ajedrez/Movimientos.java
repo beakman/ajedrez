@@ -10,10 +10,10 @@ public class Movimientos
 {
     private Pieza pieza;
     
-    // Una lista con el colos y las 2 posicion
+    // Una lista con el color y las 2 posiciones
     // Ejemplo; (blanca, a1, b1) 
     private ArrayList<String[]> movimientos = new ArrayList<>();
-    String[] mov;
+    String[] mov = new String[3];
     
     public Movimientos()
     {
@@ -34,5 +34,10 @@ public class Movimientos
         mov[1] = posicionActual;
         mov[2] = posicionAnterior;
         movimientos.add(mov);
+    }
+    
+    public void guardarMovimiendo()
+    {
+    
     }
 }

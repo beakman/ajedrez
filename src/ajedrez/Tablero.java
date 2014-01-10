@@ -8,12 +8,16 @@ import ajedrez.piezas.Alfil;
  * Tablero de ajedrez
  */
 
-// Convertido a abstract para poder compilar
-public abstract class Tablero implements ITablero 
+public class Tablero implements ITablero 
 {
     private Pieza pieza;
-    private Posicion posicion;
+    private Posicion posicion = new Posicion();
     private Alfil[] alfil;
+
+    public Tablero() 
+    {
+        this.alfil = new Alfil[4];
+    }
     
     @Override
     public boolean esMovimientoPosible(Movimientos mov)
@@ -36,6 +40,7 @@ public abstract class Tablero implements ITablero
         // Posicion del primer alfil
         posicion.setColumna('c');
         posicion.setFila(8);
+//        pieza.actualizarPosicion(posicion);
         alfil[0].actualizarPosicion(posicion);
         // Posicion del segundo alfil
         posicion.setColumna('f');
@@ -55,6 +60,11 @@ public abstract class Tablero implements ITablero
     public boolean jugadorHaceJaqueMate(Jugador jug)
     {
         return true;
+    }
+
+    @Override
+    public void mostrarTablero() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
