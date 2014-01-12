@@ -7,7 +7,6 @@ package ajedrez.piezas;
 import ajedrez.Color;
 import ajedrez.Movimientos;
 import ajedrez.Pieza;
-import static ajedrez.Pieza.posicion;
 import ajedrez.Posicion;
 
 /**
@@ -119,5 +118,7 @@ public class Alfil extends Pieza{
         posicion.setFila(nuevaPosicion.fila);
     }
     
-    
+    public String toString(){
+        return "Alfil "+color.name();
+    }
 }

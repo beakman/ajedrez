@@ -9,6 +9,10 @@ public class Posicion {
     public int fila;
     public int columna;
     
+    public Posicion(int f, int c){
+        fila=f;
+        columna=c;
+    }
     
     //Getters
     public int getFila() {

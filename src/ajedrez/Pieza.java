@@ -11,7 +11,7 @@ package ajedrez;
  * @author paco
  */
 public abstract class Pieza implements IPieza {
-    public static Posicion posicion;
+    public Posicion posicion;
     public Color color;
     
     //implementacion del constructor de la clase Pieza
@@ -21,5 +21,10 @@ public abstract class Pieza implements IPieza {
     public Pieza(Posicion pos, Color col){
         this.posicion = pos;
         this.color = col;
+    }
+    
+    @Override
+    public String toString(){
+        return null;    
     }
 }
