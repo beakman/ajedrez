@@ -37,7 +37,6 @@ public class Caballo extends Pieza{
     @Override
     public Movimientos getMovimientosPosibles() 
     {
-        int indice = 0;
         // Hay que comprobar las 8 casillas a la que puede acceder el caballo
         int f_aux = fila_actual;
         int c_aux = new String(columnas).indexOf(columna_actual); //Obtenemos la posición dentro del array
