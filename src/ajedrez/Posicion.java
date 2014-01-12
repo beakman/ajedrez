@@ -24,7 +24,7 @@ public class Posicion {
         this.fila = fila;
     }
 
-    public void setColumna(char columna) {
+    public void setColumna(int columna) {
         this.columna = columna;
     }
     
