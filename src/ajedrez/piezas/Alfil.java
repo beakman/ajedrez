@@ -4,8 +4,10 @@
  */
 package ajedrez.piezas;
 
+import ajedrez.Color;
 import ajedrez.Movimientos;
 import ajedrez.Pieza;
+import static ajedrez.Pieza.posicion;
 import ajedrez.Posicion;
 
 /**
@@ -20,12 +22,15 @@ public class Alfil extends Pieza{
     char[] filas = {'0','1','2','3','4','5','6','7','8'};
     char[] columnas = {'a','b','c','d','e','f','g','h'};
     Posicion[] result;
+    Color col;
     /**
      *
      */
-    public Alfil(){
-        this.fila_actual = posicion.getFila();
-        this.columna_actual = posicion.getColumna();
+    public Alfil(Posicion pos,Color c){
+        super(pos,c);
+        this.fila_actual = pos.getFila();
+        this.columna_actual = pos.getColumna();
+        this.color = c; 
     }
     
     @Override
