@@ -46,6 +46,7 @@ public class Alfil extends Pieza{
             c_aux++;
             result[indice].columna = columnas[c_aux];
             result[indice].fila = f_aux;
+            //result[indice] = c_aux;
             mov.anadirMovimiento("alfil", Integer.toString(c_aux), Integer.toString(c_aux));
             indice++;
         }
