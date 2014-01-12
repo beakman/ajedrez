@@ -18,7 +18,7 @@ public class Caballo extends Pieza{
     Movimientos mov;
     //Posicion pos;
     int fila_actual;
-    char columna_actual;
+    int columna_actual;
     char[] filas = {'0','1','2','3','4','5','6','7','8'};
     char[] columnas = {'a','b','c','d','e','f','g','h'};
     Posicion[] result;
@@ -67,7 +67,7 @@ public class Caballo extends Pieza{
         mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         // Septima posiciones posibles
         f_aux = f_aux - 2;
-        c_auxpiez = c_aux + 1;
+        c_aux = c_aux + 1;
         mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         // Octava posiciones posibles
         f_aux = f_aux - 2;
