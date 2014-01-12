@@ -44,8 +44,7 @@ public class VistaTablero extends javax.swing.JFrame {
      * Creates new form VistaTablero
      */
     public VistaTablero(Tablero tab) 
-    {
-        
+    {        
         tablero = tab;
         initComponents();  
         setSize(600,500);
@@ -98,7 +97,9 @@ public class VistaTablero extends javax.swing.JFrame {
     {
         // Pasamos la posicion de las piezas a  la clase tablero
         tablero.colocarPiezas();
-        // Colocamos las piezas en la vista     
+        // Colocamos las piezas en la vista
+        posicion.setFila(0);
+        posicion.setColumna(0);        
         casilla[0][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
         casilla[0][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
