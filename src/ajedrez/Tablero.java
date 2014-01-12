@@ -12,11 +12,14 @@ public class Tablero implements ITablero
 {
     private Pieza pieza;
     private Posicion posicion = new Posicion();
-    private Alfil[] alfil;
+    private Alfil[] alfil = new Alfil[4];
 
     public Tablero() 
     {
-        this.alfil = new Alfil[4];
+        alfil[0] = new Alfil();
+        alfil[1] = new Alfil();
+        alfil[2] = new Alfil();
+        alfil[3] = new Alfil();
     }
     
     @Override
