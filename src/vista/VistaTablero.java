@@ -4,11 +4,11 @@
  */
 package vista;
 
+import ajedrez.Movimientos;
 import ajedrez.IPieza;
 import ajedrez.IJugador;
-import ajedrez.Pieza;
 import ajedrez.Posicion;
-import ajedrez.piezas.Alfil;
+import ajedrez.Tablero;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,10 +28,11 @@ import javax.swing.border.TitledBorder;
  */
 public class VistaTablero extends javax.swing.JFrame {
     
-    private static IPieza pieza;
-    private static IJugador jugador;
-    private Posicion posicion;
-    private static Alfil[] alfil;
+    public static Tablero tablero;
+    public static IPieza pieza;
+    public static IJugador jugador;
+    public Posicion posicion;
+    public Movimientos movimientos = new Movimientos();
     
     public String jugador1;
     public String jugador2;
@@ -42,8 +43,10 @@ public class VistaTablero extends javax.swing.JFrame {
     /**
      * Creates new form VistaTablero
      */
-    public VistaTablero() 
-    {    
+    public VistaTablero(Tablero tab) 
+    {
+        
+        tablero = tab;
         initComponents();  
         setSize(600,500);
         tableroPanel.setLayout(new GridLayout(8, 8));
@@ -65,7 +68,9 @@ public class VistaTablero extends javax.swing.JFrame {
                     public void actionPerformed(ActionEvent event) {
                         setEstado("a6 c3", "Blancas: b2 h1", event.getActionCommand());
                         casilla[fila][columna].setSelected(true);
+                        moverFicha(event.getActionCommand(),seleccionAnterior);
                         seleccionAnterior = event.getActionCommand();
+                        
                     }
                 });
                 if ((i + j) % 2 == 0) {
@@ -80,10 +85,20 @@ public class VistaTablero extends javax.swing.JFrame {
         mostrarTablero();
         setVisible(true);        
     }
+    
+    public void moverFicha(String seleccionActual, String seleccionAnterior)
+    {
+        System.out.print(seleccionActual);
+        System.out.print(seleccionAnterior);
+        movimientos.anadirMovimiento("blancas", seleccionActual, seleccionAnterior);
+        tablero.ejecutarMovimiento(movimientos);
+    }
 
     public void mostrarTablero()
     {
-            // Colocamos las piezas        
+        // Pasamos la posicion de las piezas a  la clase tablero
+        tablero.colocarPiezas();
+        // Colocamos las piezas en la vista     
         casilla[0][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
         casilla[0][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
@@ -106,12 +121,6 @@ public class VistaTablero extends javax.swing.JFrame {
             casilla[6][i].setIcon(new ImageIcon(VistaTablero.class.getResource("peonb.png")));
         }   
     }
-    
-//    public Pieza ejecutarMovimiento()
-//    {
-//        //Pieza 
-//        return 
-//    }
     
     public void setEstado(String ultima, String turno, String pulsada){
         String estado = "Último movimiento: "+ultima+"\nJuegan "+turno+"\nSeleccionada: "+pulsada;
