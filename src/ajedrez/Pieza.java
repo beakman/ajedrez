@@ -11,5 +11,5 @@ package ajedrez;
  * @author paco
  */
 public abstract class Pieza implements IPieza {
-    
+    public static Posicion posicion;
 }
