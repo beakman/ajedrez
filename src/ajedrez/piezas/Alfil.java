@@ -18,7 +18,7 @@ public class Alfil extends Pieza{
     Movimientos mov;
     //Posicion pos;
     int fila_actual;
-    char columna_actual;
+    int columna_actual;
     char[] filas = {'0','1','2','3','4','5','6','7','8'};
     char[] columnas = {'a','b','c','d','e','f','g','h'};
     Posicion[] result;

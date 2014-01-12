@@ -7,7 +7,7 @@ package ajedrez;
 public class Posicion {
     //Los cambio de private a public
     public int fila;
-    public char columna;
+    public int columna;
     
     
     //Getters
@@ -15,7 +15,7 @@ public class Posicion {
         return fila;
     }
 
-    public char getColumna() {
+    public int getColumna() {
         return columna;
     }
 
@@ -24,7 +24,7 @@ public class Posicion {
         this.fila = fila;
     }
 
-    public void setColumna(char columna) {
+    public void setColumna(int columna) {
         this.columna = columna;
     }
     
