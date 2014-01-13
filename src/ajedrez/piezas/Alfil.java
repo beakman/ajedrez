@@ -4,8 +4,10 @@
  */
 package ajedrez.piezas;
 
+import ajedrez.Color;
 import ajedrez.Movimientos;
 import ajedrez.Pieza;
+import static ajedrez.Pieza.posicion;
 import ajedrez.Posicion;
 
 /**
@@ -13,19 +15,26 @@ import ajedrez.Posicion;
  * @author betico
  */
 public class Alfil extends Pieza{
-    Posicion pos;
+    Movimientos mov;
+    //Posicion pos;
     int fila_actual;
-    char columna_actual;
+    int columna_actual;
     char[] filas = {'0','1','2','3','4','5','6','7','8'};
     char[] columnas = {'a','b','c','d','e','f','g','h'};
     Posicion[] result;
-    public Alfil(){
+    Color col;
+    /**
+     *
+     */
+    public Alfil(Posicion pos,Color c){
+        super(pos,c);
         this.fila_actual = pos.getFila();
         this.columna_actual = pos.getColumna();
+        this.color = c; 
     }
     
     @Override
-    public Posicion[] getMovimientosPosibles() {
+    public Movimientos getMovimientosPosibles() {
         //Al ser un alfil tenemos 4 posibles caminos que comprobar (las 4 esquinas)
         int indice = 0;
         //Esquina superior derecha
@@ -37,6 +46,8 @@ public class Alfil extends Pieza{
             c_aux++;
             result[indice].columna = columnas[c_aux];
             result[indice].fila = f_aux;
+            //result[indice] = c_aux;
+            mov.anadirMovimiento("alfil", Integer.toString(c_aux), Integer.toString(c_aux));
             indice++;
         }
         //Esquina inferior derecha
@@ -48,6 +59,7 @@ public class Alfil extends Pieza{
             c_aux++;
             result[indice].columna = columnas[c_aux];
             result[indice].fila = f_aux;
+            mov.anadirMovimiento("alfil", Integer.toString(c_aux), Integer.toString(c_aux));
             indice++;
         }
         f_aux = fila_actual;
@@ -58,6 +70,7 @@ public class Alfil extends Pieza{
             c_aux--;
             result[indice].columna = columnas[c_aux];
             result[indice].fila = f_aux;
+            mov.anadirMovimiento("alfil", Integer.toString(c_aux), Integer.toString(c_aux));
             indice++;
         }
         f_aux = fila_actual;
@@ -68,11 +81,12 @@ public class Alfil extends Pieza{
             c_aux--;
             result[indice].columna = columnas[c_aux];
             result[indice].fila = f_aux;
+            mov.anadirMovimiento("alfil", Integer.toString(c_aux), Integer.toString(c_aux));
             indice++;
         }
         
         //Aquí tenemos que devolver el array result pero ¿De qué tipo?
-        return result;
+        return mov;
         
     }
 
@@ -102,8 +116,8 @@ public class Alfil extends Pieza{
 
     @Override
     public void actualizarPosicion(Posicion nuevaPosicion) {
-        pos.setColumna(nuevaPosicion.columna);
-        pos.setFila(nuevaPosicion.fila);
+        posicion.setColumna(nuevaPosicion.columna);
+        posicion.setFila(nuevaPosicion.fila);
     }
     
     

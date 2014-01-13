@@ -6,10 +6,17 @@ import ajedrez.IPartidaAjedrez.Color;
  *
  * @author paco
  */
-public abstract class Jugador implements IJugador {
+public abstract class Jugador implements IJugador, IPartidaAjedrez {
     private String nombre;
     private Color color;
     private Movimientos movimiento;
+    private Jugador jugador;
+    
+
+    @Override
+    public Jugador empezar(){
+        return jugador;
+    }
     
     @Override
     public void preguntarNombre() {

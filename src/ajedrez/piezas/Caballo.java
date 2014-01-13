@@ -4,6 +4,7 @@
  */
 package ajedrez.piezas;
 
+import ajedrez.Color;
 import ajedrez.Movimientos;
 import ajedrez.Pieza;
 import ajedrez.Posicion;
@@ -13,9 +14,11 @@ import ajedrez.Posicion;
  * @author betico
  */
 public class Caballo extends Pieza{
-
+    public Caballo(Posicion pos, Color col){
+        super(pos,col);
+    }
     @Override
-    public Posicion[] getMovimientosPosibles() {
+    public Movimientos getMovimientosPosibles() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

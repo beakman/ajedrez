@@ -9,7 +9,7 @@ package ajedrez;
  */
 public interface IPieza 
 {
-    Posicion[] getMovimientosPosibles();
+    Movimientos getMovimientosPosibles();
     boolean esMovimientoPosible(Posicion nuevoDestino);
     void actualizarPosicion(Posicion nuevaPosicion);
 }

@@ -4,7 +4,11 @@
  */
 package vista;
 
-import controlador.CtrlAjedrez;
+import ajedrez.Movimientos;
+import ajedrez.IPieza;
+import ajedrez.IJugador;
+import ajedrez.Posicion;
+import ajedrez.Tablero;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,29 +28,28 @@ import javax.swing.border.TitledBorder;
  */
 public class VistaTablero extends javax.swing.JFrame {
     
-    private CtrlAjedrez controlador;
+    public static Tablero tablero;
+    public static IPieza pieza;
+    public static IJugador jugador;
+    public Posicion posicion;
+    public Movimientos movimientos = new Movimientos();
+    
     public String jugador1;
     public String jugador2;
     public JTextArea informacion = new JTextArea();
+    public static String seleccionAnterior;
     
-    public void setControlador(CtrlAjedrez valor)
-    {
-        this.controlador = valor;
-    }
-    
-    public CtrlAjedrez getControlador()
-    {
-        return this.controlador;
-    }
-    
-    JButton casilla[][] = new JButton[8][8];
+    public static JButton casilla[][] = new JButton[8][8];
     /**
      * Creates new form VistaTablero
      */
-    public VistaTablero() {
+    public VistaTablero(Tablero tab) 
+    {        
+        tablero = tab;
         initComponents();  
         setSize(600,500);
         tableroPanel.setLayout(new GridLayout(8, 8));
+        seleccionAnterior = " ";
         
         // Dibujamos el tablero: cada casilla sera un JButton.
         for (int i = 0; i < 8; i++) {
@@ -55,16 +58,20 @@ public class VistaTablero extends javax.swing.JFrame {
                 final int columna = j;
                 casilla[i][j] = new JButton();
                 casilla[i][j].setSize(new Dimension(50,50));
+                char[] c = {'a','b','c','d','e','f','g','h'};
+                char[] f = {'8','7','6','5','4','3','2','1'};
+                String s = new StringBuilder().append(c[columna]).append(f[fila]).toString();
+                casilla[fila][columna].setActionCommand(s);
                 casilla[i][j].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        char[] c = {'a','b','c','d','e','f','g','h'};
-                        char[] f = {'8','7','6','5','4','3','2','1'};
-                        String s = new StringBuilder().append(c[columna]).append(f[fila]).toString();
-                        setEstado("a6 c3", "Blancas: b2 h1", s);
+                        setEstado("a6 c3", "Blancas: b2 h1", event.getActionCommand());
+                        casilla[fila][columna].setSelected(true);
+                        moverFicha(event.getActionCommand(),seleccionAnterior);
+                        seleccionAnterior = event.getActionCommand();
+                        
                     }
                 });
-
                 if ((i + j) % 2 == 0) {
                     casilla[i][j].setBackground(Color.white);
                 } else {                    
@@ -74,7 +81,25 @@ public class VistaTablero extends javax.swing.JFrame {
                 casilla[i][j].setEnabled(false);
             }
         }
-        // Colocamos las piezas        
+        mostrarTablero();
+        setVisible(true);        
+    }
+    
+    public void moverFicha(String seleccionActual, String seleccionAnterior)
+    {
+        System.out.print(seleccionActual);
+        System.out.print(seleccionAnterior);
+        movimientos.anadirMovimiento("blancas", seleccionActual, seleccionAnterior);
+        tablero.ejecutarMovimiento(movimientos);
+    }
+
+    public void mostrarTablero()
+    {
+        // Pasamos la posicion de las piezas a  la clase tablero
+        tablero.colocarPiezas();
+        // Colocamos las piezas en la vista
+        posicion.setFila(0);
+        posicion.setColumna(0);        
         casilla[0][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
         casilla[0][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
@@ -83,10 +108,9 @@ public class VistaTablero extends javax.swing.JFrame {
         casilla[0][5].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
         casilla[0][6].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][7].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
-
         casilla[7][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torreb.png")));
         casilla[7][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballob.png")));
-        casilla[7][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));        
+        casilla[7][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));
         casilla[7][3].setIcon(new ImageIcon(VistaTablero.class.getResource("reyb.png")));
         casilla[7][4].setIcon(new ImageIcon(VistaTablero.class.getResource("reinab.png")));
         casilla[7][5].setIcon(new ImageIcon(VistaTablero.class.getResource("alfilb.png")));
@@ -96,8 +120,7 @@ public class VistaTablero extends javax.swing.JFrame {
         for (int i = 0; i < 8; i++) {
             casilla[1][i].setIcon(new ImageIcon(VistaTablero.class.getResource("peonn.png")));
             casilla[6][i].setIcon(new ImageIcon(VistaTablero.class.getResource("peonb.png")));
-        }
-        setVisible(true);        
+        }   
     }
     
     public void setEstado(String ultima, String turno, String pulsada){
@@ -244,37 +267,40 @@ public class VistaTablero extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaTablero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaTablero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaTablero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaTablero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VistaTablero().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(VistaTablero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(VistaTablero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(VistaTablero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(VistaTablero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+// //               VistaTablero tablero = new VistaTablero();
+////                Pieza pieza = new Pieza();
+////                tablero.setVisible(true);
+//            }
+//        });
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField j1TextField;
     private javax.swing.JTextField j2TextField;
@@ -286,4 +312,5 @@ public class VistaTablero extends javax.swing.JFrame {
     private javax.swing.JPanel statusPanel;
     private javax.swing.JPanel tableroPanel;
     // End of variables declaration//GEN-END:variables
+
 }
