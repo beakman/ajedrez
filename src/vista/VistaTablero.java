@@ -64,43 +64,96 @@ public class VistaTablero extends javax.swing.JFrame {
                 final int columna = j;
                 casilla[i][j] = new JButton();
                 casilla[i][j].setSize(new Dimension(50,50));
-                char[] c = {'a','b','c','d','e','f','g','h'};
-                char[] f = {'8','7','6','5','4','3','2','1'};
-                String s = new StringBuilder().append(c[columna]).append(f[fila]).toString();
-                casilla[fila][columna].setActionCommand(s);
+                casilla[fila][columna].setActionCommand("action"+i+j);
                 casilla[i][j].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        setEstado("a6 c3", "Blancas: b2 h1", event.getActionCommand());
-                        // Se pulsa una casilla vacia habiendo pulsado ficha
                         posicionActual.setFila(fila);
                         posicionActual.setColumna(columna);
-                        if (casilla[fila][columna].getIcon()==null && fichaPulsada)
+                        Pieza pieza;
+                        if (casilla[fila][columna].getIcon()!=null && !fichaPulsada)
                         {                                                        
-                            Pieza pieza = tablero.comprobarPosicion(posicionAnterior);
-                            Pieza pieza2 = tablero.comprobarPosicion(posicionActual);
-                            System.out.println("pieza: " + pieza);
-                            System.out.println("pieza2: " + pieza2);
-                            if (pieza != null)
-                                pieza.actualizarPosicion(posicionActual);
-                            // colocamos el icono de la ficha en la nueva posicion
-                            casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
-                            // lo borramos de la antigua
-                            casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
-                            fichaPulsada=false;
-                            moverFicha(event.getActionCommand(),seleccionAnterior);
-                        }
-                        else if (casilla[fila][columna].getIcon()!=null && !fichaPulsada){
-                            fichaPulsada=true;
                             posicionAnterior.setFila(posicionActual.getFila());
-                            posicionAnterior.setColumna(posicionActual.getColumna());                            
+                            posicionAnterior.setColumna(posicionActual.getColumna()); 
+                            fichaPulsada=true;
                         }
-                        
-                        casilla[fila][columna].setSelected(true);
-                        
-                        seleccionAnterior = event.getActionCommand();
-                        posicionAnterior.setFila(fila);
-                        posicionAnterior.setColumna(columna);                        
+                        else {                            
+                            pieza = tablero.comprobarPosicion(posicionAnterior);
+                            switch(Movimientos.comprobarEstadoCasilla(posicionActual, tablero.estado, pieza)){
+                                case vacia:
+                                    posicionAnterior.setFila(posicionActual.getFila());
+                                    posicionAnterior.setColumna(posicionActual.getColumna());
+                                    fichaPulsada=false;
+                                case mover:
+                                    setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), pieza + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
+                                    tablero.actualizarEstado(posicionAnterior, posicionActual);
+                                    pieza.actualizarPosicion(posicionActual);
+                                    casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
+                                    casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
+                                    posicionAnterior.setFila(posicionActual.getFila());
+                                    posicionAnterior.setColumna(posicionActual.getColumna());
+                                    fichaPulsada=false;
+                                case matar:
+                                    tablero.estado.remove(posicionActual.toString()); // sacamos la pieza del diccionario
+                                    casilla[posicionActual.getFila()][posicionActual.getColumna()].setIcon(null);
+                                    tablero.actualizarEstado(posicionAnterior, posicionActual);
+                                    pieza.actualizarPosicion(posicionActual);
+                                    casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
+                                    casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
+                                    posicionAnterior.setFila(posicionActual.getFila());
+                                    posicionAnterior.setColumna(posicionActual.getColumna());
+                                    fichaPulsada=false;
+                                case prohibido:
+                                    posicionAnterior.setFila(posicionActual.getFila());
+                                    posicionAnterior.setColumna(posicionActual.getColumna());
+                                    fichaPulsada=false;
+                                default:
+                                    posicionAnterior.setFila(posicionActual.getFila());
+                                    posicionAnterior.setColumna(posicionActual.getColumna());
+                                    fichaPulsada=true;
+                                }
+                        }
+                           
+//                        /*                            
+//                            Casilla vacía y ficha pulsada.
+//                        */
+//                        if (casilla[fila][columna].getIcon()==null && fichaPulsada)
+//                        {                                                        
+//                            pieza = tablero.comprobarPosicion(posicionAnterior);
+//                            if (pieza != null){
+//                                setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), pieza + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
+//                                tablero.actualizarEstado(posicionAnterior, posicionActual);
+//                                pieza.actualizarPosicion(posicionActual);                                
+//                            }
+//                            // colocamos el icono de la ficha en la nueva posicion
+//                            casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
+//                            // lo borramos de la antigua
+//                            casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
+//                            System.out.println("fichaPulsada=false");
+//                            fichaPulsada=false;
+//                            moverFicha(event.getActionCommand(),seleccionAnterior);
+//                        }
+//                        /*                            
+//                            Casilla llena y ficha no pulsada (selecciono una pieza)
+//                        */
+//                        else if (casilla[fila][columna].getIcon()!=null && !fichaPulsada){
+//                            System.out.println("fichaPulsada=true");
+//                            fichaPulsada=true;                                                        
+//                        }
+//                        /*                            
+//                            Casilla llena y ficha pulsada (comer pieza)
+//                        */
+//                        else if (casilla[fila][columna].getIcon()!=null && fichaPulsada){
+//                            pieza = tablero.comprobarPosicion(posicionAnterior);
+//                            boolean hayPieza = Movimientos.hayPieza(posicionActual, tablero.estado, pieza);
+//                            System.out.println("fichaPulsada=false");
+//                            fichaPulsada=false;                                                        
+//                        }
+//                        
+//                        casilla[fila][columna].setSelected(true);                        
+//                        seleccionAnterior = event.getActionCommand();
+//                        posicionAnterior.setFila(posicionActual.getFila());
+//                        posicionAnterior.setColumna(posicionActual.getColumna());                        
                     }
                 });
                 if ((i + j) % 2 == 0) {

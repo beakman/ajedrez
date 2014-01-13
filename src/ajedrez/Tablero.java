@@ -2,7 +2,6 @@ package ajedrez;
 
 import ajedrez.piezas.Alfil;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -13,9 +12,9 @@ import java.util.Map;
 public class Tablero implements ITablero 
 {
     private Pieza pieza;
-    private Posicion posicion = new Posicion(0,0);
-    private Alfil[] alfil = new Alfil[4];
-    public Map<Posicion, Pieza> estado = new HashMap<>();
+    private final Posicion posicion = new Posicion(0,0);
+    private final Alfil[] alfil = new Alfil[4];
+    public HashMap<String, Pieza> estado = new HashMap<>();
 
     public Tablero() 
     {
@@ -41,35 +40,18 @@ public class Tablero implements ITablero
         return pieza;
     }
     
-    /**
-     *
-     */
     @Override
     public void colocarPiezas()
     {
-//        // Posicion del primer alfil
-//        posicion.setColumna('c');
-//        posicion.setFila(8);
-////        pieza.actualizarPosicion(posicion);
-//        alfil[0].actualizarPosicion(posicion);
-        estado.put(new Posicion(0,2), alfil[0]);
+        // Colocamos los alfiles
+        estado.put((new Posicion(0,2)).toString(), alfil[0]);
         System.out.println("colocando " + alfil[0] + " en " + estado);
-//        // Posicion del segundo alfil
-//        posicion.setColumna('f');
-//        posicion.setFila(8);       
-//        alfil[1].actualizarPosicion(posicion);
-        estado.put(new Posicion(0,5), alfil[1]);
-        System.out.println("colocando " + alfil[0] + " en " + estado);
-//        // Posicion del tercer alfil
-//        posicion.setColumna('c');
-//        posicion.setFila(0);
-//        alfil[2].actualizarPosicion(posicion);
-        estado.put(new Posicion(7,2), alfil[2]);
-//        // Posicion del cuarto alfil
-//        posicion.setColumna('f');
-//        posicion.setFila(0);
-//        alfil[3].actualizarPosicion(posicion);
-        estado.put(new Posicion(7,5), alfil[3]);
+        estado.put((new Posicion(0,5)).toString(), alfil[1]);
+        System.out.println("colocando " + alfil[1] + " en " + estado);
+        estado.put((new Posicion(7,2)).toString(), alfil[2]);
+        System.out.println("colocando " + alfil[2] + " en " + estado);
+        estado.put((new Posicion(7,5)).toString(), alfil[3]);
+        System.out.println("colocando " + alfil[3] + " en " + estado);
     }
     
     @Override
@@ -86,7 +68,16 @@ public class Tablero implements ITablero
     public Pieza comprobarPosicion(Posicion posicion)
     {
         System.out.println("En... " + posicion);
-        System.out.println("hay " + estado.get(posicion));
-        return estado.get(posicion);
+        System.out.println("hay " + estado.get(posicion.toString()));
+        return estado.get(posicion.toString());
+    }
+    /* 
+        actualizarEstado:
+            actualiza el diccionario estado con la posicion nueva de la pieza 
+            movida.
+    */
+    public void actualizarEstado(Posicion anterior, Posicion actual){
+        estado.put(actual.toString(), estado.get(anterior.toString()));
+        estado.put(anterior.toString(), null);
     }
 }
