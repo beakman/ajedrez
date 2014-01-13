@@ -119,6 +119,7 @@ public class Alfil extends Pieza{
         posicion.setFila(nuevaPosicion.fila);
     }
     
+    @Override
     public String toString(){
         return "Alfil "+color.name();
     }

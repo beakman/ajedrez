@@ -7,7 +7,6 @@ package ajedrez.piezas;
 import ajedrez.Color;
 import ajedrez.Movimientos;
 import ajedrez.Pieza;
-import static ajedrez.Pieza.posicion;
 import ajedrez.Posicion;
 
 /**
@@ -102,6 +101,11 @@ public class Caballo extends Pieza{
     public void actualizarPosicion(Posicion nuevaPosicion) {
         posicion.setColumna(nuevaPosicion.columna);
         posicion.setFila(nuevaPosicion.fila);
+    }
+    
+    @Override
+    public String toString(){
+        return "Caballo "+color.name();
     }
     
 }

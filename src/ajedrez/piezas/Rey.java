@@ -7,7 +7,6 @@ package ajedrez.piezas;
 import ajedrez.Color;
 import ajedrez.Movimientos;
 import ajedrez.Pieza;
-import static ajedrez.Pieza.posicion;
 import ajedrez.Posicion;
 
 /**
@@ -211,4 +210,8 @@ public class Rey extends Pieza{
         posicion.setFila(nuevaPosicion.fila);    
     }
     
+    @Override
+    public String toString(){
+        return "Rey "+color.name();
+    }
 }
