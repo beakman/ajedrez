@@ -7,8 +7,10 @@ package vista;
 import ajedrez.Movimientos;
 import ajedrez.IPieza;
 import ajedrez.IJugador;
+import ajedrez.Pieza;
 import ajedrez.Posicion;
 import ajedrez.Tablero;
+import ajedrez.piezas.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -37,7 +39,9 @@ public class VistaTablero extends javax.swing.JFrame {
     public String jugador1;
     public String jugador2;
     public JTextArea informacion = new JTextArea();
+    public static boolean fichaPulsada=false;
     public static String seleccionAnterior;
+    public static Posicion posicionAnterior, posicionActual;
     
     public static JButton casilla[][] = new JButton[8][8];
     /**
@@ -50,6 +54,8 @@ public class VistaTablero extends javax.swing.JFrame {
         setSize(600,500);
         tableroPanel.setLayout(new GridLayout(8, 8));
         seleccionAnterior = " ";
+        posicionAnterior = new Posicion(0,0);
+        posicionActual = new Posicion(0,0);
         
         // Dibujamos el tablero: cada casilla sera un JButton.
         for (int i = 0; i < 8; i++) {
@@ -66,10 +72,35 @@ public class VistaTablero extends javax.swing.JFrame {
                     @Override
                     public void actionPerformed(ActionEvent event) {
                         setEstado("a6 c3", "Blancas: b2 h1", event.getActionCommand());
-                        casilla[fila][columna].setSelected(true);
-                        moverFicha(event.getActionCommand(),seleccionAnterior);
-                        seleccionAnterior = event.getActionCommand();
+                        // Se pulsa una casilla vacia habiendo pulsado ficha
+                        posicionActual.setFila(fila);
+                        posicionActual.setColumna(columna);
+                        if (casilla[fila][columna].getIcon()==null && fichaPulsada)
+                        {                                                        
+                            Pieza pieza = tablero.comprobarPosicion(posicionAnterior);
+                            Pieza pieza2 = tablero.comprobarPosicion(posicionActual);
+                            System.out.println("pieza: " + pieza);
+                            System.out.println("pieza2: " + pieza2);
+                            if (pieza != null)
+                                pieza.actualizarPosicion(posicionActual);
+                            // colocamos el icono de la ficha en la nueva posicion
+                            casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
+                            // lo borramos de la antigua
+                            casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
+                            fichaPulsada=false;
+                            moverFicha(event.getActionCommand(),seleccionAnterior);
+                        }
+                        else if (casilla[fila][columna].getIcon()!=null && !fichaPulsada){
+                            fichaPulsada=true;
+                            posicionAnterior.setFila(posicionActual.getFila());
+                            posicionAnterior.setColumna(posicionActual.getColumna());                            
+                        }
                         
+                        casilla[fila][columna].setSelected(true);
+                        
+                        seleccionAnterior = event.getActionCommand();
+                        posicionAnterior.setFila(fila);
+                        posicionAnterior.setColumna(columna);                        
                     }
                 });
                 if ((i + j) % 2 == 0) {
@@ -87,8 +118,6 @@ public class VistaTablero extends javax.swing.JFrame {
     
     public void moverFicha(String seleccionActual, String seleccionAnterior)
     {
-        System.out.print(seleccionActual);
-        System.out.print(seleccionAnterior);
         movimientos.anadirMovimiento("blancas", seleccionActual, seleccionAnterior);
         tablero.ejecutarMovimiento(movimientos);
     }
@@ -97,9 +126,7 @@ public class VistaTablero extends javax.swing.JFrame {
     {
         // Pasamos la posicion de las piezas a  la clase tablero
         tablero.colocarPiezas();
-        // Colocamos las piezas en la vista
-        posicion.setFila(0);
-        posicion.setColumna(0);        
+        // Colocamos las piezas en la vista                
         casilla[0][0].setIcon(new ImageIcon(VistaTablero.class.getResource("torren.png")));
         casilla[0][1].setIcon(new ImageIcon(VistaTablero.class.getResource("caballon.png")));
         casilla[0][2].setIcon(new ImageIcon(VistaTablero.class.getResource("alfiln.png")));
