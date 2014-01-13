@@ -1,7 +1,6 @@
 package ajedrez;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  *
@@ -40,44 +39,5 @@ public class Movimientos
     public void guardarMovimiendo()
     {
     
-    }
-    /* Método que nos va a devolver si en la posición a la que queremos 
-     * movernos hay ya una pieza. Si es de color contrario, tendría que 
-     * comérsela si la posición es la misma destino es la misma que ese pieza
-     * Si es del mismo color, no se podría mover
-     * Si no hay pieza por medio, se puede mover si la posición es permitida
-     */
-    public boolean hayPieza(Posicion pos, Map dic, Pieza origen){
-        Pieza p;
-        //Recuperamos la pieza que hay en esa posición
-        p = (Pieza) dic.get(pos.toString());
-        Pieza o = origen;
-        boolean resultado = false;
-        if((p != null) && (p.color != origen.color))
-        {
-            /* Tienen la misma posición y distinto color
-             * -> La mata
-             */
-            //matarPieza(Pieza o, Pieza p);
-            resultado = true;
-            System.out.println("Se puede matar esa pieza");
-        }
-        else if((p != null) && (p.color == origen.color))
-        {
-            /*Tienen el mismo color, luego no puede ocupar 
-             * esa posición
-             */
-            System.out.println("Tienen el mismo color -> No se puede mover");
-        }
-        else{
-            /*No hay pieza en el destino
-             * -> puede moverse el origen
-             */
-            resultado = true;
-            System.out.println("No hay pieza en el destino ->Puedes moverla");
-        }
-        
-        return resultado;
-        
     }
 }
