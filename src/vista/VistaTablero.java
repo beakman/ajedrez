@@ -10,7 +10,6 @@ import ajedrez.IJugador;
 import ajedrez.Pieza;
 import ajedrez.Posicion;
 import ajedrez.Tablero;
-import ajedrez.piezas.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,7 +18,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
@@ -46,6 +44,7 @@ public class VistaTablero extends javax.swing.JFrame {
     public static JButton casilla[][] = new JButton[8][8];
     /**
      * Creates new form VistaTablero
+     * @param tab
      */
     public VistaTablero(Tablero tab) 
     {        
@@ -154,7 +153,7 @@ public class VistaTablero extends javax.swing.JFrame {
         tablero.ejecutarMovimiento(movimientos);
     }
 
-    public void mostrarTablero()
+    public final void mostrarTablero()
     {
         // Pasamos la posicion de las piezas a  la clase tablero
         tablero.colocarPiezas();
