@@ -8,19 +8,23 @@ import ajedrez.Color;
 import ajedrez.Movimientos;
 import ajedrez.Pieza;
 import ajedrez.Posicion;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
  * @author betico
  */
 public class Torre extends Pieza{
-    Movimientos mov;
+    Movimientos mov = new Movimientos();
     //Posicion pos;
     int fila_actual;
     int columna_actual;
     char[] filas = {'0','1','2','3','4','5','6','7','8'};
     char[] columnas = {'a','b','c','d','e','f','g','h'};
-    Posicion[] result;
+    Posicion[] result = new Posicion[64];
+    ArrayList<Posicion> resultado = new ArrayList<>();
+    Color col;
     /**
      *
      */
@@ -32,55 +36,58 @@ public class Torre extends Pieza{
         this.columna_actual = pos.getColumna();
         this.color = c; 
     }
+    
+    public void MostrarTodas()
+    {
+        this.getMovimientosPosibles();
+        System.out.println("MOVIMIENTOS POSIBLES");
+        for (Posicion palabra : resultado) {
+            System.out.print(palabra+" ");
+        }
+        System.out.println();
+    }
+    
+    
     @Override
     public Movimientos getMovimientosPosibles() {
-         //Al ser una reyna tenemos 8 posibles caminos que comprobar (las 4 esquinas y  los 4 horizaontales y verticales)
-        int indice = 0;
-        //Esquina superior derecha
-        int f_aux = fila_actual;
-        int c_aux = new String(columnas).indexOf(columna_actual); //Obtenemos la posición dentro del array
+         //Al ser una torre tenemos 4 posibles caminos que comprobar 
+
+        int f_aux = posicion.getFila();
+        int c_aux = posicion.getColumna();
         
-        f_aux = fila_actual;
-        c_aux = new String(columnas).indexOf(columna_actual);
+        System.out.println("mala: " + "f_aux= "+ f_aux + "c_aux= " + c_aux);
+        
         while(f_aux > 0){
             //Hacia atras
             f_aux--;
-            result[indice].columna = columnas[c_aux];
-            result[indice].fila = f_aux;
-            mov.anadirMovimiento("torre", Integer.toString(c_aux), Integer.toString(c_aux));
-            indice++;
+            resultado.add(new Posicion(f_aux, c_aux));
+            mov.anadirMovimiento("torre", "a", "a");
         }
         
-        f_aux = fila_actual;
-        c_aux = new String(columnas).indexOf(columna_actual);
-        while(f_aux < filas.length){
+        f_aux = posicion.getFila();
+        c_aux = posicion.getColumna();
+        while(f_aux < filas.length-2){
             //Hacia delante
             f_aux++;
-            result[indice].columna = columnas[c_aux];
-            result[indice].fila = f_aux;
-            mov.anadirMovimiento("torre", Integer.toString(c_aux), Integer.toString(c_aux));
-            indice++;
+            resultado.add(new Posicion(f_aux, c_aux));
+            mov.anadirMovimiento("torre", "a", "a");
         }
-        f_aux = fila_actual;
-        c_aux = new String(columnas).indexOf(columna_actual);
+        f_aux = posicion.getFila();
+        c_aux = posicion.getColumna();
         while(c_aux > 0){
             // Hacia izquiera
             c_aux--;
-            result[indice].columna = columnas[c_aux];
-            result[indice].fila = f_aux;
-            mov.anadirMovimiento("torre", Integer.toString(c_aux), Integer.toString(c_aux));
-            indice++;
+            resultado.add(new Posicion(f_aux, c_aux));
+            mov.anadirMovimiento("torre", "a", "a");
         }
 
-        f_aux = fila_actual;
-        c_aux = new String(columnas).indexOf(columna_actual);
-        while(c_aux < columnas.length){
+        f_aux = posicion.getFila();
+        c_aux = posicion.getColumna();
+        while(c_aux < columnas.length-2){
             // Hacia derecha
             c_aux++;
-            result[indice].columna = columnas[c_aux];
-            result[indice].fila = f_aux;
-            mov.anadirMovimiento("torre", Integer.toString(c_aux), Integer.toString(c_aux));
-            indice++;
+            resultado.add(new Posicion(f_aux, c_aux));
+            mov.anadirMovimiento("torre", "a", "a");
         } 
         return mov;
     }
@@ -90,22 +97,26 @@ public class Torre extends Pieza{
         //Aquí la idea es en primer lugar mirar en el array que nos ha devuelto 
         //el método anterior si nuevoDestino está dentro de el y por tanto
         //sería candidato a moverse si no hay otra ficha o alguna por medio
-        
-        Posicion[] array = null; // array de prueba 
+        System.out.println("resultado0= "+resultado.toString());
+        Movimientos movimientos = this.getMovimientosPosibles();
+        ArrayList<Posicion> arrayLista = new ArrayList<>();
         boolean esposible = false;
-        int indice = 0; //indice para recorrer el array
-        while ((array[indice].fila != nuevoDestino.fila) || (array[indice].columna != nuevoDestino.columna))
-        {
-            indice++;
+        System.out.println("nuevoDestino.fila= "+nuevoDestino.fila);
+        System.out.println("nuevoDestino.columna= "+nuevoDestino.columna);
+        System.out.println("resultado= "+resultado.toString());
+        System.out.println("nuevoDestino= "+nuevoDestino);
+
+        Iterator<Posicion> iterador = resultado.iterator();
+        while (iterador.hasNext()){
+            Posicion pal = iterador.next();
+            if (pal.columna==nuevoDestino.columna && pal.fila==nuevoDestino.fila){
+                esposible=true;
+            }
         }
-        if (indice < array.length)
-        {
-            esposible = true;
-        }
-        
+        resultado.clear();
         //Habría que comprobar aquí que hay fichas por medio o eso se haría en otro sitio?
-        
         return esposible;
+
     }
 
     @Override
