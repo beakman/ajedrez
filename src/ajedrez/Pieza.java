@@ -6,6 +6,8 @@
 
 package ajedrez;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author paco
@@ -14,6 +16,7 @@ public abstract class Pieza implements IPieza {
     public Posicion posicion;
     public Color color;
     
+    
     //implementacion del constructor de la clase Pieza
     /* El contructor va a recibir la posicion
      * de la pieza al crearla y su color
@@ -21,6 +24,11 @@ public abstract class Pieza implements IPieza {
     public Pieza(Posicion pos, Color col){
         this.posicion = pos;
         this.color = col;
+    }
+    
+        public void MostrarTodas()
+    {
+        
     }
     
     @Override

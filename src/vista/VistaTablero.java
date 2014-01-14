@@ -75,10 +75,10 @@ public class VistaTablero extends javax.swing.JFrame {
                          */
                         if(casilla[fila][columna].getIcon()==null && !piezaPulsada){
                             // 1. actualizamos posicionAnterior
-                            // 2. piezaPulsada=true
+                            // 2. piezaPulsada=true                            
                             posicionAnterior.setFila(posicionActual.getFila());
                             posicionAnterior.setColumna(posicionActual.getColumna());
-                            piezaPulsada=true;
+                            piezaPulsada=false;
                         }
                         /* 
                           = Casilla vacia, pieza pulsada previamente (movemos)
@@ -89,16 +89,28 @@ public class VistaTablero extends javax.swing.JFrame {
                             // 3. actualizamos el estado del tablero (el diccionario)
                             // 4. actualizamos la posicion de la pieza
                             // 5. actualizamos la visa
-                            // 6. ponemos a false piezaPulsada
+                            // 6. ponemos a false piezaPulsada                            
                             piezaAnterior = tablero.comprobarPosicion(posicionAnterior);
-                            setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
-                            tablero.actualizarEstado(posicionAnterior, posicionActual);
-                            piezaAnterior.actualizarPosicion(posicionActual);
-                            casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
-                            casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
-                            posicionAnterior.setFila(posicionActual.getFila());
-                            posicionAnterior.setColumna(posicionActual.getColumna());
-                            piezaPulsada=false;
+                            if (piezaAnterior.esMovimientoPosible(posicionActual)){
+                                setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
+                                tablero.actualizarEstado(posicionAnterior, posicionActual);
+                                piezaAnterior.actualizarPosicion(posicionActual);
+                                casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
+                                casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);                            
+                                // actualizamos el color
+                                if ((posicionAnterior.getFila() + posicionAnterior.getColumna()) % 2 == 0) {
+                                    casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(Color.white);
+                                } else {                    
+                                    casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(new Color(0x00a6ac));
+                                } 
+                                posicionAnterior.setFila(posicionActual.getFila());
+                                posicionAnterior.setColumna(posicionActual.getColumna());
+                                piezaPulsada=false;
+                            }
+                            else {
+                                System.out.println("No se puede actualizar la posicion");
+                                piezaPulsada=false;
+                            }
                         }
                         
                         /* 
@@ -107,9 +119,12 @@ public class VistaTablero extends javax.swing.JFrame {
                         else if(casilla[fila][columna].getIcon()!=null && !piezaPulsada){
                             // 1. actualizamos posicionAnterior
                             // 2. piezaPulsada=true
+                            // 3. coloreamos el fondo de la casilla
+                            casilla[fila][columna].setBackground(Color.GRAY);
                             posicionAnterior.setFila(posicionActual.getFila());
                             posicionAnterior.setColumna(posicionActual.getColumna());
                             piezaPulsada=true;
+                            tablero.comprobarPosicion(posicionActual).MostrarTodas();
                         }
                         
                         /* 
@@ -127,10 +142,17 @@ public class VistaTablero extends javax.swing.JFrame {
                                 piezaAnterior.actualizarPosicion(posicionActual);
                                 casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
                                 casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
+                                casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getBackground());
+                            }                            
+                            // actualizamos el color
+                            if ((posicionAnterior.getFila() + posicionAnterior.getColumna()) % 2 == 0) {
+                                casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(Color.white);
+                            } else {                    
+                                casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(new Color(0x00a6ac));
                             }
                             posicionAnterior.setFila(posicionActual.getFila());
                             posicionAnterior.setColumna(posicionActual.getColumna());
-                            piezaPulsada=false;
+                            piezaPulsada=false;                               
                         }                        
                     }
                 });
