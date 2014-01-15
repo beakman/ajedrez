@@ -37,6 +37,18 @@ public class Reyna extends Pieza{
         this.columna_actual = pos.getColumna();
         this.color = c; 
     }
+    
+    public void MostrarTodas()
+    {
+        this.getMovimientosPosibles();
+        System.out.println("MOVIMIENTOS POSIBLES");
+        for (Posicion palabra : resultado) {
+            System.out.print(palabra+" ");
+        }
+        System.out.println();
+        resultado.clear();
+    }
+    
     @Override
     public Movimientos getMovimientosPosibles() 
     {
@@ -65,7 +77,7 @@ public class Reyna extends Pieza{
         }
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        while((f_aux < filas.length-1) && (c_aux > 0)){
+        while((f_aux < filas.length-2) && (c_aux > 0)){
             //Esquina superior izquierda
             f_aux++;
             c_aux--;
@@ -93,7 +105,7 @@ public class Reyna extends Pieza{
         
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        while(f_aux < filas.length-1){
+        while(f_aux < filas.length-2){
             //Hacia delante
             f_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
@@ -110,7 +122,7 @@ public class Reyna extends Pieza{
 
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        while(c_aux < columnas.length -1){
+        while(c_aux < columnas.length -2){
             // Hacia derecha
             c_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
