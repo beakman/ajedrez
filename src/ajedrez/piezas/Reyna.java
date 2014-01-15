@@ -57,7 +57,8 @@ public class Reyna extends Pieza{
         //Esquina superior derecha
         int f_aux = posicion.getFila();
         int c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        while ((f_aux > 0) && (c_aux < columnas.length-2)) {
+        System.out.print("Columnas " + columnas.length);
+        while ((f_aux > 0) && (c_aux < columnas.length-1)) {
             f_aux--;
             c_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
@@ -69,7 +70,7 @@ public class Reyna extends Pieza{
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna();
         System.out.println("mala: " + "f_aux= "+ f_aux + "c_aux= " + c_aux);
-        while ((f_aux < filas.length-2) && (c_aux < columnas.length-2)) {
+        while ((f_aux < filas.length-2) && (c_aux < columnas.length-1)) {
             f_aux++;
             c_aux++;
             
