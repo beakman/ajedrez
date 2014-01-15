@@ -8,20 +8,24 @@ import ajedrez.Color;
 import ajedrez.Movimientos;
 import ajedrez.Pieza;
 import ajedrez.Posicion;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
  * @author betico
  */
 public class Peon extends Pieza{
-    
-    Movimientos mov;
+
+    Movimientos mov = new Movimientos();
     //Posicion pos;
     int fila_actual;
     int columna_actual;
     char[] filas = {'0','1','2','3','4','5','6','7','8'};
     char[] columnas = {'a','b','c','d','e','f','g','h'};
-    Posicion[] result;
+    Posicion[] result = new Posicion[64];
+    ArrayList<Posicion> resultado = new ArrayList<>();
+    Color col;
     /**
      *
      */
@@ -33,15 +37,36 @@ public class Peon extends Pieza{
         this.color = col;     
     }
     
+    public void MostrarTodas()
+    {
+        this.getMovimientosPosibles();
+        System.out.println("MOVIMIENTOS POSIBLES");
+        for (Posicion palabra : resultado) {
+            System.out.print(palabra+" ");
+        }
+        System.out.println();
+    }
+    
     @Override
     public Movimientos getMovimientosPosibles() {
-        // Hay que comprobar las 8 casillas a la que puede acceder el caballo
-        int f_aux = fila_actual;
-        int c_aux = new String(columnas).indexOf(columna_actual); //Obtenemos la posición dentro del array
+        // Hay que comprobar las 1 casilla
+        Color color = this.col;
+        
+        int f_aux = posicion.getFila();
+        int c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
         // Primera posicion posible
-        f_aux = f_aux + 1;
-        c_aux = c_aux + 1;
-        mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
+        if((f_aux > 0)&& (color == Color.blanca))
+        {
+            f_aux = f_aux - 1;
+            resultado.add(new Posicion(f_aux, c_aux));
+            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
+        }
+        else if((f_aux < filas.length - 1) && (color == Color.negra))
+        {
+            f_aux = f_aux + 1;
+            resultado.add(new Posicion(f_aux, c_aux));
+            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));          
+        }
         return mov;
     }
 
@@ -50,23 +75,26 @@ public class Peon extends Pieza{
         //Aquí la idea es en primer lugar mirar en el array que nos ha devuelto 
         //el método anterior si nuevoDestino está dentro de el y por tanto
         //sería candidato a moverse si no hay otra ficha o alguna por medio
-        
-        Posicion[] array = null; // array de prueba 
+        System.out.println("resultado0= "+resultado.toString());
+        Movimientos movimientos = this.getMovimientosPosibles();
+        ArrayList<Posicion> arrayLista = new ArrayList<>();
         boolean esposible = false;
-        int indice = 0; //indice para recorrer el array
-        while ((array[indice].fila != nuevoDestino.fila) || (array[indice].columna != nuevoDestino.columna))
-        {
-            indice++;
+        System.out.println("nuevoDestino.fila= "+nuevoDestino.fila);
+        System.out.println("nuevoDestino.columna= "+nuevoDestino.columna);
+        System.out.println("resultado= "+resultado.toString());
+        System.out.println("nuevoDestino= "+nuevoDestino);
+
+        Iterator<Posicion> iterador = resultado.iterator();
+        while (iterador.hasNext()){
+            Posicion pal = iterador.next();
+            if (pal.columna==nuevoDestino.columna && pal.fila==nuevoDestino.fila){
+                esposible=true;
+            }
         }
-        if (indice < array.length)
-        {
-            esposible = true;
-        }
-        
+        resultado.clear();
         //Habría que comprobar aquí que hay fichas por medio o eso se haría en otro sitio?
-        
         return esposible;
-        
+
     }
 
     @Override
