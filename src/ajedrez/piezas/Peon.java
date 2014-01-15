@@ -52,6 +52,7 @@ public class Peon extends Pieza{
         // Hay que comprobar las 1 casilla
         Color color = this.col;
         
+        color = Color.blanca;
         int f_aux = posicion.getFila();
         int c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
         // Primera posicion posible

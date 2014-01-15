@@ -37,6 +37,18 @@ public class Reyna extends Pieza{
         this.columna_actual = pos.getColumna();
         this.color = c; 
     }
+    
+    public void MostrarTodas()
+    {
+        this.getMovimientosPosibles();
+        System.out.println("MOVIMIENTOS POSIBLES");
+        for (Posicion palabra : resultado) {
+            System.out.print(palabra+" ");
+        }
+        System.out.println();
+        resultado.clear();
+    }
+    
     @Override
     public Movimientos getMovimientosPosibles() 
     {
@@ -45,40 +57,45 @@ public class Reyna extends Pieza{
         //Esquina superior derecha
         int f_aux = posicion.getFila();
         int c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        while((f_aux < filas.length-1) && (c_aux < columnas.length-1)){
-            
-            f_aux++;
+        while ((f_aux > 0) && (c_aux < columnas.length-2)) {
+            f_aux--;
             c_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
+            mov.anadirMovimiento("alfil", "a", "1");
+            
         }
         //Esquina inferior derecha
         //Partimos del punto inicial para volver a mirar
         f_aux = posicion.getFila();
-        c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        while((f_aux > 0) && (c_aux < columnas.length-1)){       
-            f_aux--;
+        c_aux = posicion.getColumna();
+        System.out.println("mala: " + "f_aux= "+ f_aux + "c_aux= " + c_aux);
+        while ((f_aux < filas.length-2) && (c_aux < columnas.length-2)) {
+            f_aux++;
             c_aux++;
+            
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
+            mov.anadirMovimiento("alfil", "a", "1");
         }
         f_aux = posicion.getFila();
-        c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        while((f_aux < filas.length-1) && (c_aux > 0)){
+        c_aux = posicion.getColumna();
+        System.out.println("puta: " + "f_aux= "+ f_aux + "c_aux= " + c_aux);
+        while ((f_aux > 0) && (c_aux > 0)) {
             //Esquina superior izquierda
+            f_aux--;
+            c_aux--;
+            resultado.add(new Posicion(f_aux, c_aux));
+            mov.anadirMovimiento("alfil", "a", "1");
+        }
+        f_aux = posicion.getFila();
+        c_aux = posicion.getColumna();
+        System.out.println("joder: " + "f_aux= "+ f_aux + "c_aux= " + c_aux);
+        while ((f_aux < filas.length-1) && (c_aux > 0)) {
+            //Esquina inferior izquierda
             f_aux++;
             c_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
-        }
-        f_aux = posicion.getFila();
-        c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        while((f_aux > 0) && (c_aux > 0)){
-            //Esquina inferior izquierda
-            f_aux--;
-            c_aux--;
-            resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
+            mov.anadirMovimiento("alfil", "a", "1");
+            System.out.println("me cago en to: " + "f_aux= "+ f_aux + "c_aux= " + c_aux);
         }
         
         f_aux = posicion.getFila();
@@ -87,33 +104,33 @@ public class Reyna extends Pieza{
             //Hacia atras
             f_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
+            mov.anadirMovimiento("torre", "a", "a");
         }
         
         f_aux = posicion.getFila();
-        c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        while(f_aux < filas.length-1){
+        c_aux = posicion.getColumna();
+        while(f_aux < filas.length-2){
             //Hacia delante
             f_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
+            mov.anadirMovimiento("torre", "a", "a");
         }
         f_aux = posicion.getFila();
-        c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
+        c_aux = posicion.getColumna();
         while(c_aux > 0){
             // Hacia izquiera
             c_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
+            mov.anadirMovimiento("torre", "a", "a");
         }
 
         f_aux = posicion.getFila();
-        c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        while(c_aux < columnas.length -1){
+        c_aux = posicion.getColumna();
+        while(c_aux < columnas.length-2){
             // Hacia derecha
             c_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
+            mov.anadirMovimiento("torre", "a", "a");
         } 
         return mov;
     }
