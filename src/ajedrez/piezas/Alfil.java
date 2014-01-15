@@ -10,7 +10,7 @@ import ajedrez.Pieza;
 import ajedrez.Posicion;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+import ajedrez.Tablero;
 /**
  *
  * @author betico
@@ -26,7 +26,6 @@ public class Alfil extends Pieza {
     Posicion[] result = new Posicion[64];
     ArrayList<Posicion> resultado = new ArrayList<>();
     Color col;
-
     /**
      *
      */
@@ -45,6 +44,7 @@ public class Alfil extends Pieza {
             System.out.print(palabra+" ");
         }
         System.out.println();
+        resultado.clear();
     }
     
     @Override
@@ -69,6 +69,7 @@ public class Alfil extends Pieza {
         while ((f_aux < filas.length-1) && (c_aux < columnas.length-1)) {
             f_aux++;
             c_aux++;
+            
             resultado.add(new Posicion(f_aux, c_aux));
             mov.anadirMovimiento("alfil", "a", "1");
         }
@@ -103,13 +104,12 @@ public class Alfil extends Pieza {
         //Aquí la idea es en primer lugar mirar en el array que nos ha devuelto 
         //el método anterior si nuevoDestino está dentro de el y por tanto
         //sería candidato a moverse si no hay otra ficha o alguna por medio
-        System.out.println("resultado0= "+resultado.toString());
+        //System.out.println("resultado0= "+resultado.toString());
         Movimientos movimientos = this.getMovimientosPosibles();
-        ArrayList<Posicion> arrayLista = new ArrayList<>();
         boolean esposible = false;
         System.out.println("nuevoDestino.fila= "+nuevoDestino.fila);
         System.out.println("nuevoDestino.columna= "+nuevoDestino.columna);
-        System.out.println("resultado= "+resultado.toString());
+        System.out.println("resultado= "+resultado);
         System.out.println("nuevoDestino= "+nuevoDestino);
 
         Iterator<Posicion> iterador = resultado.iterator();
@@ -120,6 +120,7 @@ public class Alfil extends Pieza {
             }
         }
         resultado.clear();
+        System.out.println("resultadoSIPOTE= "+resultado);
         //Habría que comprobar aquí que hay fichas por medio o eso se haría en otro sitio?
         return esposible;
 

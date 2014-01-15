@@ -19,7 +19,7 @@ public class Tablero implements ITablero
     private final Caballo[] caballo = new Caballo[4];
     private final Rey[] rey = new Rey[2];
     private final Reyna[] reyna = new Reyna[2];
-    public HashMap<String, Pieza> estado = new HashMap<>();
+    public final HashMap<String, Pieza> estado = new HashMap<>();
 
     public Tablero() 
     {
@@ -47,12 +47,12 @@ public class Tablero implements ITablero
         torre[3] = new Torre(new Posicion(7,7), ajedrez.Color.blanca);
         
         // Declaramos las reynas
-        reyna[0] = new Reyna(new Posicion(0,4), ajedrez.Color.negra);
-        reyna[1] = new Reyna(new Posicion(7,4), ajedrez.Color.blanca);
+        rey[0] = new Rey(new Posicion(0,4), ajedrez.Color.negra);
+        rey[1] = new Rey(new Posicion(7,4), ajedrez.Color.blanca);
         
         // Declaramos los reyes
-        rey[0] = new Rey(new Posicion(0,3), ajedrez.Color.negra);
-        rey[1] = new Rey(new Posicion(7,3), ajedrez.Color.blanca);
+        reyna[0] = new Reyna(new Posicion(0,3), ajedrez.Color.negra);
+        reyna[1] = new Reyna(new Posicion(7,3), ajedrez.Color.blanca);
     }
     
     @Override
@@ -97,13 +97,13 @@ public class Tablero implements ITablero
         estado.put((new Posicion(7,0)).toString(), torre[2]);       
         estado.put((new Posicion(7,7)).toString(), torre[3]);
         
-        // Colocamos las reynas
-        estado.put((new Posicion(0,4)).toString(), reyna[0]);
-        estado.put((new Posicion(7,4)).toString(), reyna[1]);
+        // Colocamos lo reyes
+        estado.put((new Posicion(0,4)).toString(), rey[0]);
+        estado.put((new Posicion(7,4)).toString(), rey[1]);
         
-        // Colocamos los reyes
-        estado.put((new Posicion(0,3)).toString(), rey[0]);
-        estado.put((new Posicion(7,3)).toString(), rey[1]);
+        // Colocamos las reynas
+        estado.put((new Posicion(0,3)).toString(), reyna[0]);
+        estado.put((new Posicion(7,3)).toString(), reyna[1]);
     }
     
     @Override
