@@ -25,7 +25,7 @@ public class Peon extends Pieza{
     char[] columnas = {'a','b','c','d','e','f','g','h'};
     Posicion[] result = new Posicion[64];
     ArrayList<Posicion> resultado = new ArrayList<>();
-    Color col;
+    Color color;
     /**
      *
      */
@@ -50,9 +50,8 @@ public class Peon extends Pieza{
     @Override
     public Movimientos getMovimientosPosibles() {
         // Hay que comprobar las 1 casilla
-        Color color = this.col;
+        //Color color = this.col;
         
-        color = Color.blanca;
         int f_aux = posicion.getFila();
         int c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
         // Primera posicion posible
