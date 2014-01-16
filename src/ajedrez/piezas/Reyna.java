@@ -58,6 +58,7 @@ public class Reyna extends Pieza{
         int f_aux = posicion.getFila();
         int c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
         System.out.print("Columnas " + columnas.length);
+        System.out.print("Filas " + columnas.length);
         while ((f_aux > 0) && (c_aux < columnas.length-1)) {
             f_aux--;
             c_aux++;
