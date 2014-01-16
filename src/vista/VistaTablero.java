@@ -91,7 +91,8 @@ public class VistaTablero extends javax.swing.JFrame {
                             // 5. actualizamos la visa
                             // 6. ponemos a false piezaPulsada                            
                             piezaAnterior = tablero.comprobarPosicion(posicionAnterior);
-                            if (piezaAnterior.esMovimientoPosible(posicionActual)){
+                            if (piezaAnterior.esMovimientoPosible(posicionActual) && hayFicha(posicionAnterior, posicionActual) == false)
+                            {
                                 setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
                                 tablero.actualizarEstado(posicionAnterior, posicionActual);
                                 piezaAnterior.actualizarPosicion(posicionActual);
@@ -268,6 +269,116 @@ public class VistaTablero extends javax.swing.JFrame {
         casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
         casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getBackground());
     }
+    
+    public boolean hayFicha(Posicion posicionAnterior, Posicion posicionActual)
+    {
+        int posAntFil = posicionAnterior.getFila();
+        int posAntCol = posicionAnterior.getColumna();
+        boolean hayFicha = false; 
+        // Movimiento en diagonal
+        if ((posicionActual.getFila() != posicionAnterior.getFila()) && (posicionActual.getColumna() !=posicionAnterior.getColumna()))
+        {
+            if ((posicionActual.getFila() > posicionAnterior.getFila()) && (posicionActual.getColumna() > posicionAnterior.getColumna()))
+            {
+                posAntCol++;
+                posAntFil++;
+                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() > posAntCol))
+                {
+                    posAntCol++;
+                    posAntFil++;
+                }
+                if (posicionActual.getColumna() > posAntCol)
+                    hayFicha = true;
+            }
+            if (posicionActual.getFila() < posicionAnterior.getFila() && posicionActual.getColumna() > posicionAnterior.getColumna())
+            {
+                posAntCol++;
+                posAntFil--;
+                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() > posAntCol))
+                {
+                    posAntCol++;
+                    posAntFil--;
+                }
+                if (posicionActual.getColumna() > posAntCol)
+                    hayFicha = true;
+            }
+            if (posicionActual.getFila() > posicionAnterior.getFila() && posicionActual.getColumna() < posicionAnterior.getColumna())
+            {
+                posAntCol--;
+                posAntFil++;
+                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() > posAntCol))
+                {
+                    posAntCol--;
+                    posAntFil++;
+                }
+                if (posicionActual.getColumna() < posAntCol)
+                    hayFicha = true;       
+            }
+            if (posicionActual.getFila() < posicionAnterior.getFila() && posicionActual.getColumna() < posicionAnterior.getColumna())
+            {
+                posAntCol--;
+                posAntFil--;
+                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() > posAntCol))
+                {
+                    posAntCol--;
+                    posAntFil--;
+                }
+                if (posicionActual.getColumna() < posAntCol)
+                    hayFicha = true;
+            }       
+        }
+        // Movimiento horizontal
+        if ((posicionActual.getFila() == posicionAnterior.getFila()) && (posicionActual.getColumna() !=posicionAnterior.getColumna()))
+        {
+            if (posicionActual.getColumna() < posicionAnterior.getColumna())
+            {
+                posAntCol--;
+                while ((casilla[posAntFil][posAntCol].getIcon() == null) && posAntCol > posicionActual.getColumna())
+                {
+                    posAntCol--;
+                }
+                if (posAntCol > posicionActual.getColumna())
+                    hayFicha = true;
+            }
+            if (posicionActual.getColumna() > posicionAnterior.getColumna())
+            {
+                posAntCol++;
+                while ((casilla[posAntFil][posAntCol].getIcon() == null) && posAntCol < posicionActual.getColumna())
+                {
+                    posAntCol++;
+                }
+                if (posAntCol < posicionActual.getColumna())
+                    hayFicha = true;
+            }   
+            return hayFicha;
+        }
+        // Movimiento vertical
+        if ((posicionActual.getFila() != posicionAnterior.getFila()) && (posicionActual.getColumna() ==posicionAnterior.getColumna()))
+        {
+            if (posicionActual.getFila() < posicionAnterior.getFila())
+            {
+                posAntFil--;
+                while ((casilla[posAntFil][posAntCol].getIcon() == null) && posAntFil > posicionActual.getFila())
+                {
+                    posAntFil--;
+                }
+                if (posAntFil > posicionActual.getFila())
+                    hayFicha = true;
+            }
+            if (posicionActual.getFila() > posicionAnterior.getFila())
+            {
+                posAntFil++;
+                while ((casilla[posAntFil][posAntCol].getIcon() == null) && posAntFil < posicionActual.getFila())
+                {
+                    posAntFil++;
+                }
+                if (posAntFil < posicionActual.getFila())
+                    hayFicha = true;
+            }            
+        }
+        return hayFicha;
+    }
+    
     public void moverFicha(String seleccionActual, String seleccionAnterior)
     {
         movimientos.anadirMovimiento("blancas", seleccionActual, seleccionAnterior);
