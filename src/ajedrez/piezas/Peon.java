@@ -57,12 +57,16 @@ public class Peon extends Pieza{
         // Primera posicion posible
         if((f_aux > 0)&& (color == Color.blanca))
         {
+            if (f_aux == 6)
+                resultado.add(new Posicion(f_aux - 2, c_aux));
             f_aux = f_aux - 1;
             resultado.add(new Posicion(f_aux, c_aux));
             mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         }
         else if((f_aux < filas.length - 1) && (color == Color.negra))
         {
+            if (f_aux == 1)
+                resultado.add(new Posicion(f_aux - 2, c_aux));
             f_aux = f_aux + 1;
             resultado.add(new Posicion(f_aux, c_aux));
             mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));          

@@ -8,6 +8,7 @@ import ajedrez.Color;
 import ajedrez.Movimientos;
 import ajedrez.Pieza;
 import ajedrez.Posicion;
+import ajedrez.Tablero;
 import java.util.ArrayList;
 import java.util.Iterator;
 
