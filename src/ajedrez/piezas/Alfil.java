@@ -46,6 +46,10 @@ public class Alfil extends Pieza {
         System.out.println();
         resultado.clear();
     }
+
+    public Posicion[] getResult() {
+        return result;
+    }
     
     @Override
     public Movimientos getMovimientosPosibles() {
@@ -132,6 +136,11 @@ public class Alfil extends Pieza {
         posicion.setFila(nuevaPosicion.fila);
     }
 
+    @Override
+    public String tipoPieza(){
+        return "Alfil";
+    }
+    
     @Override
     public String toString() {
         return "Alfil " + color.name();

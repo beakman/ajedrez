@@ -30,6 +30,9 @@ public abstract class Pieza implements IPieza {
     {
         
     }
+    public String tipoPieza(){
+        return null;
+    }
     
     @Override
     public String toString(){

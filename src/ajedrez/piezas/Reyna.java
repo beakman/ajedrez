@@ -150,7 +150,10 @@ public class Reyna extends Pieza{
         posicion.setColumna(nuevaPosicion.columna);
         posicion.setFila(nuevaPosicion.fila);
     }
-    
+    @Override
+    public String tipoPieza(){
+        return "Reyna";
+    }
     @Override
     public String toString(){
         return "Reyna "+color.name();
