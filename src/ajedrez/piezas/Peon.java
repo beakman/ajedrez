@@ -45,6 +45,7 @@ public class Peon extends Pieza{
             System.out.print(palabra+" ");
         }
         System.out.println();
+        resultado.clear();
     }
     
     @Override
@@ -100,7 +101,11 @@ public class Peon extends Pieza{
         return esposible;
 
     }
-
+    @Override
+    public String tipoPieza(){
+        return "Peon";
+    }
+    
     @Override
     public void actualizarPosicion(Posicion nuevaPosicion) {
         posicion.setColumna(nuevaPosicion.columna);

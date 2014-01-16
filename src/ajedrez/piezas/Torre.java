@@ -46,6 +46,7 @@ public class Torre extends Pieza{
             System.out.print(palabra+" ");
         }
         System.out.println();
+        resultado.clear();
     }
     
     
@@ -125,7 +126,12 @@ public class Torre extends Pieza{
         posicion.setColumna(nuevaPosicion.columna);
         posicion.setFila(nuevaPosicion.fila);
     }
+    @Override
+    public String tipoPieza(){
+        return "Torre";
+    }
     
+   
     @Override
     public String toString(){
         return "Torre "+color.name();

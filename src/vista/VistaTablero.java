@@ -136,14 +136,105 @@ public class VistaTablero extends javax.swing.JFrame {
                             piezaAnterior = tablero.comprobarPosicion(posicionAnterior);
                             piezaActual = tablero.comprobarPosicion(posicionActual);
                             if (piezaAnterior.color != piezaActual.color){
-                                tablero.estado.remove(posicionActual.toString()); // sacamos la pieza del diccionario
-                                casilla[posicionActual.getFila()][posicionActual.getColumna()].setIcon(null);
-                                tablero.actualizarEstado(posicionAnterior, posicionActual);
-                                piezaAnterior.actualizarPosicion(posicionActual);
-                                casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
-                                casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
-                                casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getBackground());
-                            }                            
+                                
+                                /*intento implementar aquí el matar del peon
+                                 */
+                               
+                                if(piezaAnterior.tipoPieza().equals("Peon")) 
+                                {// es un peon
+                                     int f_aux, c_aux,x,y;
+                                     f_aux = posicionAnterior.getFila();
+                                     c_aux = posicionAnterior.getColumna();
+                                     x = posicionActual.getFila();
+                                     y = posicionActual.getColumna();
+                                     System.out.println("??");
+                                     /*También tengo que comprobar que el peón sólo mata hacia adelante,
+                                      * es decir, dependiendo del color, tiene dos movimientos posibles
+                                      * para matar
+                                      */
+                                     if(piezaAnterior.color == ajedrez.Color.blanca)
+                                     {
+                                         if((((x ==f_aux -1)&&( y==c_aux +1))) || ((( x== f_aux-1)&&(y ==c_aux -1))))
+                                        {
+                                            //Si se cumple ésta condición, el peón podrá matarlo
+                                            matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
+                                       
+                                        }
+                                     }
+                                     else if (piezaAnterior.color == ajedrez.Color.negra)
+                                     {
+                                         if((((x == f_aux+1)&&(y == c_aux-1))) || (((x == f_aux+1)&&(y == c_aux+1))))
+                                         {
+                                                //Si se cumple ésta condición, el peón podrá matarlo
+                                             matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
+                                         }
+                                     }                          
+                                 }
+                                if (piezaAnterior.tipoPieza().equals("Alfil"))
+                                {
+                                    int f_aux, c_aux,x,y;
+                                     f_aux = posicionAnterior.getFila();
+                                     c_aux = posicionAnterior.getColumna();
+                                     x = posicionActual.getFila();
+                                     y = posicionActual.getColumna();
+                                     if (((x>= f_aux+1)&&(y>=c_aux+1)) || ((x>=f_aux+1)&&(y<=c_aux-1)) || ((x<=f_aux-1)&&(y<=c_aux-1)) || ((x<=f_aux-1)&&(y>=c_aux+1)))
+                                     {
+                                         
+                                            if(Math.abs((y-c_aux)/(x-f_aux))==1)
+                                            matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
+                                       
+                                    }
+                                     
+                                }
+                                
+                                if(piezaAnterior.tipoPieza().equals("Torre"))
+                                {
+                                    int f_aux, c_aux,x,y;
+                                     f_aux = posicionAnterior.getFila();
+                                     c_aux = posicionAnterior.getColumna();
+                                     x = posicionActual.getFila();
+                                     y = posicionActual.getColumna();
+                                     if((x==f_aux) || (y==c_aux))
+                                     {
+                                         matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
+                                     }
+                                }
+                                if(piezaAnterior.tipoPieza().equals("Reyna"))
+                                {
+                                    int f_aux, c_aux,x,y;
+                                     f_aux = posicionAnterior.getFila();
+                                     c_aux = posicionAnterior.getColumna();
+                                     x = posicionActual.getFila();
+                                     y = posicionActual.getColumna();
+                                    try{
+                                        if((x==f_aux) || (y==c_aux) || (Math.abs((y-c_aux)/(x-f_aux))==1))
+                                        {
+                                            matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
+                                        }
+                                    }catch(ArithmeticException e){
+                                        
+                                    }
+                                }
+                                if (piezaAnterior.tipoPieza().equals("Rey"))
+                                {
+                                    int f_aux, c_aux,x,y;
+                                     f_aux = posicionAnterior.getFila();
+                                     c_aux = posicionAnterior.getColumna();
+                                     x = posicionActual.getFila();
+                                     y = posicionActual.getColumna();
+                                     if(((x==f_aux+1) && (y==c_aux+1)) || ((x==f_aux+1)&&(y==c_aux)) || ((x==f_aux+1)&&(y == c_aux-1)) || ((x==f_aux)&&(y==c_aux-1))
+                                             || ((x==f_aux-1)&&(y==c_aux-1)) || ((x==f_aux -1 )&&(y==c_aux)) || ((x==f_aux-1)&&(y==c_aux+1)) || ((x==f_aux)&&(y==c_aux+1)))
+                                     {
+                                         matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
+                                     }
+                                     
+                                }
+                                
+//                                else{
+//                                   matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
+//                            
+//                                }
+                            }
                             // actualizamos el color
                             if ((posicionAnterior.getFila() + posicionAnterior.getColumna()) % 2 == 0) {
                                 casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(Color.white);
@@ -168,7 +259,15 @@ public class VistaTablero extends javax.swing.JFrame {
         mostrarTablero();
         setVisible(true);        
     }
-    
+    public void matar(Posicion posicionAnterior, Posicion posicionActual, Pieza piezaAnterior,int fila, int columna){
+        tablero.estado.remove(posicionActual.toString()); // sacamos la pieza del diccionario
+        casilla[posicionActual.getFila()][posicionActual.getColumna()].setIcon(null);
+        tablero.actualizarEstado(posicionAnterior, posicionActual);
+        piezaAnterior.actualizarPosicion(posicionActual);
+        casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
+        casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
+        casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getBackground());
+    }
     public void moverFicha(String seleccionActual, String seleccionAnterior)
     {
         movimientos.anadirMovimiento("blancas", seleccionActual, seleccionAnterior);

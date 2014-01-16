@@ -40,6 +40,7 @@ public class Rey extends Pieza{
             System.out.print(palabra+" ");
         }
         System.out.println();
+        resultado.clear();
     }
     @Override
     public Movimientos getMovimientosPosibles() {
@@ -200,7 +201,9 @@ public class Rey extends Pieza{
     posicion.setColumna(nuevaPosicion.columna);
         posicion.setFila(nuevaPosicion.fila);    
     }
-    
+    public String tipoPieza(){
+        return "Rey";
+    }
     @Override
     public String toString(){
         return "Rey "+color.name();
