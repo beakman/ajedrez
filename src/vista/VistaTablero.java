@@ -306,7 +306,7 @@ public class VistaTablero extends javax.swing.JFrame {
             {
                 posAntCol--;
                 posAntFil++;
-                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() > posAntCol))
+                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() < posAntCol))
                 {
                     posAntCol--;
                     posAntFil++;
@@ -318,7 +318,7 @@ public class VistaTablero extends javax.swing.JFrame {
             {
                 posAntCol--;
                 posAntFil--;
-                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() > posAntCol))
+                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() < posAntCol))
                 {
                     posAntCol--;
                     posAntFil--;
