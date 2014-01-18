@@ -175,7 +175,7 @@ public class Caballo extends Pieza{
     
     @Override
     public String toString(){
-        return "Caballo "+color.name();
+        return "Caballo"+color.name();
     }
     
 }
