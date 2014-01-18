@@ -11,8 +11,12 @@ public abstract class Jugador implements IJugador, IPartidaAjedrez {
     private Color color;
     private Movimientos movimiento;
     private Jugador jugador;
-    
 
+    
+//    public Jugador(Color color){
+//        this.color = color;
+//    }
+    
     @Override
     public Jugador empezar(){
         return jugador;
@@ -20,7 +24,7 @@ public abstract class Jugador implements IJugador, IPartidaAjedrez {
     
     @Override
     public void preguntarNombre() {
-    
+        
     }
     
     @Override
