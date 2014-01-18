@@ -1,7 +1,9 @@
 package ajedrez;
 
 import ajedrez.piezas.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
@@ -56,12 +58,58 @@ public class Tablero implements ITablero
     }
     
     @Override
-    public boolean esMovimientoPosible(Movimientos mov)
+    public boolean esMovimientoPosible(Movimiento mov, Pieza pieza)
     {
-        //return pieza.esMovimientoPosible(posicion);
-        return true;
+        boolean esposible=false;
+        Iterator<Movimiento> iterador = this.getMovimientosPosibles(pieza).iterator();
+        while (iterador.hasNext()){
+            Movimiento m = iterador.next();
+            System.out.println("M: "+m.posDestino);
+            System.out.println("MOV: "+mov.posDestino);
+            if (m.posDestino.fila==mov.posDestino.fila && m.posDestino.columna==mov.posDestino.columna){
+                esposible=true;
+            }
+        }
+        return esposible;
     }
     
+    public ArrayList<Movimiento> getMovimientosPosibles(Pieza pieza)
+    {
+        ArrayList<Movimiento> resultado=new ArrayList<>();
+        
+        if (pieza.tipoPieza().equals("Peon")){
+            // Hay que comprobar las 1 casilla
+            //Color color = this.col;
+            int f_aux = pieza.posicion.getFila();
+            int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+            // Primera posicion posible
+            if((f_aux > 0)&& (pieza.color == Color.blanca))
+            {
+                if (f_aux == 6){
+                    if(!hayPieza(new Posicion(f_aux - 2, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux - 2, c_aux)));
+                }
+                f_aux = f_aux - 1;
+                if(!hayPieza(new Posicion(f_aux, c_aux)))
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+            }
+            else if((f_aux < 7) && (pieza.color == Color.negra))
+            {
+                if (f_aux == 1){
+                    if(!hayPieza(new Posicion(f_aux + 2, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux + 2, c_aux)));
+                }
+                f_aux = f_aux + 1;
+                if(!hayPieza(new Posicion(f_aux, c_aux)))
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+            }
+        }
+        return resultado;
+    }
+    private boolean hayPieza(Posicion nueva)
+    {
+        return (estado.get(nueva) != null);
+    }
     @Override
     public Pieza ejecutarMovimiento(Movimientos mov)
     {
@@ -110,11 +158,6 @@ public class Tablero implements ITablero
     public boolean jugadorHaceJaqueMate(Jugador jug)
     {
         return true;
-    }
-
-    @Override
-    public void mostrarTablero() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public Pieza comprobarPosicion(Posicion posicion)

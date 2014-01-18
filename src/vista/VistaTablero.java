@@ -7,6 +7,7 @@ package vista;
 import ajedrez.Movimientos;
 import ajedrez.IPieza;
 import ajedrez.IJugador;
+import ajedrez.Movimiento;
 import ajedrez.Pieza;
 import ajedrez.Posicion;
 import ajedrez.Tablero;
@@ -91,8 +92,11 @@ public class VistaTablero extends javax.swing.JFrame {
                             // 5. actualizamos la visa
                             // 6. ponemos a false piezaPulsada                            
                             piezaAnterior = tablero.comprobarPosicion(posicionAnterior);
-                            if (piezaAnterior.esMovimientoPosible(posicionActual) && hayFicha(posicionAnterior, posicionActual) == false)
+                            
+//                            if (piezaAnterior.esMovimientoPosible(posicionActual) && hayFicha(posicionAnterior, posicionActual) == false)
+                            if (tablero.esMovimientoPosible(new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual), piezaAnterior))
                             {
+                                System.out.println("NI DE COÑA");
                                 setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
                                 tablero.actualizarEstado(posicionAnterior, posicionActual);
                                 piezaAnterior.actualizarPosicion(posicionActual);
@@ -109,7 +113,7 @@ public class VistaTablero extends javax.swing.JFrame {
                                 piezaPulsada=false;
                             }
                             else {
-                                System.out.println("No se puede actualizar la posicion");
+                                System.out.println("No se puede actualizar la posicionAAAAA");
                                 piezaPulsada=false;
                             }
                         }
@@ -125,7 +129,8 @@ public class VistaTablero extends javax.swing.JFrame {
                             posicionAnterior.setFila(posicionActual.getFila());
                             posicionAnterior.setColumna(posicionActual.getColumna());
                             piezaPulsada=true;
-                            tablero.comprobarPosicion(posicionActual).MostrarTodas();
+//                            System.out.println("aqui esta el fallo");
+//                            tablero.comprobarPosicion(posicionActual).MostrarTodas();
                         }
                         
                         /* 
