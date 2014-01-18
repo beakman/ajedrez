@@ -7,6 +7,7 @@ package vista;
 import ajedrez.Movimientos;
 import ajedrez.IPieza;
 import ajedrez.IJugador;
+import ajedrez.Movimiento;
 import ajedrez.Pieza;
 import ajedrez.Posicion;
 import ajedrez.Tablero;
@@ -91,8 +92,11 @@ public class VistaTablero extends javax.swing.JFrame {
                             // 5. actualizamos la visa
                             // 6. ponemos a false piezaPulsada                            
                             piezaAnterior = tablero.comprobarPosicion(posicionAnterior);
-                            if (piezaAnterior.esMovimientoPosible(posicionActual) && hayFicha(posicionAnterior, posicionActual) == false)
+                            
+//                            if (piezaAnterior.esMovimientoPosible(posicionActual) && hayFicha(posicionAnterior, posicionActual) == false)
+                            if (tablero.esMovimientoPosible(new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual), piezaAnterior))
                             {
+                                System.out.println("NI DE COÑA");
                                 setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
                                 tablero.actualizarEstado(posicionAnterior, posicionActual);
                                 piezaAnterior.actualizarPosicion(posicionActual);
@@ -109,7 +113,7 @@ public class VistaTablero extends javax.swing.JFrame {
                                 piezaPulsada=false;
                             }
                             else {
-                                System.out.println("No se puede actualizar la posicion");
+                                System.out.println("No se puede actualizar la posicionAAAAA");
                                 piezaPulsada=false;
                             }
                         }
@@ -125,7 +129,8 @@ public class VistaTablero extends javax.swing.JFrame {
                             posicionAnterior.setFila(posicionActual.getFila());
                             posicionAnterior.setColumna(posicionActual.getColumna());
                             piezaPulsada=true;
-                            tablero.comprobarPosicion(posicionActual).MostrarTodas();
+//                            System.out.println("aqui esta el fallo");
+//                            tablero.comprobarPosicion(posicionActual).MostrarTodas();
                         }
                         
                         /* 
@@ -275,64 +280,69 @@ public class VistaTablero extends javax.swing.JFrame {
         int posAntFil = posicionAnterior.getFila();
         int posAntCol = posicionAnterior.getColumna();
         boolean hayFicha = false; 
-        // Movimiento en diagonal
-        if ((posicionActual.getFila() != posicionAnterior.getFila()) && (posicionActual.getColumna() !=posicionAnterior.getColumna()))
+        Pieza pieza;
+        pieza = tablero.comprobarPosicion(posicionAnterior);
+        
+        if (!pieza.equals("Caballo"))
         {
-            if ((posicionActual.getFila() > posicionAnterior.getFila()) && (posicionActual.getColumna() > posicionAnterior.getColumna()))
+            // Movimiento en diagonal
+            if ((posicionActual.getFila() != posicionAnterior.getFila()) && (posicionActual.getColumna() !=posicionAnterior.getColumna()))
             {
-                posAntCol++;
-                posAntFil++;
-                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() > posAntCol))
+                if ((posicionActual.getFila() > posicionAnterior.getFila()) && (posicionActual.getColumna() > posicionAnterior.getColumna()))
                 {
                     posAntCol++;
                     posAntFil++;
+                    while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() > posAntCol))
+                    {
+                        posAntCol++;
+                        posAntFil++;
+                    }
+                    if (posicionActual.getColumna() > posAntCol)
+                        hayFicha = true;
                 }
-                if (posicionActual.getColumna() > posAntCol)
-                    hayFicha = true;
-            }
-            if (posicionActual.getFila() < posicionAnterior.getFila() && posicionActual.getColumna() > posicionAnterior.getColumna())
-            {
-                posAntCol++;
-                posAntFil--;
-                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() > posAntCol))
+                if (posicionActual.getFila() < posicionAnterior.getFila() && posicionActual.getColumna() > posicionAnterior.getColumna())
                 {
                     posAntCol++;
                     posAntFil--;
+                    while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() > posAntCol))
+                    {
+                        posAntCol++;
+                        posAntFil--;
+                    }
+                    if (posicionActual.getColumna() > posAntCol)
+                        hayFicha = true;
                 }
-                if (posicionActual.getColumna() > posAntCol)
-                    hayFicha = true;
-            }
-            if (posicionActual.getFila() > posicionAnterior.getFila() && posicionActual.getColumna() < posicionAnterior.getColumna())
-            {
-                posAntCol--;
-                posAntFil++;
-                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() < posAntCol))
+                if (posicionActual.getFila() > posicionAnterior.getFila() && posicionActual.getColumna() < posicionAnterior.getColumna())
                 {
                     posAntCol--;
                     posAntFil++;
+                    while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() < posAntCol))
+                    {
+                        posAntCol--;
+                        posAntFil++;
+                    }
+                    if (posicionActual.getColumna() < posAntCol)
+                        hayFicha = true;       
                 }
-                if (posicionActual.getColumna() < posAntCol)
-                    hayFicha = true;       
-            }
-            if (posicionActual.getFila() < posicionAnterior.getFila() && posicionActual.getColumna() < posicionAnterior.getColumna())
-            {
-                posAntCol--;
-                posAntFil--;
-                while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() < posAntCol))
+                if (posicionActual.getFila() < posicionAnterior.getFila() && posicionActual.getColumna() < posicionAnterior.getColumna())
                 {
                     posAntCol--;
                     posAntFil--;
-                }
-                if (posicionActual.getColumna() < posAntCol)
-                    hayFicha = true;
-            }       
-        }
-        // Movimiento horizontal
-        if ((posicionActual.getFila() == posicionAnterior.getFila()) && (posicionActual.getColumna() !=posicionAnterior.getColumna()))
-        {
-            if (posicionActual.getColumna() < posicionAnterior.getColumna())
+                    while ((casilla[posAntFil][posAntCol].getIcon() == null) && (posicionActual.getColumna() < posAntCol))
+                    {
+                        posAntCol--;
+                        posAntFil--;
+                    }
+                    if (posicionActual.getColumna() < posAntCol)
+                        hayFicha = true;
+                }       
+            }
+            // Movimiento horizontal
+            if ((posicionActual.getFila() == posicionAnterior.getFila()) && (posicionActual.getColumna() !=posicionAnterior.getColumna()))
             {
-                posAntCol--;
+                if (posicionActual.getColumna() < posicionAnterior.getColumna())
+                {
+                    posAntCol--;
                 while ((casilla[posAntFil][posAntCol].getIcon() == null) && posAntCol > posicionActual.getColumna())
                 {
                     posAntCol--;
@@ -364,17 +374,18 @@ public class VistaTablero extends javax.swing.JFrame {
                 }
                 if (posAntFil > posicionActual.getFila())
                     hayFicha = true;
-            }
-            if (posicionActual.getFila() > posicionAnterior.getFila())
-            {
-                posAntFil++;
-                while ((casilla[posAntFil][posAntCol].getIcon() == null) && posAntFil < posicionActual.getFila())
+                }
+                if (posicionActual.getFila() > posicionAnterior.getFila())
                 {
                     posAntFil++;
-                }
-                if (posAntFil < posicionActual.getFila())
-                    hayFicha = true;
-            }            
+                    while ((casilla[posAntFil][posAntCol].getIcon() == null) && posAntFil < posicionActual.getFila())
+                    {
+                        posAntFil++;
+                    }
+                    if (posAntFil < posicionActual.getFila())
+                        hayFicha = true;
+                }            
+            }
         }
         return hayFicha;
     }
