@@ -176,10 +176,6 @@ public class Caballo extends Pieza{
     public String tipoPieza(){
         return "Caballo";
     }
-    @Override
-    public String tipoPieza(){
-        return "Caballo";
-    }
     
     @Override
     public String toString(){
