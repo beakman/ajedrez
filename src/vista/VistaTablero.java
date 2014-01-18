@@ -7,6 +7,7 @@ package vista;
 import ajedrez.Movimientos;
 import ajedrez.IPieza;
 import ajedrez.IJugador;
+import ajedrez.Maquina;
 import ajedrez.Movimiento;
 import ajedrez.Pieza;
 import ajedrez.Posicion;
@@ -111,6 +112,32 @@ public class VistaTablero extends javax.swing.JFrame {
                                 posicionAnterior.setFila(posicionActual.getFila());
                                 posicionAnterior.setColumna(posicionActual.getColumna());
                                 piezaPulsada=false;
+                                //prueba de concepto: generar movimiento de máquina
+                                Maquina maq = new Maquina(tablero);
+                                Pieza p;
+                                Movimiento m = maq.hacerMovimiento();
+                                System.out.println("EN M HAY"+m);
+                                 p=  tablero.estado.get(m.posActual);
+                                 System.out.println("EN p HAY"+p);
+                                if (tablero.esMovimientoPosible(m,p)) 
+                                {
+                                    System.out.println("NI DE COÑA");
+                                    setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
+                                    tablero.actualizarEstado(posicionAnterior, posicionActual);
+                                    piezaAnterior.actualizarPosicion(posicionActual);
+                                    casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
+                                    casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);                            
+                                    // actualizamos el color
+                                    if ((posicionAnterior.getFila() + posicionAnterior.getColumna()) % 2 == 0) {
+                                        casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(Color.white);
+                                    } else {                    
+                                        casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(new Color(0x00a6ac));
+                                    } 
+                                    posicionAnterior.setFila(posicionActual.getFila());
+                                    posicionAnterior.setColumna(posicionActual.getColumna());
+                                    piezaPulsada=false;
+                                }
+                                
                             }
                             else {
                                 System.out.println("No se puede actualizar la posicionAAAAA");
