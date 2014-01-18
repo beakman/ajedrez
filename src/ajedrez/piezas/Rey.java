@@ -201,6 +201,7 @@ public class Rey extends Pieza{
     posicion.setColumna(nuevaPosicion.columna);
         posicion.setFila(nuevaPosicion.fila);    
     }
+    @Override
     public String tipoPieza(){
         return "Rey";
     }
