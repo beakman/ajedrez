@@ -33,14 +33,11 @@ public class Maquina extends Jugador{
          * vamos a moverla de manera aleatoria entre los movimientos
          * posibles que tiene
          */
-        while (!encontrado){
-        for(int x=0; x< 7;x++){
+        
+        for(int x=0; (x< 7) && (!encontrado);x++){
             for(int y=0;y<7;y++ ){
                 pos.fila = x;
                 pos.columna = y;
-                //System.out.println("Comprobando fila: "+x);
-                //System.out.println("Comprobando columna: "+y);
-                //System.out.println("En tab.estado.get(pos hay): "+tab.estado.get(pos));
                 System.out.println("En tab.estado.get(pos hay): "+tab.estado.get(new Posicion(x,y).toString()));
                 if((tab.estado.get(pos.toString()) != null) && (tab.estado.get(pos.toString()).color == ajedrez.Color.negra)){
                     posible = pos;
@@ -74,7 +71,7 @@ public class Maquina extends Jugador{
                }
         }
         }
-        }
+        
         return movimiento;
         
     }

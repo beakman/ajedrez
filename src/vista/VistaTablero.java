@@ -117,15 +117,19 @@ public class VistaTablero extends javax.swing.JFrame {
                                 Pieza p;
                                 Movimiento m = maq.hacerMovimiento();
                                 System.out.println("EN M HAY"+m);
-                                 p=  tablero.estado.get(m.posActual);
+                                 p=  tablero.estado.get(m.posActual.toString());
                                  System.out.println("EN p HAY"+p);
                                 if (tablero.esMovimientoPosible(m,p)) 
                                 {
-                                    System.out.println("NI DE COÑA");
+                                    
+                                    posicionAnterior = m.posActual;
+                                    System.out.println("El caballo se va a mover desde pos actual:"+posicionAnterior);
+                                    posicionActual = m.posDestino;
+                                    System.out.println("El caballo se va a mover desde pos actual a :"+posicionActual);
                                     setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
                                     tablero.actualizarEstado(posicionAnterior, posicionActual);
                                     piezaAnterior.actualizarPosicion(posicionActual);
-                                    casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
+                                    casilla[m.posDestino.fila][m.posDestino.columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
                                     casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);                            
                                     // actualizamos el color
                                     if ((posicionAnterior.getFila() + posicionAnterior.getColumna()) % 2 == 0) {
