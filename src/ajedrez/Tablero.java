@@ -145,9 +145,15 @@ public class Tablero implements ITablero
                     if(!hayPieza(new Posicion(f_aux, c_aux)))
                     {
                         resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        //actualizarEstado(pieza.posicion, );
+                        
                     }
-                    else
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        break;
+                    }
+                    else 
                     {
                         break;
                     }
@@ -163,7 +169,13 @@ public class Tablero implements ITablero
                     {
                         resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
                     }                    
-                    else
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        break;
+                    }
+                    else 
                     {
                         break;
                     }
@@ -176,7 +188,13 @@ public class Tablero implements ITablero
                 c_aux--;
                 if(!hayPieza(new Posicion(f_aux, c_aux)))
                     resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else
+                else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        break;
+                    }
+                else 
                 {
                     break;
                 }
@@ -189,7 +207,13 @@ public class Tablero implements ITablero
                 c_aux++;
                 if(!hayPieza(new Posicion(f_aux, c_aux)))
                     resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else
+                else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        break;
+                    }
+                else 
                 {
                     break;
                 }
