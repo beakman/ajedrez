@@ -22,6 +22,8 @@ public class Tablero implements ITablero
     private final Rey[] rey = new Rey[2];
     private final Reyna[] reyna = new Reyna[2];
     public final HashMap<String, Pieza> estado = new HashMap<>();
+    public final HashMap<String, Pieza> piezas_negras = new HashMap<>();
+    public final HashMap<String, Pieza> piezas_blancas = new HashMap<>();
 
     public Tablero() 
     {
@@ -64,8 +66,6 @@ public class Tablero implements ITablero
         Iterator<Movimiento> iterador = this.getMovimientosPosibles(pieza).iterator();
         while (iterador.hasNext()){
             Movimiento m = iterador.next();
-            System.out.println("M: "+m.posDestino);
-            System.out.println("MOV: "+mov.posDestino);
             if (m.posDestino.fila==mov.posDestino.fila && m.posDestino.columna==mov.posDestino.columna){
                 esposible=true;
             }
@@ -76,22 +76,37 @@ public class Tablero implements ITablero
     public ArrayList<Movimiento> getMovimientosPosibles(Pieza pieza)
     {
         ArrayList<Movimiento> resultado=new ArrayList<>();
+        resultado.clear();
         
         if (pieza.tipoPieza().equals("Peon")){
             // Hay que comprobar las 1 casilla
             //Color color = this.col;
+            
             int f_aux = pieza.posicion.getFila();
             int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
             // Primera posicion posible
             if((f_aux > 0)&& (pieza.color == Color.blanca))
             {
                 if (f_aux == 6){
-                    if(!hayPieza(new Posicion(f_aux - 2, c_aux)))
+                    if(!hayPieza(new Posicion(f_aux - 2, c_aux))){
                         resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux - 2, c_aux)));
+                    }
                 }
-                f_aux = f_aux - 1;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
+                f_aux=f_aux-1;
+                if(!hayPieza(new Posicion(f_aux, c_aux))){
                     resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    if(c_aux<7 && c_aux>0){
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+                    }
+                    else if(c_aux==7){                        
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+                    }
+                    else if(c_aux==0){
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+                    }
+                }
+                System.out.println("Movimientos peón blanco: "+resultado);
             }
             else if((f_aux < 7) && (pieza.color == Color.negra))
             {
@@ -102,6 +117,17 @@ public class Tablero implements ITablero
                 f_aux = f_aux + 1;
                 if(!hayPieza(new Posicion(f_aux, c_aux)))
                     resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                if(c_aux<7 && c_aux>0){
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+                }
+                else if(c_aux==7){                        
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+                }
+                else if(c_aux==0){
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+                }
+                System.out.println("Movimientos peón negro: "+resultado);
             }
         }
         
@@ -116,12 +142,10 @@ public class Tablero implements ITablero
             while(f_aux > 0){
                 //Hacia atras
                 f_aux--;
-                System.out.println("mmmmmmm");
                     if(!hayPieza(new Posicion(f_aux, c_aux)))
                     {
                         resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
                         //actualizarEstado(pieza.posicion, );
-                        System.out.println("holaaa");
                     }
                     else
                     {
@@ -131,16 +155,13 @@ public class Tablero implements ITablero
             
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna();
-            System.out.println(f_aux);
             while(f_aux < 7){
                 
                 //Hacia delante
                 f_aux++;
                     if(!hayPieza(new Posicion(f_aux, c_aux)))
                     {
-                        System.out.println(f_aux);
                         resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        System.out.println("grrrrrrrrrrr");
                     }                    
                     else
                     {
@@ -176,7 +197,6 @@ public class Tablero implements ITablero
         }
         if (pieza.tipoPieza().equals("Caballo"))
         {
-            System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             int f_aux = pieza.posicion.getFila();
             int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
             if ((f_aux - 1 >= 0)&&(c_aux + 2 <= 7))
@@ -264,7 +284,6 @@ public class Tablero implements ITablero
         }
         if (pieza.tipoPieza().equals("Reyna"))
         {
-            System.out.println("reynaaaaa");
             int f_aux = pieza.posicion.getFila();
             int c_aux = pieza.posicion.getColumna();       
                 while ((f_aux > 0) && (c_aux < 7)) {
@@ -281,7 +300,6 @@ public class Tablero implements ITablero
             //Partimos del punto inicial para volver a mirar
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna();
-            System.out.println("mala: " + "f_aux= "+ f_aux + "c_aux= " + c_aux);
             while ((f_aux < 8-2) && (c_aux < 8-1)) {
                 f_aux++;
                 c_aux++;
@@ -389,7 +407,6 @@ public class Tablero implements ITablero
             //Partimos del punto inicial para volver a mirar
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna();
-            System.out.println("mala: " + "f_aux= "+ f_aux + "c_aux= " + c_aux);
             while ((f_aux < 8-2) && (c_aux < 8-1)) {
                 f_aux++;
                 c_aux++;
@@ -530,33 +547,51 @@ public class Tablero implements ITablero
         // Colocamos los peones
         for(int i=0; i<8; i++){
             estado.put(new Posicion(1,i).toString(), peon[i]);
+            piezas_negras.put(new Posicion(1,i).toString(), peon[i]);
             estado.put(new Posicion(6,i).toString(), peon[i+8]);
+            piezas_blancas.put(new Posicion(6,i).toString(), peon[i+8]);
         }
         // Colocamos los caballos
         estado.put((new Posicion(0,1)).toString(), caballo[0]);
+        piezas_negras.put((new Posicion(0,1)).toString(), caballo[0]);
         estado.put((new Posicion(0,6)).toString(), caballo[1]);
-        estado.put((new Posicion(7,1)).toString(), caballo[2]);       
+        piezas_negras.put((new Posicion(0,6)).toString(), caballo[1]);
+        estado.put((new Posicion(7,1)).toString(), caballo[2]);  
+        piezas_blancas.put((new Posicion(7,1)).toString(), caballo[2]);  
         estado.put((new Posicion(7,6)).toString(), caballo[3]);
+        piezas_blancas.put((new Posicion(7,6)).toString(), caballo[3]);
         
         // Colocamos los alfiles
         estado.put((new Posicion(0,2)).toString(), alfil[0]);
+        piezas_negras.put((new Posicion(0,2)).toString(), alfil[0]);
         estado.put((new Posicion(0,5)).toString(), alfil[1]);
-        estado.put((new Posicion(7,2)).toString(), alfil[2]);       
+        piezas_negras.put((new Posicion(0,5)).toString(), alfil[1]);
+        estado.put((new Posicion(7,2)).toString(), alfil[2]);
+        piezas_blancas.put((new Posicion(7,2)).toString(), alfil[2]);
         estado.put((new Posicion(7,5)).toString(), alfil[3]);
-        
+        piezas_blancas.put((new Posicion(7,5)).toString(), alfil[3]);
+                
         // Colocamos las torres
         estado.put((new Posicion(0,0)).toString(), torre[0]);
+        piezas_negras.put((new Posicion(0,0)).toString(), torre[0]);
         estado.put((new Posicion(0,7)).toString(), torre[1]);
-        estado.put((new Posicion(7,0)).toString(), torre[2]);       
+        piezas_negras.put((new Posicion(0,7)).toString(), torre[1]);
+        estado.put((new Posicion(7,0)).toString(), torre[2]);  
+        piezas_blancas.put((new Posicion(7,0)).toString(), torre[2]);  
         estado.put((new Posicion(7,7)).toString(), torre[3]);
+        piezas_blancas.put((new Posicion(7,7)).toString(), torre[3]);
         
         // Colocamos lo reyes
         estado.put((new Posicion(0,4)).toString(), rey[0]);
+        piezas_negras.put((new Posicion(0,4)).toString(), rey[0]);
         estado.put((new Posicion(7,4)).toString(), rey[1]);
+        piezas_blancas.put((new Posicion(7,4)).toString(), rey[1]);
         
         // Colocamos las reynas
         estado.put((new Posicion(0,3)).toString(), reyna[0]);
+        piezas_negras.put((new Posicion(0,3)).toString(), reyna[0]);
         estado.put((new Posicion(7,3)).toString(), reyna[1]);
+        piezas_blancas.put((new Posicion(7,3)).toString(), reyna[1]);
     }
     
     @Override
@@ -567,8 +602,6 @@ public class Tablero implements ITablero
     
     public Pieza comprobarPosicion(Posicion posicion)
     {
-        System.out.println("En... " + posicion);
-        System.out.println("hay " + estado.get(posicion.toString()));
         return estado.get(posicion.toString());
     }
     /* 
@@ -577,7 +610,19 @@ public class Tablero implements ITablero
             movida.
     */
     public void actualizarEstado(Posicion anterior, Posicion actual){
+        
+        if(estado.get(anterior.toString()).color == ajedrez.Color.negra)
+        {
+            piezas_negras.put(actual.toString(), piezas_negras.get(anterior.toString()));
+            piezas_negras.remove(anterior.toString());
+        }
+        else if(estado.get(anterior.toString()).color == ajedrez.Color.blanca)
+        {
+            piezas_blancas.put(actual.toString(), piezas_blancas.get(anterior.toString()));
+            //piezas_blancas.put(anterior.toString(), null);
+            piezas_blancas.remove(anterior.toString());
+        }
         estado.put(actual.toString(), estado.get(anterior.toString()));
-        estado.put(anterior.toString(), null);
+        estado.remove(anterior.toString());
     }
 }
