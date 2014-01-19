@@ -6,6 +6,7 @@ package ajedrez;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -17,7 +18,6 @@ public class Maquina extends Jugador{
     public Maquina(Tablero t)
     {
         this.tab = t;
-        //System.out.println("En tab.estado: "+tab.estado);
     }
     
     public Movimiento hacerMovimiento(){
@@ -33,23 +33,24 @@ public class Maquina extends Jugador{
          * vamos a moverla de manera aleatoria entre los movimientos
          * posibles que tiene
          */
-        
 
             while (!encontrado)
                 {
-                pos.setFila(rd.nextInt(7));
-                pos.setColumna(rd.nextInt(7));
-                System.out.println("* En tab.estado.get(pos hay): "+tab.estado.get(pos.toString()));
-                if((tab.estado.get(pos.toString()) != null) && (tab.estado.get(pos.toString()).color == ajedrez.Color.negra)){
+               // pos.setFila(rd.nextInt(7));
+                //pos.setColumna(rd.nextInt(7));
+                
+//                if((tab.estado.get(pos.toString()) != null) && (tab.estado.get(pos.toString()).color == ajedrez.Color.negra)){
                     /*tenemos una posición del tablero con una pieza
                      * Ahora vemos si esa pieza tiene algún movimiento
                      * posible para realizar
                      */
                     //resultado será un arraylist con los posibles movimientos
                     //de la ficha seleccionada
-                     //System.out.println("CUAL ES LA MADRE DEL TOPPPOOO"+tab.estado.get(pos.toString()));
-                    resultado = tab.getMovimientosPosibles(tab.estado.get(pos.toString()));
-                    System.out.println("resultado= "+resultado);
+                    List<Pieza> valuesList = new ArrayList<Pieza>(tab.piezas_negras.values());
+                    int randomIndex = new Random().nextInt(valuesList.size());
+                    Pieza randomValue = valuesList.get(randomIndex);
+                    resultado = tab.getMovimientosPosibles(randomValue);
+
                     //ahora entre esos movimientos posibles, vamos a seleccionar uno
                     
                     if(resultado !=null)
@@ -57,7 +58,7 @@ public class Maquina extends Jugador{
                         Iterator<Movimiento> iterador = resultado.iterator();
                         while (iterador.hasNext()){
                             Movimiento m = iterador.next();
-                            if (tab.esMovimientoPosible(m, tab.estado.get(pos.toString()))){
+                            if (tab.esMovimientoPosible(m, tab.piezas_negras.get(randomValue.posicion.toString()))){
                                 movimiento =new Movimiento(m.color,m.posActual,m.posDestino);
                                 encontrado =true;
                                 break;
@@ -65,10 +66,9 @@ public class Maquina extends Jugador{
 
                         }
                     }               
-                }
+//                }
             }
 
-        System.out.println("Cabrona, eres un BLANCA??: "+movimiento);
         return movimiento;
     }
     

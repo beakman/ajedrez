@@ -39,55 +39,19 @@ public class Peon extends Pieza{
     
     public void MostrarTodas()
     {
-        this.getMovimientosPosibles();
-        System.out.println("MOVIMIENTOS POSIBLES");
         for (Posicion palabra : resultado) {
             System.out.print(palabra+" ");
         }
         System.out.println();
         resultado.clear();
-    }
-    
-    @Override
-    public Movimientos getMovimientosPosibles() {
-        // Hay que comprobar las 1 casilla
-        //Color color = this.col;
-        
-        int f_aux = posicion.getFila();
-        int c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
-        // Primera posicion posible
-        if((f_aux > 0)&& (color == Color.blanca))
-        {
-            if (f_aux == 6)
-                resultado.add(new Posicion(f_aux - 2, c_aux));
-            f_aux = f_aux - 1;
-            resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
-        }
-        else if((f_aux < filas.length - 1) && (color == Color.negra))
-        {
-            if (f_aux == 1)
-                resultado.add(new Posicion(f_aux - 2, c_aux));
-            f_aux = f_aux + 1;
-            resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));          
-        }
-        return mov;
-    }
+    }    
 
     @Override
     public boolean esMovimientoPosible(Posicion nuevoDestino) {
         //Aquí la idea es en primer lugar mirar en el array que nos ha devuelto 
         //el método anterior si nuevoDestino está dentro de el y por tanto
         //sería candidato a moverse si no hay otra ficha o alguna por medio
-        System.out.println("resultado0= "+resultado.toString());
-        Movimientos movimientos = this.getMovimientosPosibles();
-        ArrayList<Posicion> arrayLista = new ArrayList<>();
         boolean esposible = false;
-        System.out.println("nuevoDestino.fila= "+nuevoDestino.fila);
-        System.out.println("nuevoDestino.columna= "+nuevoDestino.columna);
-        System.out.println("resultado= "+resultado.toString());
-        System.out.println("nuevoDestino= "+nuevoDestino);
 
         Iterator<Posicion> iterador = resultado.iterator();
         while (iterador.hasNext()){
@@ -115,5 +79,10 @@ public class Peon extends Pieza{
     @Override
     public String toString(){
         return "Peon "+color.name();
+    }
+
+    @Override
+    public Movimientos getMovimientosPosibles() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
