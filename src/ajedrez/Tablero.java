@@ -139,7 +139,7 @@ public class Tablero implements ITablero
             int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
             boolean ficha = false;
             // Primera posicion posible
-            while(f_aux > 0){
+            while((f_aux > 0) && !ficha){
                 //Hacia atras
                 f_aux--;
                     if(!hayPieza(new Posicion(f_aux, c_aux)))
@@ -151,17 +151,18 @@ public class Tablero implements ITablero
                     {
                         if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
                             resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        break;
+                        ficha=true;
                     }
                     else 
                     {
-                        break;
+                        ficha=true;
                     }
             }
+            ficha=false;
             
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna();
-            while(f_aux < 7){
+            while((f_aux < 7) && !ficha){
                 
                 //Hacia delante
                 f_aux++;
@@ -173,17 +174,17 @@ public class Tablero implements ITablero
                     {
                         if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
                             resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        break;
+                        ficha=true;
                     }
                     else 
                     {
-                        break;
+                        ficha=true;
                     }
             }
-            
+            ficha=false;
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna();
-            while(c_aux > 0){
+            while((c_aux > 0) && !ficha){
                 // Hacia izquiera
                 c_aux--;
                 if(!hayPieza(new Posicion(f_aux, c_aux)))
@@ -192,17 +193,17 @@ public class Tablero implements ITablero
                     {
                         if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
                             resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        break;
+                        ficha=true;
                     }
                 else 
                 {
-                    break;
+                    ficha=true;
                 }
             }
-
+            ficha=false;
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna();
-            while(c_aux < 7){
+            while((c_aux < 7) && !ficha){
                 // Hacia derecha
                 c_aux++;
                 if(!hayPieza(new Posicion(f_aux, c_aux)))
@@ -211,11 +212,11 @@ public class Tablero implements ITablero
                     {
                         if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
                             resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        break;
+                        ficha=true;
                     }
                 else 
                 {
-                    break;
+                    ficha=true;
                 }
             }   
         }
