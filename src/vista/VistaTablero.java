@@ -77,10 +77,12 @@ public class VistaTablero extends javax.swing.JFrame {
                          */
                         if(casilla[fila][columna].getIcon()==null && !piezaPulsada){
                             // 1. actualizamos posicionAnterior
-                            // 2. piezaPulsada=true                            
+                            // 2. piezaPulsada=true
+                            // deseleccionamos la casilla
+                            colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
+                            piezaPulsada=false;
                             posicionAnterior.setFila(posicionActual.getFila());
                             posicionAnterior.setColumna(posicionActual.getColumna());
-                            piezaPulsada=false;
                         }
                         /* 
                           = Casilla vacia, pieza pulsada previamente (movemos)
@@ -109,9 +111,12 @@ public class VistaTablero extends javax.swing.JFrame {
                                 } else {                    
                                     casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(new Color(0x00a6ac));
                                 } 
+                                // deseleccionamos la casilla
+                                colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
+                                piezaPulsada=false;
                                 posicionAnterior.setFila(posicionActual.getFila());
                                 posicionAnterior.setColumna(posicionActual.getColumna());
-                                piezaPulsada=false;
+
                                 //prueba de concepto: generar movimiento de máquina
                                 Maquina maq = new Maquina(tablero);
                                 Pieza p;
@@ -127,23 +132,21 @@ public class VistaTablero extends javax.swing.JFrame {
                                     System.out.println("El caballo se va a mover desde pos actual a :"+posicionActual);
                                     setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
                                     tablero.actualizarEstado(posicionAnterior, posicionActual);
-                                    piezaAnterior.actualizarPosicion(posicionActual);
+                                    //piezaAnterior.actualizarPosicion(posicionActual);
                                     casilla[m.posDestino.fila][m.posDestino.columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
                                     casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);                            
-                                    // actualizamos el color
-                                    if ((posicionAnterior.getFila() + posicionAnterior.getColumna()) % 2 == 0) {
-                                        casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(Color.white);
-                                    } else {                    
-                                        casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(new Color(0x00a6ac));
-                                    } 
-                                    posicionAnterior.setFila(posicionActual.getFila());
-                                    posicionAnterior.setColumna(posicionActual.getColumna());
+                                    // deseleccionamos la casilla
+                                    colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
                                     piezaPulsada=false;
+                                    posicionAnterior.setFila(posicionActual.getFila());
+                                    posicionAnterior.setColumna(posicionActual.getColumna());                                                                        
                                 }
                                 
                             }
                             else {
-                                System.out.println("No se puede actualizar la posicionAAAAA");
+                                System.out.println("No se puede actualizar la posicion");
+                                // deseleccionamos la casilla
+                                colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
                                 piezaPulsada=false;
                             }
                         }
@@ -271,18 +274,15 @@ public class VistaTablero extends javax.swing.JFrame {
 //                            
 //                                }
                             }
-                            // actualizamos el color
-                            if ((posicionAnterior.getFila() + posicionAnterior.getColumna()) % 2 == 0) {
-                                casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(Color.white);
-                            } else {                    
-                                casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(new Color(0x00a6ac));
-                            }
+                            // deseleccionamos la casilla
+                            colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
+                            piezaPulsada=false; 
                             posicionAnterior.setFila(posicionActual.getFila());
-                            posicionAnterior.setColumna(posicionActual.getColumna());
-                            piezaPulsada=false;                               
+                            posicionAnterior.setColumna(posicionActual.getColumna());                                                      
                         }                        
                     }
                 });
+                // pone el color a las casillas
                 if ((i + j) % 2 == 0) {
                     casilla[i][j].setBackground(Color.white);
                 } else {                    
@@ -295,6 +295,14 @@ public class VistaTablero extends javax.swing.JFrame {
         mostrarTablero();
         setVisible(true);        
     }
+    public void colorCasilla(JButton boton, Posicion posicion){
+        if ((posicion.getFila() + posicion.getColumna()) % 2 == 0) {
+            boton.setBackground(Color.white);
+        } else {                    
+            boton.setBackground(new Color(0x00a6ac));
+        } 
+    }
+    
     public void matar(Posicion posicionAnterior, Posicion posicionActual, Pieza piezaAnterior,int fila, int columna){
         tablero.estado.remove(posicionActual.toString()); // sacamos la pieza del diccionario
         casilla[posicionActual.getFila()][posicionActual.getColumna()].setIcon(null);
