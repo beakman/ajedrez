@@ -50,27 +50,40 @@ public class Maquina extends Jugador{
                     int randomIndex = new Random().nextInt(valuesList.size());
                     Pieza randomValue = valuesList.get(randomIndex);
                     resultado = tab.getMovimientosPosibles(randomValue);
-
+                    if (randomValue.tipoPieza().equals("Torre"))
+                        System.out.println("Movimientos torre: "+resultado);
                     //ahora entre esos movimientos posibles, vamos a seleccionar uno
                     
                     if(resultado !=null)
                     {
                         Iterator<Movimiento> iterador = resultado.iterator();
-                        while (iterador.hasNext()){
-                            Movimiento m = iterador.next();
+                        Movimiento m = null;
+                        System.out.println("size= " + resultado.size());
+                        int aleatorio;
+                        if (resultado.size()>0)
+                            aleatorio = rd.nextInt(resultado.size())+1;
+                        else
+                            aleatorio = 0;
+                        System.out.println("aleatorio= " + aleatorio);
+                        
+                        for(int i=0; i <= aleatorio-1; i++){
+                            m = iterador.next();
+                        }
+                        System.out.println("m= " + m);
                             if (tab.esMovimientoPosible(m, tab.piezas_negras.get(randomValue.posicion.toString()))){
                                 movimiento =new Movimiento(m.color,m.posActual,m.posDestino);
                                 encontrado =true;
-                                break;
+//                                break;
                             }
 
                         }
                     }               
 //                }
+             return movimiento;
             }
 
-        return movimiento;
-    }
+       
+    
     
     @Override
     public void guardarMovimiento(String nombre, Movimientos mov) {
