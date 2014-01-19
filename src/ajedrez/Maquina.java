@@ -34,12 +34,12 @@ public class Maquina extends Jugador{
          * posibles que tiene
          */
         
-        for(int x=0; (x< 7) && (!encontrado);x++){
+        for(int x=0; (x< 7);x++){
             for(int y=0;y<7;y++ ){
                 pos.fila = x;
                 pos.columna = y;
-                System.out.println("En tab.estado.get(pos hay): "+tab.estado.get(new Posicion(x,y).toString()));
-                if((tab.estado.get(pos.toString()) != null) && (tab.estado.get(pos.toString()).color == ajedrez.Color.negra)){
+                //System.out.println("En tab.estado.get(pos hay): "+tab.estado.get(new Posicion(x,y).toString()));
+                if((tab.estado.get(pos.toString()) != null) && (tab.estado.get(pos.toString()).color == ajedrez.Color.negra)&&(!encontrado)){
                     posible = pos;
                    
                     /*tenemos una posición del tablero con una pieza
@@ -48,22 +48,21 @@ public class Maquina extends Jugador{
                      */
                     //resultado será un arraylist con los posibles movimientos
                     //de la ficha seleccionada
-                     //System.out.println("CUAL ES LA MADRE DEL TOPPPOOO"+tab.estado.get(pos.toString()));
+                     
                     resultado = tab.getMovimientosPosibles(tab.estado.get(pos.toString()));
                      System.out.println("RESULTADO"+resultado);
                     //ahora entre esos movimientos posibles, vamos a seleccionar uno
                     Iterator<Movimiento> iterador = resultado.iterator();
                     if(resultado !=null)
                     {
-                        
-                        while (iterador.hasNext()){
+                        while ((iterador.hasNext()) && !encontrado){
                             System.out.println("hallo hijoputa");
                             Movimiento m = iterador.next();
                             if (tab.esMovimientoPosible(m, tab.estado.get(pos.toString()))){
                                 System.out.println("JODERRRRRRRR");
                                 movimiento =new Movimiento(m.color,m.posActual,m.posDestino);
                                 encontrado =true;
-                                break;
+                                
                             }
 
                         }

@@ -139,7 +139,8 @@ public class VistaTablero extends javax.swing.JFrame {
                                     colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
                                     piezaPulsada=false;
                                     posicionAnterior.setFila(posicionActual.getFila());
-                                    posicionAnterior.setColumna(posicionActual.getColumna());                                                                        
+                                    posicionAnterior.setColumna(posicionActual.getColumna());           
+                                    System.out.println("IA ACTÚA");
                                 }
                                 
                             }
