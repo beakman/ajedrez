@@ -23,10 +23,10 @@ public class Maquina extends Jugador{
     public Movimiento hacerMovimiento(){
         Random rd = new Random();
         Posicion pos = new Posicion(1,1);
-        Posicion posible;
         Movimiento movimiento = new Movimiento();
         ArrayList<Movimiento> resultado=new ArrayList<>();
         boolean encontrado = false;
+        
         /*1. - Vamos a buscar la primera ficha que encontremos
          * en el tablero y que puede moverse.
          * 2. - Una vez confirmado que esa ficha puede moverse
@@ -34,14 +34,13 @@ public class Maquina extends Jugador{
          * posibles que tiene
          */
         
-        for(int x=0; (x< 7);x++){
-            for(int y=0;y<7;y++ ){
-                pos.fila = x;
-                pos.columna = y;
-                //System.out.println("En tab.estado.get(pos hay): "+tab.estado.get(new Posicion(x,y).toString()));
-                if((tab.estado.get(pos.toString()) != null) && (tab.estado.get(pos.toString()).color == ajedrez.Color.negra)&&(!encontrado)){
-                    posible = pos;
-                   
+
+            while (!encontrado)
+                {
+                pos.setFila(rd.nextInt(7));
+                pos.setColumna(rd.nextInt(7));
+                System.out.println("* En tab.estado.get(pos hay): "+tab.estado.get(pos.toString()));
+                if((tab.estado.get(pos.toString()) != null) && (tab.estado.get(pos.toString()).color == ajedrez.Color.negra)){
                     /*tenemos una posición del tablero con una pieza
                      * Ahora vemos si esa pieza tiene algún movimiento
                      * posible para realizar
@@ -50,29 +49,27 @@ public class Maquina extends Jugador{
                     //de la ficha seleccionada
                      
                     resultado = tab.getMovimientosPosibles(tab.estado.get(pos.toString()));
-                     System.out.println("RESULTADO"+resultado);
+                    System.out.println("resultado= "+resultado);
                     //ahora entre esos movimientos posibles, vamos a seleccionar uno
-                    Iterator<Movimiento> iterador = resultado.iterator();
+                    
                     if(resultado !=null)
                     {
-                        while ((iterador.hasNext()) && !encontrado){
-                            System.out.println("hallo hijoputa");
+                        Iterator<Movimiento> iterador = resultado.iterator();
+                        while (iterador.hasNext()){
                             Movimiento m = iterador.next();
                             if (tab.esMovimientoPosible(m, tab.estado.get(pos.toString()))){
-                                System.out.println("JODERRRRRRRR");
                                 movimiento =new Movimiento(m.color,m.posActual,m.posDestino);
                                 encontrado =true;
                                 
                             }
 
                         }
-                    }
-               }
-        }
-        }
-        
+                    }               
+                }
+            }
+
+        System.out.println("Cabrona, eres un BLANCA??: "+movimiento);
         return movimiento;
-        
     }
     
     @Override

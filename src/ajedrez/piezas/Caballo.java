@@ -166,12 +166,7 @@ public class Caballo extends Pieza{
         return esposible;
 
     }
-
-    @Override
-    public void actualizarPosicion(Posicion nuevaPosicion) {
-        posicion.setColumna(nuevaPosicion.columna);
-        posicion.setFila(nuevaPosicion.fila);
-    }
+    
     @Override
     public String tipoPieza(){
         return "Caballo";

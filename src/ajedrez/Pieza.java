@@ -25,6 +25,12 @@ public abstract class Pieza implements IPieza {
         this.color = col;
     }
     
+    @Override
+    public void actualizarPosicion(Posicion nuevaPosicion) {
+        posicion.setColumna(nuevaPosicion.columna);
+        posicion.setFila(nuevaPosicion.fila);
+    }
+    
     public void MostrarTodas()
     {
         

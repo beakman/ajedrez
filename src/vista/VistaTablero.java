@@ -57,6 +57,7 @@ public class VistaTablero extends javax.swing.JFrame {
         seleccionAnterior = " ";
         posicionAnterior = new Posicion(0,0);
         posicionActual = new Posicion(0,0);
+        final Maquina maq = new Maquina(tablero);
         
         // Dibujamos el tablero: cada casilla sera un JButton.
         for (int i = 0; i < 8; i++) {
@@ -99,18 +100,11 @@ public class VistaTablero extends javax.swing.JFrame {
 //                            if (piezaAnterior.esMovimientoPosible(posicionActual) && hayFicha(posicionAnterior, posicionActual) == false)
                             if (tablero.esMovimientoPosible(new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual), piezaAnterior))
                             {
-                                System.out.println("NI DE COÑA");
                                 setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
                                 tablero.actualizarEstado(posicionAnterior, posicionActual);
                                 piezaAnterior.actualizarPosicion(posicionActual);
                                 casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
-                                casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);                            
-                                // actualizamos el color
-                                if ((posicionAnterior.getFila() + posicionAnterior.getColumna()) % 2 == 0) {
-                                    casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(Color.white);
-                                } else {                    
-                                    casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(new Color(0x00a6ac));
-                                } 
+                                casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);                             
                                 // deseleccionamos la casilla
                                 colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
                                 piezaPulsada=false;
@@ -118,29 +112,24 @@ public class VistaTablero extends javax.swing.JFrame {
                                 posicionAnterior.setColumna(posicionActual.getColumna());
 
                                 //prueba de concepto: generar movimiento de máquina
-                                Maquina maq = new Maquina(tablero);
+                                
                                 Pieza p;
                                 Movimiento m = maq.hacerMovimiento();
                                 System.out.println("EN M HAY"+m);
-                                p=  tablero.estado.get(m.posActual.toString());
+                                p=  tablero.estado.get((m.posActual).toString());
                                 System.out.println("EN p HAY"+p);
                                 if (tablero.esMovimientoPosible(m,p)) 
                                 {    
-                                    posicionAnterior = m.posActual;
-                                    System.out.println("El caballo se va a mover desde pos actual:"+posicionAnterior);
-                                    posicionActual = m.posDestino;
-                                    System.out.println("El caballo se va a mover desde pos actual a :"+posicionActual);
-                                    setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
-                                    tablero.actualizarEstado(posicionAnterior, posicionActual);
-                                    //piezaAnterior.actualizarPosicion(posicionActual);
-                                    casilla[m.posDestino.fila][m.posDestino.columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
-                                    casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);                            
+                                    setEstado(m.posActual.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + m.posActual.toString()+" "+m.posDestino.toString(), event.getActionCommand());
+                                    tablero.actualizarEstado(m.posActual, m.posDestino);
+                                    //p.actualizarPosicion(posicionActual);
+                                    casilla[m.posDestino.fila][m.posDestino.columna].setIcon(casilla[m.posActual.getFila()][m.posActual.getColumna()].getIcon());
+                                    casilla[m.posActual.getFila()][m.posActual.getColumna()].setIcon(null);                            
                                     // deseleccionamos la casilla
-                                    colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
+                                    colorCasilla(casilla[m.posActual.getFila()][m.posActual.getColumna()], m.posActual);
                                     piezaPulsada=false;
-                                    posicionAnterior.setFila(posicionActual.getFila());
-                                    posicionAnterior.setColumna(posicionActual.getColumna());           
-                                    System.out.println("IA ACTÚA");
+                                    m.posActual.setFila(m.posDestino.getFila());
+                                    m.posActual.setColumna(m.posDestino.getColumna());                                                                        
                                 }
                                 
                             }
@@ -187,7 +176,6 @@ public class VistaTablero extends javax.swing.JFrame {
                                      c_aux = posicionAnterior.getColumna();
                                      x = posicionActual.getFila();
                                      y = posicionActual.getColumna();
-                                     System.out.println("??");
                                      /*También tengo que comprobar que el peón sólo mata hacia adelante,
                                       * es decir, dependiendo del color, tiene dos movimientos posibles
                                       * para matar
