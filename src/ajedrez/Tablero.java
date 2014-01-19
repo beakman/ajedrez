@@ -179,7 +179,7 @@ public class Tablero implements ITablero
             System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             int f_aux = pieza.posicion.getFila();
             int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-            if ((f_aux - 1 > 0)&&(c_aux + 2 < 7))
+            if ((f_aux - 1 >= 0)&&(c_aux + 2 <= 7))
             {
                 f_aux = f_aux - 1;
                 c_aux = c_aux + 2;
@@ -190,7 +190,7 @@ public class Tablero implements ITablero
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
             // Segunda posiciones posibles
-            if ((f_aux + 1 < 7)&&(c_aux + 2 < 7))
+            if ((f_aux + 1 <= 7)&&(c_aux + 2 <= 7))
             {        
                 f_aux = f_aux + 1;
                 c_aux = c_aux + 2;
@@ -200,7 +200,7 @@ public class Tablero implements ITablero
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
             // Tercera posiciones posibles
-            if ((f_aux - 1 > 0)&&(c_aux - 2 > 0))
+            if ((f_aux - 1 >= 0)&&(c_aux - 2 >= 0))
             {
                 f_aux = f_aux - 1;
                 c_aux = c_aux - 2;
@@ -211,7 +211,7 @@ public class Tablero implements ITablero
             c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
         
             // Cuarta posicion posible
-            if ((f_aux + 1 < 7)&&(c_aux - 2 > 0))
+            if ((f_aux + 1 <= 7)&&(c_aux - 2 >= 0))
             {        
                 f_aux = f_aux + 1;
                 c_aux = c_aux - 2;
@@ -222,7 +222,7 @@ public class Tablero implements ITablero
             c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
             
             // Quinta posicion posible
-            if ((f_aux + 2 < 7)&&(c_aux + 1 < 7))
+            if ((f_aux + 2 <= 7)&&(c_aux + 1 <= 7))
             {        
                 f_aux = f_aux + 2;
                 c_aux = c_aux + 1;
@@ -232,7 +232,7 @@ public class Tablero implements ITablero
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
             // Sexta posiciones posibles
-            if ((f_aux + 2 < 7)&&(c_aux - 1 > 0))
+            if ((f_aux + 2 <= 7)&&(c_aux - 1 >= 0))
             {        
                 f_aux = f_aux + 2;
                 c_aux = c_aux - 1;
@@ -243,7 +243,7 @@ public class Tablero implements ITablero
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
             // Septima posiciones posibles
-            if ((f_aux - 2 > 0)&&(c_aux + 1 < 7))
+            if ((f_aux - 2 >= 0)&&(c_aux + 1 <= 7))
             {        
                 f_aux = f_aux - 2;
                 c_aux = c_aux + 1;
@@ -254,7 +254,7 @@ public class Tablero implements ITablero
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
             // Octava posiciones posibles
-            if ((f_aux - 2 > 0)&&(c_aux - 1 > 0))
+            if ((f_aux - 2 >= 0)&&(c_aux - 1 >= 0))
             {        
                 f_aux = f_aux - 2;
                 c_aux = c_aux - 1;

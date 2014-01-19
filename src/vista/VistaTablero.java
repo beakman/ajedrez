@@ -117,11 +117,10 @@ public class VistaTablero extends javax.swing.JFrame {
                                 Pieza p;
                                 Movimiento m = maq.hacerMovimiento();
                                 System.out.println("EN M HAY"+m);
-                                 p=  tablero.estado.get(m.posActual.toString());
-                                 System.out.println("EN p HAY"+p);
+                                p=  tablero.estado.get(m.posActual.toString());
+                                System.out.println("EN p HAY"+p);
                                 if (tablero.esMovimientoPosible(m,p)) 
-                                {
-                                    
+                                {    
                                     posicionAnterior = m.posActual;
                                     System.out.println("El caballo se va a mover desde pos actual:"+posicionAnterior);
                                     posicionActual = m.posDestino;
