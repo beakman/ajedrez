@@ -21,6 +21,7 @@ public class Maquina extends Jugador{
     }
     
     public Movimiento hacerMovimiento(){
+        
         Random rd = new Random();
         Posicion pos = new Posicion(1,1);
         Movimiento movimiento = new Movimiento();
