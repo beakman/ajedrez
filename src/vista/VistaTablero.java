@@ -197,9 +197,12 @@ public class VistaTablero extends javax.swing.JFrame {
                             }
                             else {
                                 System.out.println("No se puede actualizar la posicion");
+                                System.out.println(">> "+tablero.estado.get(posicionAnterior.toString())+"\nMovimientos: "+tablero.estado.get(posicionAnterior.toString()).getMovimientosPosibles());
                                 // deseleccionamos la casilla
                                 colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
                                 piezaPulsada=false;
+                                posicionAnterior.setFila(posicionActual.getFila());
+                                posicionAnterior.setColumna(posicionActual.getColumna());
                                 System.out.println("Turno de las blancas.");
                                 turno = true;
                             }
@@ -333,7 +336,6 @@ public class VistaTablero extends javax.swing.JFrame {
 //                            
 //                                }
                                 
-                            }
                             // deseleccionamos la casilla
                             colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
                             piezaPulsada=false; 
@@ -371,7 +373,20 @@ public class VistaTablero extends javax.swing.JFrame {
                             else {
                                 System.out.println("Turno de las negras.");
                                 turno = false;
+                            }    
                             }
+                            else{
+                                if(tablero.estado.get((new Posicion(fila,columna)).toString()).color == ajedrez.Color.blanca)
+                                {
+                                    // deseleccionamos la casilla
+                                    colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
+                                    casilla[fila][columna].setBackground(Color.GRAY);                                
+                                    piezaPulsada=true;
+                                }
+                                posicionAnterior.setFila(posicionActual.getFila());
+                                posicionAnterior.setColumna(posicionActual.getColumna());
+                            }
+                            
                             
                         }                        
                     }
@@ -422,8 +437,13 @@ public class VistaTablero extends javax.swing.JFrame {
                             }
                             else {
                                 System.out.println("No se puede actualizar la posicion");
+                                System.out.println(">> "+tablero.estado.get(posicionAnterior.toString())+"\nMovimientos: "+tablero.getMovimientosAlfil(tablero.estado.get(posicionAnterior.toString())));
                                 // deseleccionamos la casilla
                                 colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
+                                posicionAnterior.setFila(posicionActual.getFila());
+                                posicionAnterior.setColumna(posicionActual.getColumna());
+                                System.out.println("Turno de las negras.");
+                                turno=false;
                                 piezaPulsada=false;
                             }
                         }
@@ -550,14 +570,26 @@ public class VistaTablero extends javax.swing.JFrame {
                                     y = posicionActual.getColumna();
                                     matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
                                 }
+                                // deseleccionamos la casilla
+                                colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
+                                piezaPulsada=false;
+                                posicionAnterior.setFila(posicionActual.getFila());
+                                posicionAnterior.setColumna(posicionActual.getColumna());
+                                System.out.println("Turno de las blancas.");
+                                turno = true;
                             }
-                            // deseleccionamos la casilla
-                            colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
-                            piezaPulsada=false;
-                            posicionAnterior.setFila(posicionActual.getFila());
-                            posicionAnterior.setColumna(posicionActual.getColumna());
-                            System.out.println("Turno de las blancas.");
-                            turno = true;
+                            
+                            else{
+                                if(tablero.estado.get((new Posicion(fila,columna)).toString()).color == ajedrez.Color.negra)
+                                {
+                                    // deseleccionamos la casilla
+                                    colorCasilla(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()], posicionAnterior);
+                                    casilla[fila][columna].setBackground(Color.GRAY);                                
+                                    piezaPulsada=true;
+                                }
+                                posicionAnterior.setFila(posicionActual.getFila());
+                                posicionAnterior.setColumna(posicionActual.getColumna());
+                            }
                         }                        
                         }
                     }
@@ -588,6 +620,8 @@ public class VistaTablero extends javax.swing.JFrame {
         casilla[posicionActual.getFila()][posicionActual.getColumna()].setIcon(null);
         tablero.actualizarEstado(posicionAnterior, posicionActual);
         piezaAnterior.actualizarPosicion(posicionActual);
+        movimientos.anadirMovimiento(piezaAnterior, new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual));
+        listModel.addElement(movimientos.getUltimoMovimiento());
         casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
         casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
         casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getBackground());
