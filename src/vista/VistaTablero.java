@@ -22,8 +22,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
@@ -43,6 +46,7 @@ public class VistaTablero extends javax.swing.JFrame {
     public String jugador1;
     public String jugador2;
     public JTextArea informacion = new JTextArea();
+    public JList historial;
     public static boolean piezaPulsada=false;
     public static String seleccionAnterior;
     public static Posicion posicionAnterior, posicionActual;
@@ -50,6 +54,8 @@ public class VistaTablero extends javax.swing.JFrame {
         //o contra otro usuario
     public static boolean contraPersona = false;
     public static JButton casilla[][] = new JButton[8][8];
+    public Movimientos movimientos = new Movimientos();
+    private DefaultListModel listModel;
     /**
      * Creates new form VistaTablero
      * @param tab
@@ -96,10 +102,7 @@ public class VistaTablero extends javax.swing.JFrame {
                     repaint();
                 }
   
-            });
-
-                
-                
+            });                                
                 
                 casilla[i][j].addActionListener(new ActionListener() {
                     @Override
@@ -136,6 +139,8 @@ public class VistaTablero extends javax.swing.JFrame {
                             {
                                 
                                 setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
+                                movimientos.anadirMovimiento(piezaAnterior, new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual));
+                                listModel.addElement(movimientos.getUltimoMovimiento());
                                 tablero.actualizarEstado(posicionAnterior, posicionActual);
                                 
                                 piezaAnterior.actualizarPosicion(posicionActual);
@@ -170,6 +175,8 @@ public class VistaTablero extends javax.swing.JFrame {
                                     }
                                     
                                     setEstado(m.posActual.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + m.posActual.toString()+" "+m.posDestino.toString(), event.getActionCommand());
+                                    movimientos.anadirMovimiento(p, m);
+                                    listModel.addElement(movimientos.getUltimoMovimiento());
                                     tablero.actualizarEstado(m.posActual, m.posDestino);
                                     
                                     //p.actualizarPosicion(m.posDestino);
@@ -333,6 +340,8 @@ public class VistaTablero extends javax.swing.JFrame {
                                         matar(m.posActual, m.posDestino,p,m.posDestino.fila,m.posDestino.columna);
                                     }
                                     setEstado(m.posActual.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + m.posActual.toString()+" "+m.posDestino.toString(), event.getActionCommand());
+                                    movimientos.anadirMovimiento(p, m);
+                                    listModel.addElement(movimientos.getUltimoMovimiento());
                                     tablero.actualizarEstado(m.posActual, m.posDestino);
                                     //p.actualizarPosicion(posicionActual);
                                     casilla[m.posDestino.fila][m.posDestino.columna].setIcon(casilla[m.posActual.getFila()][m.posActual.getColumna()].getIcon());
@@ -556,17 +565,24 @@ public class VistaTablero extends javax.swing.JFrame {
         remove(statusPanel);
         
         // nuevo panel con borde y titulo
-        JPanel estado = new JPanel();
-        estado.setBorder(new TitledBorder("Jugadas"));
+        JPanel estado = new JPanel(new BorderLayout());
         
         // cuadro de texto que mostrara la informacion, con el color de fondo
         // del panel y que no sea editable por el usuario.
-        informacion.setText("Último movimiento: d6 a3 \nJuegan Blancas: c8 a6");
+        informacion.setBorder(new TitledBorder("Jugadas"));
+        informacion.setText("Comienza la partida");
         informacion.setBackground(this.getContentPane().getBackground());
         informacion.setEditable(false);
         
+        // cuadro de texto con histórico de movimientos
+        listModel = new DefaultListModel();
+        historial = new JList(listModel);
+        historial.setBorder(new TitledBorder("Movimientos"));
+        historial.setBackground(this.getContentPane().getBackground());
+        
+        estado.add(historial, BorderLayout.CENTER);
         // añadimos el cuadro de texto al panel
-        estado.add(informacion, BorderLayout.CENTER);
+        estado.add(informacion, BorderLayout.NORTH);        
         add(estado, BorderLayout.WEST);
         
         // refrescamos la vista
