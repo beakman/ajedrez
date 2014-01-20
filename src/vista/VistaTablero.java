@@ -620,11 +620,14 @@ public class VistaTablero extends javax.swing.JFrame {
         casilla[posicionActual.getFila()][posicionActual.getColumna()].setIcon(null);
         tablero.actualizarEstado(posicionAnterior, posicionActual);
         piezaAnterior.actualizarPosicion(posicionActual);
+        System.out.println(tablero.estado.toString());
         movimientos.anadirMovimiento(piezaAnterior, new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual));
         listModel.addElement(movimientos.getUltimoMovimiento());
         casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
         casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
         casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getBackground());
+        if (tablero.comprobarJaque(piezaAnterior))
+            System.out.println("El rey esta en JAQUE");
     }
     
     public void moverFicha(String seleccionActual, String seleccionAnterior)
