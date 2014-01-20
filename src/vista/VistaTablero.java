@@ -59,6 +59,7 @@ public class VistaTablero extends javax.swing.JFrame {
         posicionActual = new Posicion(0,0);
         final Maquina maq = new Maquina(tablero);
         
+        // hola Josema
         // Dibujamos el tablero: cada casilla sera un JButton.
         for (int i = 0; i < 8; i++) {
             final int fila = i;
