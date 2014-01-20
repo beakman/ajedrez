@@ -205,14 +205,48 @@ public class Tablero implements ITablero
         estado.remove(anterior.toString());
     }
     
-    public void getMovimientoPosiblesBlancas()
+    public ArrayList<Movimiento> getMovimientosPosiblesBlancas()
     {
-        ArrayList<ArrayList<Movimiento>> array = new ArrayList<ArrayList<Movimiento>>();
         ArrayList<Movimiento> resultado = new ArrayList<>();
+        
         Pieza p;
-        p = piezas_blancas.get("Torre");
-        resultado = getMovimientosPosibles(p);
-        array.add(resultado);
+        for (int i=0; i<7 ;i++)
+        {
+            for (int j=0; j<7; j++)
+            {
+                if (hayPieza((new Posicion(i,j))))
+                {
+                    p = this.estado.get(new Posicion(i,j).toString());
+                    if(p.color == Color.blanca)
+                    {
+                        resultado.addAll(getMovimientosPosibles(p));
+                    }
+                }
+            }
+        }
+        return resultado;
+    }
+    
+    public ArrayList<Movimiento> getMovimientosPosiblesNegras()
+    {
+        ArrayList<Movimiento> resultado = new ArrayList<>();
+        
+        Pieza p;
+        for (int i=0; i<7 ;i++)
+        {
+            for (int j=0; j<7; j++)
+            {
+                if (hayPieza((new Posicion(i,j))))
+                {
+                    p = this.estado.get(new Posicion(i,j).toString());
+                    if(p.color == Color.blanca)
+                    {
+                        resultado.addAll(getMovimientosPosibles(p));
+                    }
+                }
+            }
+        }
+        return resultado;
     }
     
     public boolean comprobarJaque(Pieza pieza)
@@ -231,6 +265,9 @@ public class Tablero implements ITablero
                     if ( (pieza.color != this.estado.get(mov.get(i).posDestino.toString()).color) && ( this.estado.get(mov.get(i).posDestino.toString()).tipoPieza().toString().equals("Rey") ) )
                     {
                         jaque = true;
+                        // le paso como argumento el rey que esta en jaque
+                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()));
+                        System.out.println("El rey esta en JAQUE");
                     }
                 }
             }
@@ -247,6 +284,8 @@ public class Tablero implements ITablero
                     if ( (pieza.color != this.estado.get(mov.get(i).posDestino.toString()).color) && ( this.estado.get(mov.get(i).posDestino.toString()).tipoPieza().toString().equals("Rey") ) )
                     {
                         jaque = true;
+                        // le paso como argumento el rey que esta en jaque
+                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()));
                     }
                 }
             }
@@ -262,6 +301,8 @@ public class Tablero implements ITablero
                     if ( (pieza.color != this.estado.get(mov.get(i).posDestino.toString()).color) && ( this.estado.get(mov.get(i).posDestino.toString()).tipoPieza().toString().equals("Rey") ) )
                     {
                         jaque = true;
+                        // le paso como argumento el rey que esta en jaque
+                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()));
                     }
                 }
             }
@@ -278,6 +319,8 @@ public class Tablero implements ITablero
                     if ( (pieza.color != this.estado.get(mov.get(i).posDestino.toString()).color) && ( this.estado.get(mov.get(i).posDestino.toString()).tipoPieza().toString().equals("Rey") ) )
                     {
                         jaque = true;
+                        // le paso como argumento el rey que esta en jaque
+                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()));
                     }
                 }
             }
@@ -294,12 +337,66 @@ public class Tablero implements ITablero
                     if ( (pieza.color != this.estado.get(mov.get(i).posDestino.toString()).color) && ( this.estado.get(mov.get(i).posDestino.toString()).tipoPieza().toString().equals("Rey") ) )
                     {
                         jaque = true;
+                        // le paso como argumento el rey que esta en jaque
+                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()));
                     }
                 }
             }
         }
         
         return jaque;
+    }
+    
+    public boolean comprobarJaqueMate(Pieza pieza_en_jaque)
+    {
+        ArrayList<Movimiento> resultado = new ArrayList<>();
+        ArrayList<Movimiento> movRey = new ArrayList<>();
+        
+        if (pieza_en_jaque.color == Color.negra)
+        {
+            resultado = getMovimientosPosiblesBlancas();
+        }
+        else
+        {
+            resultado = getMovimientosPosiblesNegras();            
+        }
+        // La posicion del rey amenazado se detecta bien
+        int fila_aux = pieza_en_jaque.posicion.getFila();
+        int col_aux = pieza_en_jaque.posicion.getColumna();
+        System.out.println("fila " + fila_aux);
+        System.out.println("columna " + col_aux);
+        System.out.println(resultado);
+        System.out.println(resultado.size());
+        
+        
+        movRey = getMovimientosPosibles(pieza_en_jaque);
+        System.out.println(movRey);
+        int i = 0;
+        int j = 0;
+        boolean jaqueMate = true;
+        boolean jaqueMateInt = false;
+        
+        while(i<movRey.size() && jaqueMate)
+        {
+            j = 0;
+            jaqueMateInt = false;
+            System.out.println("hola");
+            while(j<resultado.size())
+            {
+                if (movRey.get(i) == resultado.get(j))
+                    jaqueMateInt = true;
+                j++;
+            }
+            if (jaqueMateInt == true)
+                jaqueMate = true;
+            else
+                jaqueMate = false;
+            i++;
+        }
+        
+        if (jaqueMate)
+            System.out.println("JAQUE MATEEEEEEEE ");
+        return jaqueMate;
     }
     
     public ArrayList<Movimiento> getMovimientosPeon(Pieza pieza)
