@@ -13,7 +13,9 @@ import java.util.Random;
  *
  * @author betico
  */
-public class Maquina extends Jugador{
+
+//JM: he quiado extends de jugador
+public class Maquina {
     Tablero tab;
     public Maquina(Tablero t)
     {
@@ -86,9 +88,9 @@ public class Maquina extends Jugador{
        
     
     
-    @Override
-    public void guardarMovimiento(String nombre, Movimientos mov) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    @Override
+//    public void guardarMovimiento(String nombre, Movimientos mov) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
     
 }

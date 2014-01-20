@@ -1,26 +1,27 @@
 package ajedrez;
 
-import ajedrez.IPartidaAjedrez.Color;
+import ajedrez.Color;
 
 /**
  *
  * @author paco
  */
-public abstract class Jugador implements IJugador, IPartidaAjedrez {
+public abstract class Jugador implements IJugador{
     private String nombre;
     private Color color;
     private Movimientos movimiento;
-    private Jugador jugador;
+    
 
     
-//    public Jugador(Color color){
-//        this.color = color;
-//    }
-    
-    @Override
-    public Jugador empezar(){
-        return jugador;
+    public Jugador(String nombre, Color color){
+        this.nombre = nombre;
+        this.color = color;
     }
+    
+//    @Override
+//    public Jugador empezar(){
+//        return jugador;
+//    }
     
     @Override
     public void preguntarNombre() {

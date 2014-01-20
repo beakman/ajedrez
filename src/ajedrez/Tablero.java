@@ -421,8 +421,10 @@ public class Tablero implements ITablero
                 if(!hayPieza(new Posicion(f_aux, c_aux))){
                     resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
                     if(c_aux<7 && c_aux>0){
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+                        if(hayPieza(new Posicion(f_aux, c_aux+1)) && (pieza.color != this.estado.get(new Posicion(f_aux, c_aux+1).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+                        if(hayPieza(new Posicion(f_aux, c_aux-1)) && (pieza.color != this.estado.get(new Posicion(f_aux, c_aux-1).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
                     }
                     else if(c_aux==7){                        
                         resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
@@ -862,7 +864,7 @@ public class Tablero implements ITablero
             int c_aux = pieza.posicion.getColumna();
             if((f_aux > 0) && (f_aux < 7) && (c_aux > 0) && (c_aux < 7)){
             //posicion media
-            
+                
                 resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
                 resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
                 resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));

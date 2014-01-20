@@ -52,7 +52,7 @@ public class VistaTablero extends javax.swing.JFrame {
     public static String seleccionAnterior;
     public static Posicion posicionAnterior, posicionActual;
     //Dependiendo del check nos dirá si vamos a jugar contra la máquina
-        //o contra otro usuario
+    //o contra otro usuario
     public static boolean contraPersona = false;
     public static JButton casilla[][] = new JButton[8][8];
     public Movimientos movimientos = new Movimientos();
