@@ -28,6 +28,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
@@ -577,10 +578,13 @@ public class VistaTablero extends javax.swing.JFrame {
         // cuadro de texto con histórico de movimientos
         listModel = new DefaultListModel();
         historial = new JList(listModel);
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(historial);
+        historial.setAutoscrolls(true);
         historial.setBorder(new TitledBorder("Movimientos"));
         historial.setBackground(this.getContentPane().getBackground());
         
-        estado.add(historial, BorderLayout.CENTER);
+        estado.add(scrollPane, BorderLayout.CENTER);
         // añadimos el cuadro de texto al panel
         estado.add(informacion, BorderLayout.NORTH);        
         add(estado, BorderLayout.WEST);
