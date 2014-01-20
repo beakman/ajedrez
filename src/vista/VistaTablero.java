@@ -216,10 +216,13 @@ public class VistaTablero extends javax.swing.JFrame {
                             // 1. actualizamos posicionAnterior
                             // 2. piezaPulsada=true
                             // 3. coloreamos el fondo de la casilla
-                            casilla[fila][columna].setBackground(Color.GRAY);
+                            if(tablero.estado.get((new Posicion(fila,columna)).toString()).color == ajedrez.Color.blanca)
+                            {
+                                casilla[fila][columna].setBackground(Color.GRAY);                                
+                                piezaPulsada=true;
+                            }
                             posicionAnterior.setFila(posicionActual.getFila());
                             posicionAnterior.setColumna(posicionActual.getColumna());
-                            piezaPulsada=true;
                         }
                         
                         /* 
