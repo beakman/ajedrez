@@ -556,6 +556,7 @@ public class Tablero implements ITablero
                 }
             }  
         }
+        System.out.println("getMovimientosPosiblesTorre("+resultado+")");
         return resultado;
     }
    

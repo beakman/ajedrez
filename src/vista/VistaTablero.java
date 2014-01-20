@@ -232,7 +232,7 @@ public class VistaTablero extends javax.swing.JFrame {
                             // 2. distinto color -> matar
                             piezaAnterior = tablero.comprobarPosicion(posicionAnterior);
                             piezaActual = tablero.comprobarPosicion(posicionActual);
-                            if (piezaAnterior.color != piezaActual.color){
+                            if (piezaAnterior.color != piezaActual.color && tablero.esMovimientoPosible(new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual), piezaAnterior)){
                                 
                                 /*
                                     intento implementar aquí el matar del peon
@@ -471,7 +471,7 @@ public class VistaTablero extends javax.swing.JFrame {
                             // 2. distinto color -> matar
                             piezaAnterior = tablero.comprobarPosicion(posicionAnterior);
                             piezaActual = tablero.comprobarPosicion(posicionActual);
-                            if (piezaAnterior.color != piezaActual.color){
+                            if (piezaAnterior.color != piezaActual.color && tablero.esMovimientoPosible(new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual), piezaAnterior)){
                                 
                                 /*intento implementar aquí el matar del peon
                                  */
