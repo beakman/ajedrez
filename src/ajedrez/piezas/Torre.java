@@ -63,7 +63,6 @@ public class Torre extends Pieza{
             //Hacia atras
             f_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("torre", "a", "a");
         }
         
         f_aux = posicion.getFila();
@@ -72,7 +71,6 @@ public class Torre extends Pieza{
             //Hacia delante
             f_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("torre", "a", "a");
         }
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna();
@@ -80,7 +78,6 @@ public class Torre extends Pieza{
             // Hacia izquiera
             c_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("torre", "a", "a");
         }
 
         f_aux = posicion.getFila();
@@ -89,7 +86,6 @@ public class Torre extends Pieza{
             // Hacia derecha
             c_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("torre", "a", "a");
         } 
         return mov;
     }

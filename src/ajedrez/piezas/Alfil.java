@@ -62,7 +62,6 @@ public class Alfil extends Pieza {
             f_aux--;
             c_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("alfil", "a", "1");
             
         }
         //Esquina inferior derecha
@@ -75,7 +74,6 @@ public class Alfil extends Pieza {
             c_aux++;
             
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("alfil", "a", "1");
         }
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna();
@@ -85,7 +83,6 @@ public class Alfil extends Pieza {
             f_aux--;
             c_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("alfil", "a", "1");
         }
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna();
@@ -95,7 +92,6 @@ public class Alfil extends Pieza {
             f_aux++;
             c_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("alfil", "a", "1");
             System.out.println("me cago en to: " + "f_aux= "+ f_aux + "c_aux= " + c_aux);
         }
         //Aquí tenemos que devolver el arr ay result pero ¿De qué tipo?       

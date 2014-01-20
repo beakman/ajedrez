@@ -53,119 +53,73 @@ public class Rey extends Pieza{
         //posicion media
             
             resultado.add(new Posicion(f_aux, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux+1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux+1, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux+1, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux+1));
         }
         else if((c_aux -1 < 0) && (f_aux-1 <0)){
          //esquina superior izquierda
             resultado.add(new Posicion(f_aux, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux+1, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux+1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
         }
         else if((c_aux - 1 < 0) && (f_aux + 1 > filas.length)){
          //esquina inferior izquierda
             resultado.add(new Posicion(f_aux, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1"); 
         }
         else if((c_aux +1 > columnas.length) && (f_aux +1 > filas.length))
         {
             //esquina inferior derecha
             resultado.add(new Posicion(f_aux, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux -1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
-            
         }
         else if((c_aux +1 > columnas.length) && (f_aux -1 < 0)){
             //esquina superior derecha
             resultado.add(new Posicion(f_aux+1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux+1, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
-            
         }
         else if(c_aux - 1 < 0 ){
             //Lateral izquierdo
             resultado.add(new Posicion(f_aux+1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux+1, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
-            
         }
         else if(c_aux + 1 > columnas.length -1){
             //Lateral derecho
             resultado.add(new Posicion(f_aux+1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux+1, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
-            
         }
         else if(f_aux + 1 > filas.length -1){
             //Inferior
             resultado.add(new Posicion(f_aux-1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux+1));
-           mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux-1, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
         }
         else if(f_aux - 1 < 0){
             //Superior
             resultado.add(new Posicion(f_aux+1, c_aux));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux+1, c_aux-1));
-            mov.anadirMovimiento("rey", "a", "1");
             resultado.add(new Posicion(f_aux+1, c_aux+1));
-            mov.anadirMovimiento("rey", "a", "1");
-           
         }
             
-       
         return mov;
-        
     }
     
 

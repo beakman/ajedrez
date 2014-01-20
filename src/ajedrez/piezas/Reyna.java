@@ -63,7 +63,6 @@ public class Reyna extends Pieza{
             f_aux--;
             c_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
         }
         //Esquina inferior derecha
         //Partimos del punto inicial para volver a mirar
@@ -74,7 +73,6 @@ public class Reyna extends Pieza{
             f_aux++;
             c_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
         }
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
@@ -83,7 +81,6 @@ public class Reyna extends Pieza{
             f_aux++;
             c_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
         }
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
@@ -92,7 +89,6 @@ public class Reyna extends Pieza{
             f_aux--;
             c_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
         }
         
         f_aux = posicion.getFila();
@@ -101,7 +97,6 @@ public class Reyna extends Pieza{
             //Hacia atras
             f_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
         }
         
         f_aux = posicion.getFila();
@@ -110,7 +105,6 @@ public class Reyna extends Pieza{
             //Hacia delante
             f_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
         }
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
@@ -118,7 +112,6 @@ public class Reyna extends Pieza{
             // Hacia izquiera
             c_aux--;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
         }
 
         f_aux = posicion.getFila();
@@ -127,7 +120,6 @@ public class Reyna extends Pieza{
             // Hacia derecha
             c_aux++;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("reyna", Integer.toString(c_aux), Integer.toString(c_aux));
         } 
         return mov;
     }

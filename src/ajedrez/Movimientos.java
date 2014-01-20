@@ -1,6 +1,7 @@
 package ajedrez;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,38 +11,30 @@ import java.util.Map;
 
 public class Movimientos 
 {
-    private Pieza pieza;
+    //private Pieza pieza;    
+    public final HashMap<Pieza, Movimiento> movimientos = new HashMap<>();
+    public ArrayList<String> listado_movimientos = new ArrayList<>();
     
     // Una lista con el color y las 2 posiciones
     // Ejemplo; (blanca, a1, b1) 
-    private ArrayList<String[]> movimientos = new ArrayList<>();
-    String[] mov = new String[3];
+//    private ArrayList<String[]> movimientos = new ArrayList<>();
+//    String[] mov = new String[3];
     
     public Movimientos()
     {
-        mov[0] = "Blanca";
-        mov[1] = "a1";
-        mov[2] = "b2";
-        movimientos.add(mov);
+        
     }
     
-    public String[] getUltimoMovimiento()
+    public String getUltimoMovimiento()
     {
-        return movimientos.get(movimientos.size()-1);
+        return listado_movimientos.get(listado_movimientos.size()-1);
     }
     
-    public void anadirMovimiento(String color, String posicionActual, String posicionAnterior )
+    public void anadirMovimiento(Pieza pieza, Movimiento movimiento)
     {
-        mov[0] = color;
-        mov[1] = posicionActual;
-        mov[2] = posicionAnterior;
-        movimientos.add(mov);
+        listado_movimientos.add(pieza+" "+movimiento);
     }
     
-    public void guardarMovimiendo()
-    {
-    
-    }
     
 /* 
     Método que nos va a devolver si en la posición a la que queremos 

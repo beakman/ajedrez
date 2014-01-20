@@ -59,7 +59,6 @@ public class Caballo extends Pieza{
             f_aux = f_aux - 1;
             c_aux = c_aux + 2;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         }
  
         f_aux = posicion.getFila();
@@ -70,7 +69,6 @@ public class Caballo extends Pieza{
             f_aux = f_aux + 1;
             c_aux = c_aux + 2;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         }
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
@@ -80,7 +78,6 @@ public class Caballo extends Pieza{
             f_aux = f_aux - 1;
             c_aux = c_aux - 2;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         }
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
@@ -91,7 +88,6 @@ public class Caballo extends Pieza{
             f_aux = f_aux + 1;
             c_aux = c_aux - 2;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         }
         f_aux = posicion.getFila();
         c_aux = posicion.getColumna(); //Obtenemos la posición dentro del array
@@ -102,7 +98,6 @@ public class Caballo extends Pieza{
             f_aux = f_aux + 2;
             c_aux = c_aux + 1;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         }
         
         f_aux = posicion.getFila();
@@ -113,7 +108,6 @@ public class Caballo extends Pieza{
             f_aux = f_aux + 2;
             c_aux = c_aux - 1;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         }
         
         f_aux = posicion.getFila();
@@ -125,7 +119,6 @@ public class Caballo extends Pieza{
             f_aux = f_aux - 2;
             c_aux = c_aux + 1;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         }
         
         f_aux = posicion.getFila();
@@ -136,7 +129,6 @@ public class Caballo extends Pieza{
             f_aux = f_aux - 2;
             c_aux = c_aux - 1;
             resultado.add(new Posicion(f_aux, c_aux));
-            mov.anadirMovimiento("caballo", Integer.toString(f_aux), Integer.toString(c_aux));
         }
         return mov;
     }

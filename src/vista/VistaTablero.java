@@ -34,7 +34,7 @@ public class VistaTablero extends javax.swing.JFrame {
     public static IPieza pieza;
     public static IJugador jugador;
     public Posicion posicion;
-    public Movimientos movimientos = new Movimientos();
+    //public Movimientos movimientos = new Movimientos();
     
     public String jugador1;
     public String jugador2;
@@ -341,8 +341,8 @@ public class VistaTablero extends javax.swing.JFrame {
     
     public void moverFicha(String seleccionActual, String seleccionAnterior)
     {
-        movimientos.anadirMovimiento("blancas", seleccionActual, seleccionAnterior);
-        tablero.ejecutarMovimiento(movimientos);
+//        movimientos.anadirMovimiento("blancas", seleccionActual, seleccionAnterior);
+//        tablero.ejecutarMovimiento(movimientos);
     }
 
     public final void mostrarTablero()
