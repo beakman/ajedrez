@@ -1289,6 +1289,7 @@ public class Tablero implements ITablero
                     }
             //Esquina inferior derecha
             //Partimos del punto inicial para volver a mirar
+            ficha = false;
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna();
             while ((f_aux <= 7) && (c_aux <= 7) && !ficha) {
@@ -1310,6 +1311,7 @@ public class Tablero implements ITablero
                     }
                 }
             }
+            ficha = false;
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna();
             while((f_aux <= 7) && (c_aux >= 0) && !ficha){
@@ -1332,6 +1334,7 @@ public class Tablero implements ITablero
                     }
                 }
             }
+            ficha = false;
             f_aux = pieza.posicion.getFila();
             c_aux = pieza.posicion.getColumna();
             while((f_aux >= 0) && (c_aux >= 0) && !ficha){
