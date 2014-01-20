@@ -18,6 +18,10 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -42,7 +46,9 @@ public class VistaTablero extends javax.swing.JFrame {
     public static boolean piezaPulsada=false;
     public static String seleccionAnterior;
     public static Posicion posicionAnterior, posicionActual;
-    
+    //Dependiendo del check nos dirá si vamos a jugar contra la máquina
+        //o contra otro usuario
+    public static boolean contraPersona = false;
     public static JButton casilla[][] = new JButton[8][8];
     /**
      * Creates new form VistaTablero
@@ -57,9 +63,10 @@ public class VistaTablero extends javax.swing.JFrame {
         seleccionAnterior = " ";
         posicionAnterior = new Posicion(0,0);
         posicionActual = new Posicion(0,0);
+        
         final Maquina maq = new Maquina(tablero);
         
-        // hola Josema
+        
         // Dibujamos el tablero: cada casilla sera un JButton.
         for (int i = 0; i < 8; i++) {
             final int fila = i;
@@ -68,6 +75,32 @@ public class VistaTablero extends javax.swing.JFrame {
                 casilla[i][j] = new JButton();
                 casilla[i][j].setSize(new Dimension(50,50));
                 casilla[fila][columna].setActionCommand("action"+i+j);
+                //Comprobación de jugar con ordenador o persona
+                
+                contraMaquina.addItemListener(new ItemListener(){
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if(e.getStateChange() == ItemEvent.SELECTED){
+                        j2TextField.setEnabled(false);
+                        j2TextField.setText("Ordenador");
+                        j2TextField.setBackground(Color.LIGHT_GRAY);
+                        contraPersona = false;
+                    }
+                    else if(e.getStateChange() == ItemEvent.DESELECTED){
+                        j2TextField.setEnabled(true);
+                        j2TextField.setText("jugador 2");
+                        j2TextField.setBackground(Color.white);
+                        contraPersona = true;
+                    }
+                    validate();
+                    repaint();
+                }
+  
+            });
+
+                
+                
+                
                 casilla[i][j].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
@@ -101,8 +134,10 @@ public class VistaTablero extends javax.swing.JFrame {
 //                            if (piezaAnterior.esMovimientoPosible(posicionActual) && hayFicha(posicionAnterior, posicionActual) == false)
                             if (tablero.esMovimientoPosible(new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual), piezaAnterior))
                             {
+                                
                                 setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
                                 tablero.actualizarEstado(posicionAnterior, posicionActual);
+                                
                                 piezaAnterior.actualizarPosicion(posicionActual);
                                 casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
                                 casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);                             
@@ -115,7 +150,7 @@ public class VistaTablero extends javax.swing.JFrame {
                                 if (tablero.comprobarJaque(piezaAnterior))
                                     System.out.println("El rey esta en JAQUE");
 
-                                //prueba de concepto: generar movimiento de máquina
+                                
                                 
                                 Pieza p;
                                 Movimiento m = maq.hacerMovimiento();
@@ -124,7 +159,7 @@ public class VistaTablero extends javax.swing.JFrame {
                                 {   
                                     
                                     if(tablero.estado.get(m.posDestino.toString())!=null){
-                                        System.out.println("IA MATA");
+                                        
                                         if (tablero.estado.get(m.posDestino.toString()).color != p.color)
                                         {
                                             //matar
@@ -133,8 +168,10 @@ public class VistaTablero extends javax.swing.JFrame {
 //                                            matar(m.posActual, m.posDestino,p,m.posDestino.fila,m.posDestino.columna);
                                         }
                                     }
+                                    
                                     setEstado(m.posActual.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + m.posActual.toString()+" "+m.posDestino.toString(), event.getActionCommand());
                                     tablero.actualizarEstado(m.posActual, m.posDestino);
+                                    
                                     //p.actualizarPosicion(m.posDestino);
                                     casilla[m.posDestino.fila][m.posDestino.columna].setIcon(casilla[m.posActual.getFila()][m.posActual.getColumna()].getIcon());
                                     casilla[m.posActual.getFila()][m.posActual.getColumna()].setIcon(null);                            
@@ -142,7 +179,8 @@ public class VistaTablero extends javax.swing.JFrame {
                                     colorCasilla(casilla[m.posActual.getFila()][m.posActual.getColumna()], m.posActual);
                                     piezaPulsada=false;
                                     m.posActual.setFila(m.posDestino.getFila());
-                                    m.posActual.setColumna(m.posDestino.getColumna());                                                                        
+                                    m.posActual.setColumna(m.posDestino.getColumna());
+                                    
                                 }
                                 
                             }
@@ -197,7 +235,6 @@ public class VistaTablero extends javax.swing.JFrame {
                                         {
                                             //Si se cumple ésta condición, el peón podrá matarlo
                                             matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
-                                       
                                         }
                                      }
                                      else if (piezaAnterior.color == ajedrez.Color.negra)
@@ -218,10 +255,8 @@ public class VistaTablero extends javax.swing.JFrame {
                                      y = posicionActual.getColumna();
                                      if (((x>= f_aux+1)&&(y>=c_aux+1)) || ((x>=f_aux+1)&&(y<=c_aux-1)) || ((x<=f_aux-1)&&(y<=c_aux-1)) || ((x<=f_aux-1)&&(y>=c_aux+1)))
                                      {
-                                         
                                             if(Math.abs((y-c_aux)/(x-f_aux))==1)
                                             matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
-                                       
                                     }
                                      
                                 }
@@ -266,6 +301,17 @@ public class VistaTablero extends javax.swing.JFrame {
                                      {
                                          matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
                                      }
+                                     
+                                }
+                                if (piezaAnterior.tipoPieza().equals("Caballo"))
+                                {
+                                    int f_aux, c_aux,x,y;
+                                     f_aux = posicionAnterior.getFila();
+                                     c_aux = posicionAnterior.getColumna();
+                                     x = posicionActual.getFila();
+                                     y = posicionActual.getColumna();
+                                     
+                                     matar(posicionAnterior, posicionActual,piezaAnterior,fila,columna);
                                      
                                 }
                                 
@@ -377,7 +423,9 @@ public class VistaTablero extends javax.swing.JFrame {
         String estado = "Último movimiento: "+ultima+"\nJuegan "+turno+"\nSeleccionada: "+pulsada;
         informacion.setText(estado);
         validate();
+        
         repaint();
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
