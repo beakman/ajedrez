@@ -110,6 +110,9 @@ public class VistaTablero extends javax.swing.JFrame {
                                 piezaPulsada=false;
                                 posicionAnterior.setFila(posicionActual.getFila());
                                 posicionAnterior.setColumna(posicionActual.getColumna());
+                                
+                                if (tablero.comprobarJaque(piezaAnterior))
+                                    System.out.println("El rey esta en JAQUE");
 
                                 //prueba de concepto: generar movimiento de máquina
                                 

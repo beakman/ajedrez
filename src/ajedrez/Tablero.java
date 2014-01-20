@@ -79,475 +79,30 @@ public class Tablero implements ITablero
         resultado.clear();
         
         if (pieza.tipoPieza().equals("Peon")){
-            // Hay que comprobar las 1 casilla
-            //Color color = this.col;
-            
-            int f_aux = pieza.posicion.getFila();
-            int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-            // Primera posicion posible
-            if((f_aux > 0)&& (pieza.color == Color.blanca))
-            {
-                if (f_aux == 6){
-                    if(!hayPieza(new Posicion(f_aux - 2, c_aux))){
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux - 2, c_aux)));
-                    }
-                }
-                f_aux=f_aux-1;
-                if(!hayPieza(new Posicion(f_aux, c_aux))){
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                    if(c_aux<7 && c_aux>0){
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
-                    }
-                    else if(c_aux==7){                        
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
-                    }
-                    else if(c_aux==0){
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-                    }
-                }
-                System.out.println("Movimientos peón blanco: "+resultado);
-            }
-            else if((f_aux < 7) && (pieza.color == Color.negra))
-            {
-                if (f_aux == 1){
-                    if(!hayPieza(new Posicion(f_aux + 2, c_aux)))
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux + 2, c_aux)));
-                }
-                f_aux = f_aux + 1;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                if(c_aux<7 && c_aux>0){
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
-                }
-                else if(c_aux==7){                        
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
-                }
-                else if(c_aux==0){
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-                }
-                System.out.println("Movimientos peón negro: "+resultado);
-            }
+            resultado = getMovimientosPeon(pieza);
         }
         
         if (pieza.tipoPieza().equals("Torre"))
-        {
-            // Hay que comprobar las 1 casilla
-            //Color color = this.col;
-            int f_aux = pieza.posicion.getFila();
-            int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-            boolean ficha = false;
-            // Primera posicion posible
-            while(f_aux > 0){
-                //Hacia atras
-                f_aux--;
-                    if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    {
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        
-                    }
-                    else if(hayPieza(new Posicion(f_aux, c_aux)))
-                    {
-                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
-                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        break;
-                    }
-                    else 
-                    {
-                        break;
-                    }
-            }
-            
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna();
-            while(f_aux < 7){
-                
-                //Hacia delante
-                f_aux++;
-                    if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    {
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                    }                    
-                    else if(hayPieza(new Posicion(f_aux, c_aux)))
-                    {
-                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
-                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        break;
-                    }
-                    else 
-                    {
-                        break;
-                    }
-            }
-            
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna();
-            while(c_aux > 0){
-                // Hacia izquiera
-                c_aux--;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else if(hayPieza(new Posicion(f_aux, c_aux)))
-                    {
-                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
-                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        break;
-                    }
-                else 
-                {
-                    break;
-                }
-            }
-
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna();
-            while(c_aux < 7){
-                // Hacia derecha
-                c_aux++;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else if(hayPieza(new Posicion(f_aux, c_aux)))
-                    {
-                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
-                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                        break;
-                    }
-                else 
-                {
-                    break;
-                }
-            }   
-        }
+            resultado = getMovimientosTorre(pieza);
+        
         if (pieza.tipoPieza().equals("Caballo"))
         {
-            int f_aux = pieza.posicion.getFila();
-            int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-            if ((f_aux - 1 >= 0)&&(c_aux + 2 <= 7))
-            {
-                f_aux = f_aux - 1;
-                c_aux = c_aux + 2;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-            }
- 
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-            // Segunda posiciones posibles
-            if ((f_aux + 1 <= 7)&&(c_aux + 2 <= 7))
-            {        
-                f_aux = f_aux + 1;
-                c_aux = c_aux + 2;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-            }
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-            // Tercera posiciones posibles
-            if ((f_aux - 1 >= 0)&&(c_aux - 2 >= 0))
-            {
-                f_aux = f_aux - 1;
-                c_aux = c_aux - 2;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-            }
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-        
-            // Cuarta posicion posible
-            if ((f_aux + 1 <= 7)&&(c_aux - 2 >= 0))
-            {        
-                f_aux = f_aux + 1;
-                c_aux = c_aux - 2;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-            }
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-            
-            // Quinta posicion posible
-            if ((f_aux + 2 <= 7)&&(c_aux + 1 <= 7))
-            {        
-                f_aux = f_aux + 2;
-                c_aux = c_aux + 1;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-            }
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-            // Sexta posiciones posibles
-            if ((f_aux + 2 <= 7)&&(c_aux - 1 >= 0))
-            {        
-                f_aux = f_aux + 2;
-                c_aux = c_aux - 1;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-            }
-        
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-            // Septima posiciones posibles
-            if ((f_aux - 2 >= 0)&&(c_aux + 1 <= 7))
-            {        
-                f_aux = f_aux - 2;
-                c_aux = c_aux + 1;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-            }
-        
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
-            // Octava posiciones posibles
-            if ((f_aux - 2 >= 0)&&(c_aux - 1 >= 0))
-            {        
-                f_aux = f_aux - 2;
-                c_aux = c_aux - 1;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-            }
+            resultado = getMovimientosCaballo(pieza);
         }
+        
         if (pieza.tipoPieza().equals("Reyna"))
         {
-            int f_aux = pieza.posicion.getFila();
-            int c_aux = pieza.posicion.getColumna();       
-                while ((f_aux > 0) && (c_aux < 7)) {
-                f_aux--;
-                c_aux++;
-                    if(!hayPieza(new Posicion(f_aux, c_aux)))
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                    else
-                    {
-                        break;
-                    }
-                }
-            //Esquina inferior derecha
-            //Partimos del punto inicial para volver a mirar
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna();
-            while ((f_aux < 8-2) && (c_aux < 8-1)) {
-                f_aux++;
-                c_aux++;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else
-                {
-                    break;
-                }
-            }
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna();
-            while((f_aux < 8-2) && (c_aux > 0)){
-                //Esquina superior izquierda
-                f_aux++;
-                c_aux--;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else
-                {
-                    break;
-                }
-            }
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna();
-            while((f_aux > 0) && (c_aux > 0)){
-                //Esquina inferior izquierda
-                f_aux--;
-                c_aux--;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else
-                {
-                    break;
-                }
-            }
-        
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna();
-            while(f_aux > 0){
-                //Hacia atras
-                f_aux--;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else
-                {
-                    break;
-                }
-            }
-        
-        f_aux = pieza.posicion.getFila();
-        c_aux = pieza.posicion.getColumna();
-        while(f_aux < 7){
-            //Hacia delante
-            f_aux++;
-                    if(!hayPieza(new Posicion(f_aux, c_aux)))
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                    else
-                    {
-                        break;
-                    }
-        }
-        f_aux = pieza.posicion.getFila();
-        c_aux = pieza.posicion.getColumna();
-        while(c_aux > 0){
-            // Hacia izquiera
-            c_aux--;
-                    if(!hayPieza(new Posicion(f_aux, c_aux)))
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                    else
-                    {
-                        break;
-                    }
-        }
-
-        f_aux = pieza.posicion.getFila();
-        c_aux = pieza.posicion.getColumna();
-        while(c_aux < 7){
-            // Hacia derecha
-            c_aux++;
-                    if(!hayPieza(new Posicion(f_aux, c_aux)))
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                    else
-                    {
-                        break;
-                    }
-        }
+            resultado = getMovimientosReyna(pieza);
         }
         
         if (pieza.tipoPieza().equals("Alfil"))
         {
-                int f_aux = pieza.posicion.getFila();
-                int c_aux = pieza.posicion.getColumna();       
-                while ((f_aux > 0) && (c_aux < 7)) {
-                f_aux--;
-                c_aux++;
-                    if(!hayPieza(new Posicion(f_aux, c_aux)))
-                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                    else
-                    {
-                        break;
-                    }
-                }
-            //Esquina inferior derecha
-            //Partimos del punto inicial para volver a mirar
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna();
-            while ((f_aux < 8-2) && (c_aux < 8-1)) {
-                f_aux++;
-                c_aux++;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else
-                {
-                    break;
-                }
-            }
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna();
-            while((f_aux < 8-2) && (c_aux > 0)){
-                //Esquina superior izquierda
-                f_aux++;
-                c_aux--;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else
-                {
-                    break;
-                }
-            }
-            f_aux = pieza.posicion.getFila();
-            c_aux = pieza.posicion.getColumna();
-            while((f_aux > 0) && (c_aux > 0)){
-                //Esquina inferior izquierda
-                f_aux--;
-                c_aux--;
-                if(!hayPieza(new Posicion(f_aux, c_aux)))
-                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
-                else
-                {
-                    break;
-                }
-            }
+            resultado = getMovimientosAlfil(pieza);
         }
         
         if (pieza.tipoPieza().equals("Rey"))
         {
-            int f_aux = pieza.posicion.getFila();
-            int c_aux = pieza.posicion.getColumna();
-            if((f_aux > 0) && (f_aux < 7) && (c_aux > 0) && (c_aux < 7)){
-            //posicion media
-            
-                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
-                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));
-                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux-1)));
-                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
-                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux-1)));
-                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux+1)));
-                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux+1)));
-        }
-        else if((c_aux -1 < 0) && (f_aux-1 <0)){
-         //esquina superior izquierda
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux+1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
-        }
-        else if((c_aux - 1 < 0) && (f_aux + 1 > 7)){
-         //esquina inferior izquierda
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux+1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));
-        }
-        else if((c_aux +1 > 7) && (f_aux +1 > 7))
-        {
-            //esquina inferior derecha
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux-1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux -1, c_aux)));
-            
-        }
-        else if((c_aux +1 > 7) && (f_aux -1 < 0)){
-            //esquina superior derecha
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux-1)));
-            
-        }
-        else if(c_aux - 1 < 0 ){
-            //Lateral izquierdo
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux+1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux+1)));
-            
-        }
-        else if(c_aux + 1 > 7){
-            //Lateral derecho
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux-1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux-1)));
-
-            
-        }
-        else if(f_aux + 1 > 7){
-            //Inferior
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux+1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux-1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
-        }
-        else if(f_aux - 1 < 0){
-            //Superior
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux-1)));
-            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux+1)));
-           
-        }        
+            resultado = getMovimientosRey(pieza);   
         }
 
         return resultado;
@@ -649,4 +204,728 @@ public class Tablero implements ITablero
         estado.put(actual.toString(), estado.get(anterior.toString()));
         estado.remove(anterior.toString());
     }
+    
+    public void getMovimientoPosiblesBlancas()
+    {
+        ArrayList<ArrayList<Movimiento>> array = new ArrayList<ArrayList<Movimiento>>();
+        ArrayList<Movimiento> resultado = new ArrayList<>();
+        Pieza p;
+        p = piezas_blancas.get("Torre");
+        resultado = getMovimientosPosibles(p);
+        array.add(resultado);
+    }
+    
+    public boolean comprobarJaque(Pieza pieza)
+    {
+        boolean jaque = false;
+        ArrayList<Movimiento> mov=new ArrayList<>();
+        
+        if (pieza.tipoPieza().equals("Torre"))
+        {
+            mov = getMovimientosTorre(pieza);
+            
+            for (int i=0; i<mov.size(); i++)
+            {
+                if (hayPieza(mov.get(i).posDestino))
+                {
+                    if ( (pieza.color != this.estado.get(mov.get(i).posDestino.toString()).color) && ( this.estado.get(mov.get(i).posDestino.toString()).tipoPieza().toString().equals("Rey") ) )
+                    {
+                        jaque = true;
+                    }
+                }
+            }
+        }
+        
+        if (pieza.tipoPieza().equals("Alfil"))
+        {
+            mov = getMovimientosAlfil(pieza);
+            
+            for (int i=0; i<mov.size(); i++)
+            {
+                if (hayPieza(mov.get(i).posDestino))
+                {
+                    if ( (pieza.color != this.estado.get(mov.get(i).posDestino.toString()).color) && ( this.estado.get(mov.get(i).posDestino.toString()).tipoPieza().toString().equals("Rey") ) )
+                    {
+                        jaque = true;
+                    }
+                }
+            }
+        }
+        if (pieza.tipoPieza().equals("Peon"))
+        {
+            mov = getMovimientosPeon(pieza);
+            
+            for (int i=0; i<mov.size(); i++)
+            {
+                if (hayPieza(mov.get(i).posDestino))
+                {
+                    if ( (pieza.color != this.estado.get(mov.get(i).posDestino.toString()).color) && ( this.estado.get(mov.get(i).posDestino.toString()).tipoPieza().toString().equals("Rey") ) )
+                    {
+                        jaque = true;
+                    }
+                }
+            }
+        }     
+        
+        if (pieza.tipoPieza().equals("Reyna"))
+        {
+            mov = getMovimientosReyna(pieza);
+            
+            for (int i=0; i<mov.size(); i++)
+            {
+                if (hayPieza(mov.get(i).posDestino))
+                {
+                    if ( (pieza.color != this.estado.get(mov.get(i).posDestino.toString()).color) && ( this.estado.get(mov.get(i).posDestino.toString()).tipoPieza().toString().equals("Rey") ) )
+                    {
+                        jaque = true;
+                    }
+                }
+            }
+        }
+        
+        if (pieza.tipoPieza().equals("Caballo"))
+        {
+            mov = getMovimientosCaballo(pieza);
+            
+            for (int i=0; i<mov.size(); i++)
+            {
+                if (hayPieza(mov.get(i).posDestino))
+                {
+                    if ( (pieza.color != this.estado.get(mov.get(i).posDestino.toString()).color) && ( this.estado.get(mov.get(i).posDestino.toString()).tipoPieza().toString().equals("Rey") ) )
+                    {
+                        jaque = true;
+                    }
+                }
+            }
+        }
+        
+        return jaque;
+    }
+    
+    public ArrayList<Movimiento> getMovimientosPeon(Pieza pieza)
+    {
+         ArrayList<Movimiento> resultado=new ArrayList<>();
+         resultado.clear();
+         if (pieza.tipoPieza().equals("Peon")){
+            // Hay que comprobar las 1 casilla
+            //Color color = this.col;
+            
+            int f_aux = pieza.posicion.getFila();
+            int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+            // Primera posicion posible
+            if((f_aux > 0)&& (pieza.color == Color.blanca))
+            {
+                if (f_aux == 6){
+                    if(!hayPieza(new Posicion(f_aux - 2, c_aux))){
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux - 2, c_aux)));
+                    }
+                }
+                f_aux=f_aux-1;
+                if(!hayPieza(new Posicion(f_aux, c_aux))){
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    if(c_aux<7 && c_aux>0){
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+                    }
+                    else if(c_aux==7){                        
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+                    }
+                    else if(c_aux==0){
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+                    }
+                }
+                System.out.println("Movimientos peón blanco: "+resultado);
+            }
+            else if((f_aux < 7) && (pieza.color == Color.negra))
+            {
+                if (f_aux == 1){
+                    if(!hayPieza(new Posicion(f_aux + 2, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux + 2, c_aux)));
+                }
+                f_aux = f_aux + 1;
+                if(!hayPieza(new Posicion(f_aux, c_aux)))
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                if(c_aux<7 && c_aux>0){
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+                }
+                else if(c_aux==7){                        
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+                }
+                else if(c_aux==0){
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+                }
+                System.out.println("Movimientos peón negro: "+resultado);
+            }
+        }
+        return resultado;
+    }
+    
+    
+    public ArrayList<Movimiento> getMovimientosTorre(Pieza pieza)
+    {
+        ArrayList<Movimiento> resultado=new ArrayList<>();
+        resultado.clear();
+        if (pieza.tipoPieza().equals("Torre"))
+        {
+            // Hay que comprobar las 1 casilla
+            //Color color = this.col;
+            int f_aux = pieza.posicion.getFila();
+            int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+            boolean ficha = false;
+            // Primera posicion posible
+            while((f_aux > 0) && !ficha){
+                //Hacia atras
+                f_aux--;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        
+                    }
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+            }
+            ficha=false;
+            
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna();
+            while((f_aux < 7) && !ficha){
+                
+                //Hacia delante
+                f_aux++;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    }                    
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+            }
+            ficha=false;
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna();
+            while((c_aux > 0) && !ficha){
+                // Hacia izquiera
+                c_aux--;
+                if(!hayPieza(new Posicion(f_aux, c_aux)))
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                else 
+                {
+                    ficha=true;
+                }
+            }
+            ficha=false;
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna();
+            while((c_aux < 7) && !ficha){
+                // Hacia derecha
+                c_aux++;
+                if(!hayPieza(new Posicion(f_aux, c_aux)))
+                    resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                else 
+                {
+                    ficha=true;
+                }
+            }   
+        }
+        return resultado;
+    }
+    
+    public ArrayList<Movimiento> getMovimientosCaballo(Pieza pieza)
+    {
+        ArrayList<Movimiento> resultado=new ArrayList<>();
+        resultado.clear();
+       if (pieza.tipoPieza().equals("Caballo"))
+        {
+            boolean ficha = false;
+            int f_aux = pieza.posicion.getFila();
+            int c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+            if ((f_aux - 1 >= 0)&&(c_aux + 2 <= 7))
+            {
+                f_aux = f_aux - 1;
+                c_aux = c_aux + 2;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    }
+            }
+ 
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+            // Segunda posiciones posibles
+            if ((f_aux + 1 <= 7)&&(c_aux + 2 <= 7))
+            {        
+                f_aux = f_aux + 1;
+                c_aux = c_aux + 2;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    }
+            }
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+            // Tercera posiciones posibles
+            if ((f_aux - 1 >= 0)&&(c_aux - 2 >= 0))
+            {
+                f_aux = f_aux - 1;
+                c_aux = c_aux - 2;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    }
+            }
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+        
+            // Cuarta posicion posible
+            if ((f_aux + 1 <= 7)&&(c_aux - 2 >= 0))
+            {        
+                f_aux = f_aux + 1;
+                c_aux = c_aux - 2;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    }
+            }
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+            
+            // Quinta posicion posible
+            if ((f_aux + 2 <= 7)&&(c_aux + 1 <= 7))
+            {        
+                f_aux = f_aux + 2;
+                c_aux = c_aux + 1;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    }
+            }
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+            // Sexta posiciones posibles
+            if ((f_aux + 2 <= 7)&&(c_aux - 1 >= 0))
+            {        
+                f_aux = f_aux + 2;
+                c_aux = c_aux - 1;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    }
+            }
+        
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+            // Septima posiciones posibles
+            if ((f_aux - 2 >= 0)&&(c_aux + 1 <= 7))
+            {        
+                f_aux = f_aux - 2;
+                c_aux = c_aux + 1;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    }
+            }
+        
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna(); //Obtenemos la posición dentro del array
+            // Octava posiciones posibles
+            if ((f_aux - 2 >= 0)&&(c_aux - 1 >= 0))
+            {        
+                f_aux = f_aux - 2;
+                c_aux = c_aux - 1;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    }
+            }
+        }
+       return resultado;
+    }
+    
+    public ArrayList<Movimiento> getMovimientosReyna(Pieza pieza)
+    {
+        ArrayList<Movimiento> resultado=new ArrayList<>();
+        resultado.clear();
+        if (pieza.tipoPieza().equals("Reyna"))
+        {
+            boolean ficha = false;
+            int f_aux = pieza.posicion.getFila();
+            int c_aux = pieza.posicion.getColumna();       
+                while ((f_aux > 0) && (c_aux < 7) && !ficha) {
+                f_aux--;
+                c_aux++;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+                }
+            //Esquina inferior derecha
+            //Partimos del punto inicial para volver a mirar
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna();
+            while ((f_aux < 8-2) && (c_aux < 8-1) && !ficha) {
+                f_aux++;
+                c_aux++;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+            }
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna();
+            while((f_aux < 8-2) && (c_aux > 0) && !ficha){
+                //Esquina superior izquierda
+                f_aux++;
+                c_aux--;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+            }
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna();
+            while((f_aux > 0) && (c_aux > 0) && !ficha){
+                //Esquina inferior izquierda
+                f_aux--;
+                c_aux--;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+            }
+        
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna();
+            while(f_aux > 0 && !ficha){
+                //Hacia atras
+                f_aux--;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+            }
+        
+        f_aux = pieza.posicion.getFila();
+        c_aux = pieza.posicion.getColumna();
+        while(f_aux < 7 && !ficha){
+            //Hacia delante
+            f_aux++;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+        }
+        f_aux = pieza.posicion.getFila();
+        c_aux = pieza.posicion.getColumna();
+        while(c_aux > 0 && !ficha){
+            // Hacia izquiera
+            c_aux--;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+        }
+
+        f_aux = pieza.posicion.getFila();
+        c_aux = pieza.posicion.getColumna();
+        while(c_aux < 7 && !ficha){
+            // Hacia derecha
+            c_aux++;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+        }
+        }
+        return resultado;
+    }
+    
+    public ArrayList<Movimiento> getMovimientosRey(Pieza pieza)
+    {
+        ArrayList<Movimiento> resultado=new ArrayList<>();
+        resultado.clear();
+        if (pieza.tipoPieza().equals("Rey"))
+        {
+            int f_aux = pieza.posicion.getFila();
+            int c_aux = pieza.posicion.getColumna();
+            if((f_aux > 0) && (f_aux < 7) && (c_aux > 0) && (c_aux < 7)){
+            //posicion media
+            
+                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
+                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));
+                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux-1)));
+                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux-1)));
+                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux+1)));
+                resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux+1)));
+        }
+        else if((c_aux -1 < 0) && (f_aux-1 <0)){
+         //esquina superior izquierda
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux+1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
+        }
+        else if((c_aux - 1 < 0) && (f_aux + 1 > 7)){
+         //esquina inferior izquierda
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux+1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));
+        }
+        else if((c_aux +1 > 7) && (f_aux +1 > 7))
+        {
+            //esquina inferior derecha
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux-1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux -1, c_aux)));
+            
+        }
+        else if((c_aux +1 > 7) && (f_aux -1 < 0)){
+            //esquina superior derecha
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux-1)));
+            
+        }
+        else if(c_aux - 1 < 0 ){
+            //Lateral izquierdo
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux+1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux+1)));
+            
+        }
+        else if(c_aux + 1 > 7){
+            //Lateral derecho
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux-1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux-1)));
+
+            
+        }
+        else if(f_aux + 1 > 7){
+            //Inferior
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux+1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux-1, c_aux-1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+        }
+        else if(f_aux - 1 < 0){
+            //Superior
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux-1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux-1)));
+            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux+1, c_aux+1)));
+           
+        }        
+        }
+        return resultado;
+    }
+    public ArrayList<Movimiento> getMovimientosAlfil(Pieza pieza)
+    {
+        ArrayList<Movimiento> resultado=new ArrayList<>();
+        resultado.clear();
+            if (pieza.tipoPieza().equals("Alfil"))
+        {
+            boolean ficha = false;
+                int f_aux = pieza.posicion.getFila();
+                int c_aux = pieza.posicion.getColumna();       
+                while ((f_aux > 0) && (c_aux < 7) && !ficha) {
+                f_aux--;
+                c_aux++;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+                }
+            //Esquina inferior derecha
+            //Partimos del punto inicial para volver a mirar
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna();
+            while ((f_aux < 8-2) && (c_aux < 8-1) && !ficha) {
+                f_aux++;
+                c_aux++;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+            }
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna();
+            while((f_aux < 8-2) && (c_aux > 0) && !ficha){
+                //Esquina superior izquierda
+                f_aux++;
+                c_aux--;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+            }
+            f_aux = pieza.posicion.getFila();
+            c_aux = pieza.posicion.getColumna();
+            while((f_aux > 0) && (c_aux > 0) && !ficha){
+                //Esquina inferior izquierda
+                f_aux--;
+                c_aux--;
+                    if(!hayPieza(new Posicion(f_aux, c_aux)))
+                        resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                    else if(hayPieza(new Posicion(f_aux, c_aux)))
+                    {
+                        if((pieza.color != this.estado.get(new Posicion(f_aux, c_aux).toString()).color))
+                            resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux)));
+                        ficha=true;
+                    }
+                    else 
+                    {
+                        ficha=true;
+                    }
+            }
+        }
+            return resultado;
+    }
+    
 }
