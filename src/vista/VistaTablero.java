@@ -143,7 +143,11 @@ public class VistaTablero extends javax.swing.JFrame {
                             {
                                 setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
                                 movimientos.anadirMovimiento(piezaAnterior, new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual));
-                                listModel.addElement(movimientos.getUltimoMovimiento());
+                                if (turno)
+                                    listModel.addElement(jugador1+": "+movimientos.getUltimoMovimiento());
+                                else
+                                    listModel.addElement(jugador2+": "+movimientos.getUltimoMovimiento());
+                                
                                 tablero.actualizarEstado(posicionAnterior, posicionActual);
                                 
                                 piezaAnterior.actualizarPosicion(posicionActual);
@@ -176,7 +180,10 @@ public class VistaTablero extends javax.swing.JFrame {
                                     }
                                     setEstado(m.posActual.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + m.posActual.toString()+" "+m.posDestino.toString(), event.getActionCommand());
                                     movimientos.anadirMovimiento(p, m);
-                                    listModel.addElement(movimientos.getUltimoMovimiento());
+                                    if (turno)
+                                        listModel.addElement(jugador1+": "+movimientos.getUltimoMovimiento());
+                                    else
+                                        listModel.addElement(jugador2+": "+movimientos.getUltimoMovimiento());
                                     tablero.actualizarEstado(m.posActual, m.posDestino);
                                     
                                     //p.actualizarPosicion(m.posDestino);
@@ -356,7 +363,10 @@ public class VistaTablero extends javax.swing.JFrame {
                                         }
                                         setEstado(m.posActual.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + m.posActual.toString()+" "+m.posDestino.toString(), event.getActionCommand());
                                         movimientos.anadirMovimiento(p, m);
-                                        listModel.addElement(movimientos.getUltimoMovimiento());
+                                        if (turno)
+                                            listModel.addElement(jugador1+": "+movimientos.getUltimoMovimiento());
+                                        else
+                                            listModel.addElement(jugador2+": "+movimientos.getUltimoMovimiento());
                                         tablero.actualizarEstado(m.posActual, m.posDestino);
                                         //p.actualizarPosicion(posicionActual);
                                         casilla[m.posDestino.fila][m.posDestino.columna].setIcon(casilla[m.posActual.getFila()][m.posActual.getColumna()].getIcon());
@@ -416,7 +426,10 @@ public class VistaTablero extends javax.swing.JFrame {
                             {
                                 setEstado(posicionAnterior.toString()+" "+posicionActual.toString(), piezaAnterior + ": " + posicionAnterior.toString()+" "+posicionActual.toString(), event.getActionCommand());
                                 movimientos.anadirMovimiento(piezaAnterior, new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual));
-                                listModel.addElement(movimientos.getUltimoMovimiento());
+                                if (turno)
+                                    listModel.addElement(jugador1+": "+movimientos.getUltimoMovimiento());
+                                else
+                                    listModel.addElement(jugador2+": "+movimientos.getUltimoMovimiento());
                                 tablero.actualizarEstado(posicionAnterior, posicionActual);
                                 
                                 piezaAnterior.actualizarPosicion(posicionActual);
@@ -622,7 +635,10 @@ public class VistaTablero extends javax.swing.JFrame {
         piezaAnterior.actualizarPosicion(posicionActual);
         System.out.println(tablero.estado.toString());
         movimientos.anadirMovimiento(piezaAnterior, new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual));
-        listModel.addElement(movimientos.getUltimoMovimiento());
+        if (turno)
+            listModel.addElement(jugador1+": "+movimientos.getUltimoMovimiento());
+        else
+            listModel.addElement(jugador2+": "+movimientos.getUltimoMovimiento());
         casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
         casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
         casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getBackground());

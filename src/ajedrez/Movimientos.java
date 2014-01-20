@@ -32,7 +32,7 @@ public class Movimientos
     
     public void anadirMovimiento(Pieza pieza, Movimiento movimiento)
     {
-        listado_movimientos.add(pieza+" "+movimiento);
+        listado_movimientos.add(pieza.tipoPieza()+" "+movimiento);
     }
      
 }
