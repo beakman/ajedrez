@@ -422,9 +422,20 @@ public class Tablero implements ITablero
             // Se puede interponer alguna pieza en la trayectoria
             if (pieza_amenaza.tipoPieza().toString().equals("Torre"))
             {
-//                if ()
-//                {}
+                // estan en la misma columna, hay que ver que pieza se puede interponer
+                if (pieza_amenaza.posicion.getColumna() == pieza_en_jaque.posicion.getColumna())
+                {
+                    //for 
+                }
             }
+            if (pieza_amenaza.tipoPieza().toString().equals("Torre"))
+            {
+                // estan en la misma columna, hay que ver que pieza se puede interponer
+                if (pieza_amenaza.posicion.getColumna() == pieza_en_jaque.posicion.getColumna())
+                {
+                    //for 
+                }
+            }            
         }
         
         System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
