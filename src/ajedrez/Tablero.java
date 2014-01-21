@@ -253,6 +253,7 @@ public class Tablero implements ITablero
         boolean jaque = false;
         ArrayList<Movimiento> mov=new ArrayList<>();
        
+        // Miro para cada pieza si 
         if (pieza.tipoPieza().equals("Torre"))
         {
             mov = getMovimientosTorre(pieza);
@@ -418,12 +419,12 @@ public class Tablero implements ITablero
                     //estado.get(anterior.toString()).color == ajedrez.Color.negra)
                     if (estado.get(comprobacion.get(i).posActual.toString()).tipoPieza().toString().equals("Rey"))
                     {
-                        // Habria que hacer movimientos futuros
+                        // Habria que hacer movimientos futuros para comprobar si el rey se come la ficha atacante hay una ficha detras que se comeria al rey y por tanto jaque mate
                     }
                 }
                 i++;
             }
-            // Se puede interponer alguna pieza en la trayectoria
+            // Se puede interponer alguna pieza en la trayectoria de la torre
             if (pieza_amenaza.tipoPieza().toString().equals("Torre"))
             {
                 // estan en la misma columna, hay que ver que pieza se puede interponer
@@ -441,6 +442,7 @@ public class Tablero implements ITablero
                     }
                 }
             }
+            // Se puede interponer en la trayectoria del alfil que ataca
             if (pieza_amenaza.tipoPieza().toString().equals("Alfil"))
             {
                 // estan en la misma columna, hay que ver que pieza se puede interponer
@@ -449,6 +451,7 @@ public class Tablero implements ITablero
                     //for 
                 }
             }
+            // Se puede interponer en la trayectoria de la reyna otra ficha
             if (pieza_amenaza.tipoPieza().toString().equals("Reyna"))
             {
                 // estan en la misma columna, hay que ver que pieza se puede interponer
