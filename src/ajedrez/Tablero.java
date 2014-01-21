@@ -104,7 +104,6 @@ public class Tablero implements ITablero
         {
             resultado = getMovimientosRey(pieza);  
         }
-        System.out.println("getMovimientosPosibles("+resultado+")");
         return resultado;
     }
     private boolean hayPieza(Posicion nueva)
@@ -266,6 +265,7 @@ public class Tablero implements ITablero
                     {
                         jaque = true;
                         // le paso como argumento el rey que esta en jaque
+                        System.out.println("EL REY ESTA EN JAQUE!!");
                         comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()),pieza);
                     }
                 }
@@ -284,6 +284,7 @@ public class Tablero implements ITablero
                     {
                         jaque = true;
                         // le paso como argumento el rey que esta en jaque
+                        System.out.println("EL REY ESTA EN JAQUE!!");
                         comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()),pieza);
                     }
                 }
@@ -301,6 +302,7 @@ public class Tablero implements ITablero
                     {
                         jaque = true;
                         // le paso como argumento el rey que esta en jaque
+                        System.out.println("EL REY ESTA EN JAQUE!!");
                         comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()),pieza);
                     }
                 }
@@ -319,6 +321,7 @@ public class Tablero implements ITablero
                     {
                         jaque = true;
                         // le paso como argumento el rey que esta en jaque
+                        System.out.println("EL REY ESTA EN JAQUE!!");
                         comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()),pieza);
                     }
                 }
@@ -337,6 +340,7 @@ public class Tablero implements ITablero
                     {
                         jaque = true;
                         // le paso como argumento el rey que esta en jaque
+                        System.out.println("EL REY ESTA EN JAQUE!!");
                         comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()),pieza);
                     }
                 }
@@ -455,8 +459,6 @@ public class Tablero implements ITablero
             }
             
         }
-        
-        System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         if (jaqueMate)
             System.out.println("JAQUE MATEEEEEEEE ");
         return jaqueMate;
@@ -496,7 +498,6 @@ public class Tablero implements ITablero
                         resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
                     }
                 }
-                System.out.println("Movimientos peón blanco: "+resultado);
             }
             else if((f_aux < 7) && (pieza.color == Color.negra))
             {
@@ -519,7 +520,6 @@ public class Tablero implements ITablero
                 else if(c_aux==0){
                     resultado.add(new Movimiento(pieza.color, pieza.posicion, new Posicion(f_aux, c_aux+1)));
                 }
-                System.out.println("Movimientos peón negro: "+resultado);
             }
         }
         return resultado;

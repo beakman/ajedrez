@@ -160,8 +160,8 @@ public class VistaTablero extends javax.swing.JFrame {
                                 posicionAnterior.setFila(posicionActual.getFila());
                                 posicionAnterior.setColumna(posicionActual.getColumna());
                                 
-                                if (tablero.comprobarJaque(piezaAnterior))
-                                    System.out.println("El rey esta en JAQUE");
+                                // comprobamos el jaque
+                                tablero.comprobarJaque(piezaAnterior);
 
                                 if(contraPersona == false){
                                 Pieza p;
@@ -634,7 +634,6 @@ public class VistaTablero extends javax.swing.JFrame {
         casilla[posicionActual.getFila()][posicionActual.getColumna()].setIcon(null);
         tablero.actualizarEstado(posicionAnterior, posicionActual);
         piezaAnterior.actualizarPosicion(posicionActual);
-        System.out.println(tablero.estado.toString());
         movimientos.anadirMovimiento(piezaAnterior, new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual));
         if (turno)
             listModel.addElement(jugador1+": "+movimientos.getUltimoMovimiento());
@@ -643,8 +642,7 @@ public class VistaTablero extends javax.swing.JFrame {
         casilla[fila][columna].setIcon(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getIcon());
         casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setIcon(null);
         casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].setBackground(casilla[posicionAnterior.getFila()][posicionAnterior.getColumna()].getBackground());
-        if (tablero.comprobarJaque(piezaAnterior))
-            System.out.println("El rey esta en JAQUE");
+        tablero.comprobarJaque(piezaAnterior);
     }
     
     public void moverFicha(String seleccionActual, String seleccionAnterior)
