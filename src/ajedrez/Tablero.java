@@ -425,17 +425,35 @@ public class Tablero implements ITablero
                 // estan en la misma columna, hay que ver que pieza se puede interponer
                 if (pieza_amenaza.posicion.getColumna() == pieza_en_jaque.posicion.getColumna())
                 {
-                    //for 
+                    if (pieza_amenaza.posicion.getFila() > pieza_en_jaque.posicion.getFila())
+                    {
+                        int f_aux = pieza_amenaza.posicion.getFila();
+                        while (f_aux > pieza_en_jaque.posicion.getFila())
+                        {
+                            f_aux--;
+                            
+                        }
+                        
+                    }
                 }
             }
-            if (pieza_amenaza.tipoPieza().toString().equals("Torre"))
+            if (pieza_amenaza.tipoPieza().toString().equals("Alfil"))
             {
                 // estan en la misma columna, hay que ver que pieza se puede interponer
                 if (pieza_amenaza.posicion.getColumna() == pieza_en_jaque.posicion.getColumna())
                 {
                     //for 
                 }
-            }            
+            }
+            if (pieza_amenaza.tipoPieza().toString().equals("Reyna"))
+            {
+                // estan en la misma columna, hay que ver que pieza se puede interponer
+                if (pieza_amenaza.posicion.getColumna() == pieza_en_jaque.posicion.getColumna())
+                {
+                    //for 
+                }
+            }
+            
         }
         
         System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
