@@ -266,8 +266,7 @@ public class Tablero implements ITablero
                     {
                         jaque = true;
                         // le paso como argumento el rey que esta en jaque
-                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()));
-                        System.out.println("El rey esta en JAQUE");
+                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()),pieza);
                     }
                 }
             }
@@ -285,7 +284,7 @@ public class Tablero implements ITablero
                     {
                         jaque = true;
                         // le paso como argumento el rey que esta en jaque
-                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()));
+                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()),pieza);
                     }
                 }
             }
@@ -302,7 +301,7 @@ public class Tablero implements ITablero
                     {
                         jaque = true;
                         // le paso como argumento el rey que esta en jaque
-                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()));
+                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()),pieza);
                     }
                 }
             }
@@ -320,7 +319,7 @@ public class Tablero implements ITablero
                     {
                         jaque = true;
                         // le paso como argumento el rey que esta en jaque
-                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()));
+                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()),pieza);
                     }
                 }
             }
@@ -338,7 +337,7 @@ public class Tablero implements ITablero
                     {
                         jaque = true;
                         // le paso como argumento el rey que esta en jaque
-                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()));
+                        comprobarJaqueMate(this.estado.get(mov.get(i).posDestino.toString()),pieza);
                     }
                 }
             }
@@ -347,53 +346,88 @@ public class Tablero implements ITablero
         return jaque;
     }
    
-    public boolean comprobarJaqueMate(Pieza pieza_en_jaque)
+    public boolean comprobarJaqueMate(Pieza pieza_en_jaque, Pieza pieza_amenaza)
     {
         ArrayList<Movimiento> resultado = new ArrayList<>();
         ArrayList<Movimiento> movRey = new ArrayList<>();
-       
+        ArrayList<Movimiento> comprobacion = new ArrayList<>();
+        
         if (pieza_en_jaque.color == Color.negra)
         {
             resultado = getMovimientosPosiblesBlancas();
+            comprobacion = getMovimientosPosiblesNegras();
         }
         else
         {
-            resultado = getMovimientosPosiblesNegras();            
+            resultado = getMovimientosPosiblesNegras();
+            comprobacion = getMovimientosPosiblesBlancas();
         }
         // La posicion del rey amenazado se detecta bien
         int fila_aux = pieza_en_jaque.posicion.getFila();
         int col_aux = pieza_en_jaque.posicion.getColumna();
-        System.out.println("fila " + fila_aux);
-        System.out.println("columna " + col_aux);
-        System.out.println(resultado);
-        System.out.println(resultado.size());
+//        System.out.println("fila " + fila_aux);
+//        System.out.println("columna " + col_aux);
+//        System.out.println(resultado);
+//        System.out.println(resultado.size());
        
        
         movRey = getMovimientosPosibles(pieza_en_jaque);
-        System.out.println(movRey);
+        
         int i = 0;
         int j = 0;
-        boolean jaqueMate = true;
-        boolean jaqueMateInt = false;
+        boolean jaqueMate = false;
+        boolean jaqueMateInt;
        
-        while(i<movRey.size() && jaqueMate)
+        while(i<movRey.size())
         {
             j = 0;
             jaqueMateInt = false;
-            System.out.println("hola");
-            while(j<resultado.size())
+            while(j<resultado.size() && !jaqueMateInt)
             {
-                if (movRey.get(i) == resultado.get(j))
+                jaqueMateInt = false;
+                if (movRey.get(i).posDestino.toString().equals(resultado.get(j).posDestino.toString()))
+                {
                     jaqueMateInt = true;
+                }
                 j++;
             }
             if (jaqueMateInt == true)
+            {
                 jaqueMate = true;
+            }
             else
+            {
                 jaqueMate = false;
+                break;
+            }
             i++;
         }
-       
+        if (jaqueMate)
+        {
+            // Hay una pieza de las que defienden el rey que se pueden comer la pieza atacante
+            i=0;
+            while(i<comprobacion.size() && jaqueMate)
+            {
+                if (pieza_amenaza.posicion.toString().equals(comprobacion.get(i).posDestino.toString()))
+                {
+                    jaqueMate = false;
+                    //estado.get(anterior.toString()).color == ajedrez.Color.negra)
+                    if (estado.get(comprobacion.get(i).posActual.toString()).tipoPieza().toString().equals("Rey"))
+                    {
+                        // Habria que hacer movimientos futuros
+                    }
+                }
+                i++;
+            }
+            // Se puede interponer alguna pieza en la trayectoria
+            if (pieza_amenaza.tipoPieza().toString().equals("Torre"))
+            {
+//                if ()
+//                {}
+            }
+        }
+        
+        System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         if (jaqueMate)
             System.out.println("JAQUE MATEEEEEEEE ");
         return jaqueMate;
