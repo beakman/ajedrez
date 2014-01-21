@@ -136,7 +136,8 @@ public class VistaTablero extends javax.swing.JFrame {
                             // 3. actualizamos el estado del tablero (el diccionario)
                             // 4. actualizamos la posicion de la pieza
                             // 5. actualizamos la visa
-                            // 6. ponemos a false piezaPulsada                            
+                            // 6. ponemos a false piezaPulsada
+                            
                             piezaAnterior = tablero.comprobarPosicion(posicionAnterior);
                             
                             if (tablero.esMovimientoPosible(new Movimiento(piezaAnterior.color, piezaAnterior.posicion, posicionActual), piezaAnterior))
